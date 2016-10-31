@@ -1,0 +1,17 @@
+<main>
+    <img id="logo" src="../../public/images/angular.png">
+    <h1>Events List</h1>
+    <div class="events-wrapper">
+        <ul class="events">
+            <li *ngFor="let event of events"
+                [class.selected]="event === selectedEvent"
+                (click)="onSelect(event)">
+                <span class="badge">{{ event.start_time * 1000 | date: 'hh:mm a' }}</span> {{ event.name }}
+            </li>
+        </ul>
+        <event-detail
+                class="event-detail"
+                [event]="selectedEvent">
+        </event-detail>
+    </div>
+</main>

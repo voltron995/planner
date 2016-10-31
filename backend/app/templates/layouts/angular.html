@@ -1,0 +1,13 @@
+{% extends "main.html" %}
+
+{% block body %}
+    <planner-app>
+        Loading...
+        <div id="content">
+            {% block content %}{% endblock %}
+        </div>
+    </planner-app>
+    <script src="{{ url_for('static', filename='polyfills.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor.js') }}"></script>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+{% endblock %}
