@@ -19,4 +19,4 @@ chmod-socket    = 666
 callable = app
 
 #location of log files
-logto = %(base)/log/uwsgi/%n.log
+logto = <LOG_DIRECTORY_PATH>/%n.log

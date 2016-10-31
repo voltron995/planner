@@ -16,7 +16,7 @@ server {
         uwsgi_pass unix:<UWSGI_SOCKET_FILE_PATH>;
     }
 
-    location /static {
+    location /dist {
         root /<PROJECT_ROOT_PATH>/frontend;
     }
 }
