@@ -18,3 +18,5 @@ frontend/dist
 uwsgi.sock
 nginx.conf
 uwsgi.ini
+
+backend/instance

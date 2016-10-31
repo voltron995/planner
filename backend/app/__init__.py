@@ -1,10 +1,12 @@
 import os
 from flask import Flask
+import config.config as config
 
 
 def create_app():
-    app = Flask(__name__, static_url_path='/dist')
-    # app.config.from_object(os.environ['APP_SETTINGS'])
+    app = Flask(__name__, static_url_path='/dist', instance_relative_config=True)
+    app.config.from_object(eval(os.environ['APP_SETTINGS']))
+    app.config.from_pyfile('config.py')
 
     from . import events
     from . import users
