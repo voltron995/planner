@@ -19,4 +19,4 @@ uwsgi.sock
 nginx.conf
 uwsgi.ini
 
-backend/instance
+backend/instance/config.py
