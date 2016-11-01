@@ -1,6 +1,8 @@
 import os
 from flask import Flask
 import config.config as config
+from flask_migrate import Migrate
+from .database import db
 
 
 def create_app():
@@ -8,12 +10,15 @@ def create_app():
 
     app.config.from_object(eval(os.environ['APP_SETTINGS']))
     app.config.from_pyfile('config.py')
+    migrate = Migrate(app, db)
 
     from . import events
     from . import users
+    from . import msclient
 
     from app.events import models
     from app.users import models
+    from app.msclient import models
 
     from app.events import module as events_module
     from app.users import module as users_module

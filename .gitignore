@@ -12,6 +12,8 @@ log
 nginx.conf
 uwsgi.ini
 
+backend/migrations
+
 frontend/node_modules
 frontend/dist
 
