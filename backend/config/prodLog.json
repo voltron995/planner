@@ -3,9 +3,9 @@
                 "full": {"format": "%(asctime)s %(name)-15s %(levelname)-8s %(message)s"}
                 },
  "handlers": {"filelog": {
-                   "class": "logging.FileHandler",
+                   "class": "logging.handlers.RotatingFileHandler",
                    "formatter": "full",
                    "level": "WARN",
-                   "filename": "log/planner.log"}
+                   "filename": "../log/planner.log"}
               },
  "root": {"level": "WARN", "handlers": ["filelog"]}}
