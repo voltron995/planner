@@ -1,4 +1,0 @@
-SECRET_KEY = 'our-secret-key'
-DBHOST = ''
-DBNAME = ''
-SQLALCHEMY_DATABASE_URI = ''

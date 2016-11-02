@@ -1,7 +1,6 @@
 from flask.views import MethodView
 from flask import render_template, request
 
-
 class EventsList(MethodView):
 
     def get(self):
