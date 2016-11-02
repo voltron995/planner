@@ -8,7 +8,7 @@ from .database import db
 def create_app():
     app = Flask(__name__, static_url_path='/dist')
 
-    app.config.from_pyfile('../config/' + os.environ['APP_SETTINGS'])
+    app.config.from_pyfile('../config/local.py')
     migrate = Migrate(app, db)
 
     from . import events

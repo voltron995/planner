@@ -1,4 +1,5 @@
 import os
+import logging.config
 basedir = os.path.abspath(os.path.dirname(__file__) + '/../../')
 
 TESTING = False
