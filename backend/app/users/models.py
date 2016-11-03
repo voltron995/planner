@@ -1,5 +1,6 @@
-from ..database import db
+from app import db
 from sqlalchemy.orm import relationship
+
 
 class User(db.Model):
     __tablename__ = 'users'

@@ -1,26 +1,20 @@
 from flask import Flask
 from flask_migrate import Migrate
-from .database import db
+from flask_sqlalchemy import SQLAlchemy
 
 
-def create_app():
-    app = Flask(__name__, static_url_path='/dist')
+app = Flask(__name__, static_url_path='/dist')
 
-    app.config.from_object('app.settings.local')
+app.config.from_object('app.settings.local')
 
-    Migrate(app, db)
+db = SQLAlchemy()
+migrate = Migrate(app, db)
 
-    from . import events
-    from . import users
-    from . import msclient
+from . import events
+from . import users
+from . import msclient
 
-    from app.events import models
-    from app.users import models
-    from app.msclient import models
-
-    from app.events import module as events_module
-    from app.users import module as users_module
-    app.register_blueprint(events_module)
-    app.register_blueprint(users_module)
-
-    return app
+from app.events import events as events_blueprint
+from app.users import users as users_blueprint
+app.register_blueprint(events_blueprint)
+app.register_blueprint(users_blueprint)

@@ -1,10 +1,10 @@
-from ..database import db
-
 from sqlalchemy import Table, Column, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 
-from ..msclient.models import *
-from ..users.models import *
+from app import db
+from app.msclient.models import *
+from app.users.models import *
+
 
 class Event(db.Model):
     __tablename__ = 'events'
@@ -21,6 +21,7 @@ class Event(db.Model):
     created_at = db.Column(db.DateTime)
     updatet_at = db.Column(db.DateTime)
 
+
 class Target(db.Model):
     __tablename__ = 'targets'
     id = db.Column(db.Integer, primary_key=True)
@@ -32,6 +33,7 @@ class Target(db.Model):
     status = db.Column(db.Boolean)
     created_at = db.Column(db.DateTime)
     updatet_at = db.Column(db.DateTime)
+
 
 class Item(db.Model):
     __tablename__ = 'items'
