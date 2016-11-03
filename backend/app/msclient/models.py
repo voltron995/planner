@@ -1,5 +1,6 @@
 from ..database import db
 
+
 class Plugin(db.Model):
     __tablename__ = 'plugins'
     id = db.Column(db.Integer, primary_key=True)

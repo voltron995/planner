@@ -1,6 +1,6 @@
 [uwsgi]
 #application's base folder
-base = <PROJECT_ROOT_PATH>
+base = /home/andy/Python/planner
 
 #python module to import
 app = manage
@@ -10,7 +10,7 @@ home = %(base)/env
 pythonpath = %(base)/backend
 
 #socket file's location
-socket = %(base)/backend/config/%n.sock
+socket = %(base)/%n.sock
 
 #permissions for the socket file
 chmod-socket    = 666
@@ -19,4 +19,4 @@ chmod-socket    = 666
 callable = app
 
 #location of log files
-logto = <LOG_DIRECTORY_PATH>/%n.log
+logto = %(base)/log/uwsgi/%n.log

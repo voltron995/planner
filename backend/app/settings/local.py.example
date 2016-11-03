@@ -1,0 +1,13 @@
+from .base import *
+
+DB_CONFIG = {
+    'DRIVER': '',
+    'USER': '',
+    'PASSWORD': '',
+    'HOST': '127.0.0.1',
+    'PORT': 5432,
+    'NAME': ''
+}
+
+SQLALCHEMY_DATABASE_URI = '{DRIVER}://{USER}:{PASSWORD}@{HOST}:{PORT}/{NAME}'.format(**DB_CONFIG)
+
