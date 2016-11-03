@@ -1,5 +1,6 @@
 import os
 import logging.config
+from .local import *
 
 basedir = os.path.abspath(os.path.dirname(__file__) + '/../../..')
 
@@ -41,4 +42,6 @@ config_dict = {
 }
 
 logging.config.dictConfig(config_dict)
+
+SQLALCHEMY_DATABASE_URI = '{DRIVER}://{USER}:{PASSWORD}@{HOST}:{PORT}/{NAME}'.format(**DB_CONFIG)
 

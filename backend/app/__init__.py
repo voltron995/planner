@@ -5,7 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__, static_url_path='/dist')
 
-app.config.from_object('app.settings.local')
+app.config.from_object('app.settings.base')
 
 db = SQLAlchemy()
 migrate = Migrate(app, db)
