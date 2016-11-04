@@ -1,6 +1,6 @@
 from flask import Flask
-from flask.ext.bootstrap import Bootstrap
-from flask.ext.login import LoginManager
+from flask_bootstrap import Bootstrap
+from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 
