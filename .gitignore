@@ -21,4 +21,4 @@ uwsgi.sock
 nginx.conf
 uwsgi.ini
 
-backend/config/local.py
+backend/app/settings/local.py
