@@ -10,6 +10,7 @@ app = Flask(__name__, static_url_path='/dist')
 app.config.from_object('app.settings.base')
 
 db = SQLAlchemy()
+db.init_app(app)
 migrate = Migrate(app, db)
 
 login_manager = LoginManager()
