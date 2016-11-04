@@ -1,4 +1,6 @@
 from flask import Flask
+from flask.ext.bootstrap import Bootstrap
+from flask.ext.login import LoginManager
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 
@@ -10,11 +12,16 @@ app.config.from_object('app.settings.base')
 db = SQLAlchemy()
 migrate = Migrate(app, db)
 
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+bootstrap = Bootstrap(app)
+
 from . import events
 from . import users
 from . import msclient
 
-from app.events import events as events_blueprint
-from app.users import users as users_blueprint
+from app.events import events_blueprint
+from app.users import users_blueprint
 app.register_blueprint(events_blueprint)
 app.register_blueprint(users_blueprint)

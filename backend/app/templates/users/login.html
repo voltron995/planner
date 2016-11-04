@@ -1,0 +1,12 @@
+{% import "bootstrap/wtf.html" as wtf %}
+{% extends "layouts/default.html" %}
+{% block title %}
+    Log In
+{% endblock %}
+
+{% block content %}
+    <h1>Log In</h1>
+    <div>
+      {{ wtf.quick_form(form) }}
+    </div>
+{% endblock %}
