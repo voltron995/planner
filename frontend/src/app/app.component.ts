@@ -4,7 +4,10 @@ import {OnInit} from '@angular/core';
 import {Event} from './event';
 import {EventService} from './event.service';
 
+// todo: do not import assets here, figure out how to compile them without import.
 import '../../public/css/styles.css'
+import '../../public/images/avatar-default.png'
+import '../../public/images/logo.png'
 
 @Component({
     selector: 'planner-app',

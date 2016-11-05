@@ -1,0 +1,23 @@
+<div id="main-menu" class="group">
+    <div class="logo">
+        <a href="{{ url_for('events.list') }}">
+            <img src="{{ url_for('static', filename='assets/logo.png') }}"/>
+        </a>
+    </div>
+    {% if current_user.is_authenticated %}
+        <div class="profile">
+            <div class="greetings">
+                <img src="{{ url_for('static', filename='assets/avatar-default.png') }}"/>
+                <span>Hello, <strong>{{ current_user.email }}!</strong></span>
+            </div>
+            <ul class="menu-links">
+                <li class="edit"><a href="#">Edit profile</a></li>
+                <li class="logout">
+                    <form action="{{ url_for('users.logout') }}" method="post">
+                        <input type="submit" value="Log Out">
+                    </form>
+                </li>
+            </ul>
+        </div>
+    {% endif %}
+</div>

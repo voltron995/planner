@@ -1,7 +1,8 @@
-from app import db
 from sqlalchemy.orm import relationship
 
-from app import login_manager
+from app import db
+
+from .helpers import verify_password
 
 
 class User(db.Model):
@@ -15,12 +16,15 @@ class User(db.Model):
     # # created_at = db.Column(db.D   ateTime)
     # # updated_at = db.Column(db.DateTime)
     #
-    is_active = True #todo:
-    is_authenticated = False
+    is_active = True  # todo
+    is_authenticated = True
     is_anonymous = False
 
     def get_id(self):
         return self.id
+
+    def verify_password(self, password: str):
+        return verify_password(password, self.password)
 
 
 # class Profile(db.Model):
@@ -34,8 +38,3 @@ class User(db.Model):
 #     image_path = db.Column(db.String)
 #     created_at = db.Column(db.DateTime)
 #     updated_at = db.Column(db.DateTime)
-
-
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(user_id)
