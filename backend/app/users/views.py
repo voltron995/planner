@@ -1,9 +1,8 @@
 from flask.views import MethodView
-from flask import redirect, render_template, url_for
+from flask import flash, redirect, render_template, url_for
 from flask_login import current_user, login_user, logout_user, login_required
 
 from app import db, login_manager
-
 from .forms import LoginForm
 from .models import User
 
@@ -17,13 +16,18 @@ class UsersLogin(MethodView):
 
     def post(self):
         form = LoginForm()
-        if form.validate_on_submit():
-            user = User.query.filter_by(email=form.email.data).first()
-            if user is not None and user.verify_password(form.password.data):
-                login_user(user)
-                return redirect(url_for('events.list'))
-            return 'no such user'
-        return 'not valid'
+
+        if not form.validate_on_submit():
+            flash('Validation error', 'login_error')
+            return redirect(url_for('.login'))
+
+        user = User.query.filter_by(email=form.email.data).first()
+        if user is None or not user.verify_password(form.password.data):
+            flash('Invalid password or email', 'login_error')
+            return redirect(url_for('.login'))
+
+        login_user(user)
+        return redirect(url_for('events.list'))
 
 
 class UsersLogout(MethodView):

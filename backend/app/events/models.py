@@ -1,9 +1,9 @@
-from sqlalchemy import Table, Column, Integer, ForeignKey
-from sqlalchemy.orm import relationship
+# from sqlalchemy import Table, Column, Integer, ForeignKey
+# from sqlalchemy.orm import relationship
 
-from app import db
-from app.msclient.models import *
-from app.users.models import *
+# from app import db
+# from app.msclient.models import *
+# from app.users.models import *
 
 
 # class Event(db.Model):
