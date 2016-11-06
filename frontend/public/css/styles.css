@@ -2,96 +2,33 @@ html {
     overflow-y: scroll;
 }
 
-.group:after {
-    content: "";
-    display: table;
-    clear: both;
+.navbar-brand>img {
+  height: 100%;
+  width: auto;
 }
 
-#main-menu {
-    background: yellow;
-}
-
-#main-menu .logo {
-    float: left;
-}
-
-#main-menu .logo img {
-    height: 50px;
-    padding: 10px 20px 8px;
-    width: 50px;
-}
-
-#main-menu .profile {
-    float: right;
-    position: relative;
-}
-
-#main-menu .profile .greetings {
-    padding: 14px 20px 14px 0;
-}
-
-#main-menu .profile .greetings img {
-    border: 2px solid #607D8B;
+#user-avatar {
+    padding-top:2px;
+    padding-bottom: 2px;
     border-radius: 50%;
-    height: 40px;
-    margin-right: 10px;
+}
+
+.navbar-right {
+    padding-top:0px;
+    padding-bottom: 0px;
+    padding-right:15px;
+}
+
+.navbar-right .navbar-brand {
+    padding-top:0px;
+    padding-bottom: 0px;
+}
+
+#project-name {
+    color:#333;
+    font-size: 23px;
     vertical-align: middle;
-    width: 40px;
-}
-
-#main-menu .profile .greetings img + span {
-    position: relative;
-    top: 4px;
-}
-
-#main-menu .profile .menu-links {
-    display: none;
-    position: absolute;
-    width: 100%;
-    margin: 0;
-    list-style: none;
-    padding: 0;
-    background: yellow;
-}
-
-#main-menu .profile .menu-links:hover,
-#main-menu .profile .greetings:hover + .menu-links {
-    display: block;
-}
-
-#main-menu .profile .menu-links li {
-    padding: 6px 6px 6px 58px;
-    cursor: pointer;
-}
-
-#main-menu .profile .menu-links li:hover {
-    color: #607D8B;
-    background: lightyellow;
-}
-
-#main-menu .profile .menu-links li:hover:before {
-    content: '>';
-    position: absolute;
-    left: 43px;
-    margin-top: 1px;
-    font-weight: bold;
-}
-
-#main-menu .profile .menu-links li a,
-#main-menu .profile .menu-links li input[type=submit] {
-    text-decoration: none;
-    color: inherit;
-    width: 100%;
-    display: inline-block;
-}
-
-#main-menu .profile .menu-links li input[type=submit] {
-    padding: 0;
-    text-align: left;
-    background: none;
-    border: none;
-    cursor: pointer;
+    line-height:23px;
 }
 
 #main-app > i.loading {

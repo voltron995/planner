@@ -1,10 +1,10 @@
 {% extends "main.html" %}
 
-{% block body %}
+{% block page_content %}
     <planner-app id="main-app">
         <i class="loading"></i>
         <div id="content">
-            {% block content %}{% endblock %}
+            {% block angular_content %}{% endblock %}
         </div>
     </planner-app>
     <script src="{{ url_for('static', filename='polyfills.js') }}"></script>
