@@ -1,18 +1,14 @@
 from flask import current_app
+from flask_login import UserMixin
 from itsdangerous import Serializer
 from sqlalchemy.orm import relationship
 
 from app import db
+from app.mixins import TimestampsMixin
 from .helpers import verify_password, encrypt_password
 
 
-# todo: move out to mixins file.
-class Timestamps:
-    created_at = db.Column(db.DateTime, nullable=False, default=db.func.now())
-    updated_at = db.Column(db.DateTime, nullable=False, default=db.func.now(), onupdate=db.func.now())
-
-
-class User(Timestamps, db.Model):
+class User(UserMixin, TimestampsMixin, db.Model):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -24,9 +20,6 @@ class User(Timestamps, db.Model):
     last_access = db.Column(db.DateTime)
 
     profile = relationship('Profile', uselist=False, backref='user')
-
-    is_authenticated = True
-    is_anonymous = False
 
     @property
     def password(self):
@@ -59,7 +52,7 @@ class User(Timestamps, db.Model):
         return True
 
 
-class Profile(Timestamps, db.Model):
+class Profile(TimestampsMixin, db.Model):
     __tablename__ = 'profiles'
 
     id = db.Column(db.Integer, primary_key=True)
