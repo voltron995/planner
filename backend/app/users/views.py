@@ -53,3 +53,14 @@ class UsersRegister(MethodView):
         if current_user.is_authenticated:
             return redirect(url_for('events.list'))
         return render_template('users/register.html', form=RegisterForm())
+
+    def post(self):
+        form = RegisterForm()
+
+        if form.validate_on_submit():
+            user = User(login=form.username.data, email=form.email.data, password=form.password.data)
+            db.session.add(user)
+            db.session.commit()
+            flash("Registered a new user")
+            return redirect(url_for('users.login'))
+        return render_template('users/register.html')
