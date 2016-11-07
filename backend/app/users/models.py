@@ -1,7 +1,9 @@
+from flask import current_app
+from itsdangerous import Serializer
 from sqlalchemy.orm import relationship
 
 from app import db
-from .helpers import verify_password
+from .helpers import verify_password, encrypt_password
 
 
 # todo: move out to mixins file.
@@ -16,7 +18,7 @@ class User(Timestamps, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     login = db.Column(db.String(120), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(255), nullable=False)
+    password_hash = db.Column(db.String(255), nullable=False)
     is_active = db.Column(db.Boolean, nullable=False, default=False)
     is_admin = db.Column(db.Boolean, nullable=False, default=False)
     last_access = db.Column(db.DateTime)
@@ -26,11 +28,35 @@ class User(Timestamps, db.Model):
     is_authenticated = True
     is_anonymous = False
 
+    @property
+    def password(self):
+        raise AttributeError('Password is not a readable attribute')
+
+    @password.setter
+    def password(self, password):
+        self.password_hash = encrypt_password(password)
+
+    def verify_password(self, password: str):
+        return verify_password(password, self.password_hash)
+
     def get_id(self):
         return self.id
 
-    def verify_password(self, password: str):
-        return verify_password(password, self.password)
+    def generate_confirmation_token(self, expiration=3600):
+        s = Serializer(current_app.config['SECRET_KEY'], expiration)
+        return s.dumps({'confirm': self.id})
+
+    def confirm(self, token):
+        s = Serializer(current_app.config['SECRET_KEY'])
+        try:
+            data = s.loads(token)
+        except:
+            return False
+        if data.get('confirm') != self.id:
+            return False
+        self.is_active = True
+        db.session.add(self)
+        return True
 
 
 class Profile(Timestamps, db.Model):

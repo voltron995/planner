@@ -2,22 +2,16 @@
 {% extends "layouts/default.html" %}
 
 {% block title %}
-    Log In
+    Register
 {% endblock %}
 
 
 {% block page_content %}
     <div class="page-header">
-        <h1>Log In</h1>
+        <h1>Register</h1>
     </div>
     <div>
         {{ wtf.quick_form(form) }}
-    </div>
-    <div>
-        <p>
-            New user?
-            <a href="{{ url_for('users.register') }}">Click here to register</a>
-        </p>
     </div>
 
 {% endblock %}

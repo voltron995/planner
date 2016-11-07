@@ -3,7 +3,9 @@ from flask import flash, redirect, render_template, url_for
 from flask_login import current_user, login_user, logout_user, login_required
 
 from app import db, login_manager
-from .forms import LoginForm
+
+from app.email import send_email
+from .forms import LoginForm, RegisterForm
 from .models import User
 
 
@@ -45,3 +47,10 @@ def load_user(user_id):
 @login_manager.unauthorized_handler
 def unauthorized_callback():
     return redirect(url_for('users.login'))
+
+class UsersRegister(MethodView):
+    def get(self):
+        if current_user.is_authenticated:
+            return redirect(url_for('events.list'))
+        return render_template('users/register.html', form=RegisterForm())
+

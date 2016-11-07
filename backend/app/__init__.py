@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_mail import Mail
 from flask_bootstrap import Bootstrap
 from flask_login import LoginManager
 from flask_migrate import Migrate
@@ -17,6 +18,7 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 bootstrap = Bootstrap(app)
+mail = Mail(app)
 
 from . import events
 from . import users
