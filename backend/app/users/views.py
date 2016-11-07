@@ -10,7 +10,6 @@ from .models import User
 
 
 class UsersLogin(MethodView):
-
     def get(self):
         if current_user.is_authenticated:
             return redirect(url_for('events.list'))
@@ -20,12 +19,12 @@ class UsersLogin(MethodView):
         form = LoginForm()
 
         if not form.validate_on_submit():
-            flash('Validation error', 'login_error')
+            flash('Invalid password or email.', 'login_error')
             return redirect(url_for('.login'))
 
         user = User.query.filter_by(email=form.email.data).first()
         if user is None or not user.verify_password(form.password.data):
-            flash('Invalid password or email', 'login_error')
+            flash('User with such password or email does not exist.', 'login_error')
             return redirect(url_for('.login'))
 
         login_user(user)
@@ -48,9 +47,9 @@ def load_user(user_id):
 def unauthorized_callback():
     return redirect(url_for('users.login'))
 
+
 class UsersRegister(MethodView):
     def get(self):
         if current_user.is_authenticated:
             return redirect(url_for('events.list'))
         return render_template('users/register.html', form=RegisterForm())
-
