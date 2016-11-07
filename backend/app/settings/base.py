@@ -1,5 +1,6 @@
 import os
 import logging.config
+from redis import Redis
 from .local import *
 
 basedir = os.path.abspath(os.path.dirname(__file__) + '/../../..')
@@ -50,3 +51,6 @@ SQLALCHEMY_TRACK_MODIFICATIONS = True
 
 SQLALCHEMY_DATABASE_URI = '{DRIVER}://{USER}:{PASSWORD}@{HOST}:{PORT}/{NAME}'.format(**DB_CONFIG)
 
+SESSION_TYPE = 'redis'
+
+SESSION_REDIS = Redis(**REDIS_CONFIG)
