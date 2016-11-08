@@ -1,6 +1,6 @@
 from flask import current_app
 from flask_login import UserMixin
-from itsdangerous import Serializer
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from sqlalchemy.orm import relationship
 
 from app import db

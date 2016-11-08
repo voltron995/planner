@@ -1,13 +1,22 @@
+from flask import current_app
 from flask.views import MethodView
-from flask import flash, redirect, render_template, url_for
+from flask import flash, redirect, render_template, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 
 from app import db, login_manager
 
 from app.email import send_email
+
+from .tokens import Token
 from .forms import LoginForm, RegisterForm
 from .models import User
 
+
+def flash_errors(form):
+    for field, errors in form.errors.items():
+        for error in errors:
+            flash(error)
 
 class UsersLogin(MethodView):
     def get(self):
@@ -28,7 +37,7 @@ class UsersLogin(MethodView):
             return redirect(url_for('.login'))
 
         login_user(user)
-        return redirect(url_for('events.list'))
+        return redirect(request.args.get('next') or url_for('events.list'))
 
 
 class UsersLogout(MethodView):
@@ -62,5 +71,26 @@ class UsersRegister(MethodView):
             db.session.add(user)
             db.session.commit()
             flash("Registered a new user")
+            t = Token()
+            token = t.generate_confirmation_token(user.id)
+            send_email(user.email, 'Account Confirmation', 'confirmation', username=user.login, token=token)
+            flash("The confirmation letter has been sent to you via email.")
             return redirect(url_for('users.login'))
-        return render_template('users/register.html')
+        flash_errors(form)
+        return redirect(url_for('users.register'))
+
+class UsersConfirm(MethodView):
+    def get(self, token):
+        t = Token()
+        id = t.get_key_from_confirmation_token(token)
+        if id:
+            user = User.query.filter_by(id=id).first()
+            if user.is_active:
+                return redirect(url_for('events.list'))
+            user.is_active = True
+            db.session.add(user)
+            db.session.commit()
+            flash('You have confirmed your account. Thanks! You can log in now.')
+            return redirect(url_for('users.login'))
+        flash('The confirmation link is invalid or has expired.')
+        return redirect(url_for('users.login')) #todo: resend confirmation email
