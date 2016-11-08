@@ -1,0 +1,7 @@
+<h1> Dear {{ username }}, </h1>
+<p>Welcome to Planner!</p>
+<p> To confirm your account please click on the following link:
+{{ url_for('users.confirm', token=token, _external=True) }}</p>
+<p>Sincerely,</p>
+<h2>The Planner Team</h2>
+<p>Note: replies to this email address are not monitored.</p>

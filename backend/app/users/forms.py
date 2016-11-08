@@ -26,5 +26,16 @@ class RegisterForm(FlaskForm):
             raise ValidationError('Email already registered.')
 
     def validate_username(self, field):
-        if User.query.filter_by(username=field.data).first():
+        if User.query.filter_by(login=field.data).first():
             raise ValidationError('Username already in use.')
+
+class ResendForm(FlaskForm):
+    email = EmailField('Email', validators=[DataRequired(), Length(1, 64), Email()])
+    submit = SubmitField('Send email')
+
+    def validate_email(self, field):
+        user = User.query.filter_by(email=field.data).first()
+        if not user:
+            raise ValidationError("You haven't registered yet.")
+        if user.is_active:
+            raise ValidationError('Account with this email is already confirmed. Try to log in!')
