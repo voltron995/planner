@@ -18,6 +18,17 @@ def flash_errors(form):
         for error in errors:
             flash(error)
 
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)
+
+
+@login_manager.unauthorized_handler
+def unauthorized_callback():
+    return redirect(url_for('users.login'))
+
+
 class UsersLogin(MethodView):
     def get(self):
         if current_user.is_authenticated:
@@ -47,16 +58,6 @@ class UsersLogout(MethodView):
         return redirect(url_for('.login'))
 
 
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(user_id)
-
-
-@login_manager.unauthorized_handler
-def unauthorized_callback():
-    return redirect(url_for('users.login'))
-
-
 class UsersRegister(MethodView):
     def get(self):
         if current_user.is_authenticated:
@@ -70,8 +71,7 @@ class UsersRegister(MethodView):
             user = User(login=form.username.data, email=form.email.data, password=form.password.data)
             db.session.add(user)
             db.session.commit()
-            t = Token()
-            token = t.generate_confirmation_token(user.id)
+            token = Token.encrypt_confirmation_token(user.id)
             #todo: make it asynchronous
             send_email(user.email, 'Account Confirmation', 'confirmation', username=user.login, token=token)
             flash("The confirmation letter has been sent to you via email.")
@@ -83,8 +83,7 @@ class UsersConfirm(MethodView):
     def get(self, token):
         if current_user.is_authenticated:
             return redirect(url_for(HOME_PAGE))
-        t = Token()
-        id = t.get_key_from_confirmation_token(token)
+        id = Token.decrypt_confirmation_token(token)
         if id:
             user = User.query.filter_by(id=id).first()
             if user.is_active:
@@ -107,8 +106,7 @@ class UsersResend(MethodView):
         form = ResendForm()
         if form.validate_on_submit():
             user = User.query.filter_by(email=form.email.data).first()
-            t = Token()
-            token = t.generate_confirmation_token(user.id)
+            token = Token.encrypt_confirmation_token(user.id)
             send_email(user.email, 'Account Confirmation', 'confirmation', username=user.login, token=token)
             flash("The new confirmation letter has been sent to you via email.")
             return redirect(url_for('users.login'))
