@@ -44,7 +44,7 @@ config_dict = {
 
 logging.config.dictConfig(config_dict)
 
-FLASKY_MAIL_SUBJECT_PREFIX = '[Planner]'
+FLASKY_MAIL_SUBJECT_PREFIX = '[Planner] '
 FLASKY_MAIL_SENDER = 'Planner <planner018@yandex.ru>'
 
 SQLALCHEMY_TRACK_MODIFICATIONS = True
