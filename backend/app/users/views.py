@@ -33,17 +33,12 @@ class UsersLogin(MethodView):
     def post(self):
         form = LoginForm()
 
-        if not form.validate_on_submit():
-            flash('Invalid password or email.', 'login_error')
-            return redirect(url_for('.login'))
-
-        user = User.query.filter_by(email=form.email.data).first()
-        if user is None or not user.verify_password(form.password.data):
-            flash('User with such password or email does not exist.', 'login_error')
-            return redirect(url_for('.login'))
-
-        login_user(user)
-        return redirect(request.args.get('next') or url_for(HOME_PAGE))
+        if form.validate_on_submit():
+            user = User.query.filter_by(email=form.email.data).first()
+            login_user(user)
+            return redirect(request.args.get('next') or url_for(HOME_PAGE))
+        form.flash_errors()
+        return redirect(url_for('users.login'))
 
 
 class UsersLogout(MethodView):

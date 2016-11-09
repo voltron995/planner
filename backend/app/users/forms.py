@@ -11,6 +11,15 @@ class LoginForm(Form):
     password = PasswordField('Password', validators=[DataRequired(), Length(1, 64)])
     submit = SubmitField('Log In')
 
+    def validate_email(self, field):
+        user = User.query.filter_by(email=field.data).first()
+        if not user:
+            raise ValidationError('User with such email does not exist.')
+        if not user.verify_password(self.password.data):
+            raise ValidationError('Wrong password.')
+
+
+
 
 class RegisterForm(Form):
     email = EmailField('Email', validators=[DataRequired(), Length(1, 64), Email()])
