@@ -13,11 +13,6 @@ from .models import User
 
 HOME_PAGE = 'events.list'
 
-def flash_errors(form):
-    for field, errors in form.errors.items():
-        for error in errors:
-            flash(error)
-
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -72,12 +67,13 @@ class UsersRegister(MethodView):
             db.session.add(user)
             db.session.commit()
             token = Token.encrypt_confirmation_token(user.id)
-            #todo: make it asynchronous
+            # todo: make it asynchronous
             send_email(user.email, 'Account Confirmation', 'confirmation', username=user.login, token=token)
             flash("The confirmation letter has been sent to you via email.")
             return redirect(url_for('users.login'))
-        flash_errors(form)
+        form.flash_errors()
         return redirect(url_for('users.register'))
+
 
 class UsersConfirm(MethodView):
     def get(self, token):
@@ -96,6 +92,7 @@ class UsersConfirm(MethodView):
         flash('The confirmation link is invalid or has expired.')
         return redirect(url_for('users.resend'))
 
+
 class UsersResend(MethodView):
     def get(self):
         if current_user.is_authenticated:
@@ -110,5 +107,5 @@ class UsersResend(MethodView):
             send_email(user.email, 'Account Confirmation', 'confirmation', username=user.login, token=token)
             flash("The new confirmation letter has been sent to you via email.")
             return redirect(url_for('users.login'))
-        flash_errors(form)
+        form.flash_errors()
         return redirect(url_for(HOME_PAGE))

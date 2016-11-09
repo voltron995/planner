@@ -1,4 +1,4 @@
-from flask_wtf import FlaskForm
+from app.form import Form
 from wtforms import SubmitField, PasswordField, StringField
 from wtforms.fields.html5 import EmailField
 from wtforms.validators import Email, DataRequired, Length, Regexp, EqualTo, ValidationError
@@ -6,18 +6,19 @@ from wtforms.validators import Email, DataRequired, Length, Regexp, EqualTo, Val
 from .models import User
 
 
-class LoginForm(FlaskForm):
+class LoginForm(Form):
     email = EmailField('Email', validators=[DataRequired(), Length(1, 64), Email()])
     password = PasswordField('Password', validators=[DataRequired(), Length(1, 64)])
     submit = SubmitField('Log In')
 
 
-class RegisterForm(FlaskForm):
+class RegisterForm(Form):
     email = EmailField('Email', validators=[DataRequired(), Length(1, 64), Email()])
     username = StringField('Username', validators=[DataRequired(), Length(1, 64), Regexp('^[A-Za-z][A-Za-z0-9_.]*$', 0,
                                                                                          'Usernames must have only letters, '
                                                                                          'numbers, dots or underscores')])
-    password = PasswordField('Password', validators=[DataRequired(), EqualTo('confirm', message='Passwords must match.')])
+    password = PasswordField('Password',
+                             validators=[DataRequired(), EqualTo('confirm', message='Passwords must match.')])
     confirm = PasswordField('Confirm password', validators=[DataRequired()])
     submit = SubmitField('Register')
 
@@ -29,13 +30,14 @@ class RegisterForm(FlaskForm):
         if User.query.filter_by(login=field.data).first():
             raise ValidationError('Username already in use.')
 
-class ResendForm(FlaskForm):
+
+class ResendForm(Form):
     email = EmailField('Email', validators=[DataRequired(), Length(1, 64), Email()])
     submit = SubmitField('Send email')
 
     def validate_email(self, field):
         user = User.query.filter_by(email=field.data).first()
         if not user:
-            raise ValidationError("You haven't registered yet.")
+            raise ValidationError('You haven\'t registered yet.')
         if user.is_active:
             raise ValidationError('Account with this email is already confirmed. Try to log in!')
