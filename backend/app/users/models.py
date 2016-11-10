@@ -1,17 +1,13 @@
-from flask import current_app
 from flask_login import UserMixin
-from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from sqlalchemy.orm import relationship
+from passlib.handlers.sha2_crypt import sha256_crypt
 
 from app import db
-from app.mixins import TimestampsMixin
-from .helpers import verify_password, encrypt_password
+from app.models import BaseModel
 
 
-class User(UserMixin, TimestampsMixin, db.Model):
+class User(db.Model, BaseModel, UserMixin):
     __tablename__ = 'users'
-
-    id = db.Column(db.Integer, primary_key=True)
     login = db.Column(db.String(120), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(255), nullable=False)
@@ -27,35 +23,18 @@ class User(UserMixin, TimestampsMixin, db.Model):
 
     @password.setter
     def password(self, password):
-        self.password_hash = encrypt_password(password)
+        self.password_hash = sha256_crypt.encrypt(password)
 
     def verify_password(self, password: str):
-        return verify_password(password, self.password_hash)
+        return sha256_crypt.verify(password, self.password_hash)
 
     def get_id(self):
-        return self.id
-
-    def generate_confirmation_token(self, expiration=3600):
-        s = Serializer(current_app.config['SECRET_KEY'], expiration)
-        return s.dumps({'confirm': self.id})
-
-    def confirm(self, token):
-        s = Serializer(current_app.config['SECRET_KEY'])
-        try:
-            data = s.loads(token)
-        except:
-            return False
-        if data.get('confirm') != self.id:
-            return False
-        self.is_active = True
-        db.session.add(self)
-        return True
+        return self.uuid
 
 
-class Profile(TimestampsMixin, db.Model):
+class Profile(db.Model, BaseModel):
     __tablename__ = 'profiles'
 
-    id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     first_name = db.Column(db.String(255))
     last_name = db.Column(db.String(255))

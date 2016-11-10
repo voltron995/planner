@@ -1,4 +1,5 @@
 from app.form import Form
+from flask import flash
 from wtforms import SubmitField, PasswordField, StringField
 from wtforms.fields.html5 import EmailField
 from wtforms.validators import Email, DataRequired, Length, Regexp, EqualTo, ValidationError
@@ -11,23 +12,33 @@ class LoginForm(Form):
     password = PasswordField('Password', validators=[DataRequired(), Length(1, 64)])
     submit = SubmitField('Log In')
 
-    def validate_email(self, field):
-        user = User.query.filter_by(email=field.data).first()
-        if not user:
-            raise ValidationError('User with such email does not exist.')
+    def validate(self):
+        rv = Form.validate(self)
+        if not rv:
+            return False
+        user = User.query.filter_by(email=self.email.data).first()
+        if user is None:
+            self.email.errors.append('User with such email does not exist.')
+            return False
         if not user.verify_password(self.password.data):
-            raise ValidationError('Wrong password.')
-
-
+            self.password.errors.append('Wrong password.')
+            return False
+        return True
 
 
 class RegisterForm(Form):
     email = EmailField('Email', validators=[DataRequired(), Length(1, 64), Email()])
-    username = StringField('Username', validators=[DataRequired(), Length(1, 64), Regexp('^[A-Za-z][A-Za-z0-9_.]*$', 0,
-                                                                                         'Usernames must have only letters, '
-                                                                                         'numbers, dots or underscores')])
-    password = PasswordField('Password',
-                             validators=[DataRequired(), EqualTo('confirm', message='Passwords must match.')])
+    username = StringField(
+        'Username',
+        validators=[
+            DataRequired(), Length(1, 64),
+            Regexp('^[A-Za-z][A-Za-z0-9_.]*$', 0, 'Usernames must have only letters, numbers, dots or underscores')
+        ]
+    )
+    password = PasswordField(
+        'Password',
+         validators=[DataRequired(), EqualTo('confirm', message='Passwords must match.')]
+     )
     confirm = PasswordField('Confirm password', validators=[DataRequired()])
     submit = SubmitField('Register')
 

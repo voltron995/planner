@@ -15,8 +15,8 @@ HOME_PAGE = 'events.list'
 
 
 @login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(user_id)
+def load_user(uuid):
+    return User.query.filter_by(uuid=uuid).first()
 
 
 @login_manager.unauthorized_handler
@@ -61,8 +61,7 @@ class UsersRegister(MethodView):
             user = User(login=form.username.data, email=form.email.data, password=form.password.data)
             db.session.add(user)
             db.session.commit()
-            token = Token.encrypt_confirmation_token(user.id)
-            # todo: make it asynchronous
+            token = Token.encrypt_confirmation_token(user.uuid)
             send_email(user.email, 'Account Confirmation', 'confirmation', username=user.login, token=token)
             flash("The confirmation letter has been sent to you via email.")
             return redirect(url_for('users.login'))
@@ -74,16 +73,16 @@ class UsersConfirm(MethodView):
     def get(self, token):
         if current_user.is_authenticated:
             return redirect(url_for(HOME_PAGE))
-        id = Token.decrypt_confirmation_token(token)
-        if id:
-            user = User.query.filter_by(id=id).first()
-            if user.is_active:
-                return redirect(url_for(HOME_PAGE))
-            user.is_active = True
-            db.session.add(user)
-            db.session.commit()
-            flash('You have confirmed your account. Thanks! You can log in now.')
-            return redirect(url_for('users.login'))
+        uuid = Token.decrypt_confirmation_token(token)
+        if uuid:
+            user = User.query.filter_by(uuid=uuid).first()
+            if user:
+                if user.is_active:
+                    return redirect(url_for(HOME_PAGE))
+                user.is_active = True
+                db.session.commit()
+                flash('You have confirmed your account. Thanks! You can log in now.')
+                return redirect(url_for('users.login'))
         flash('The confirmation link is invalid or has expired.')
         return redirect(url_for('users.resend'))
 
