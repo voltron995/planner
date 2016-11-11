@@ -19,5 +19,11 @@
             <a href="{{ url_for('users.register') }}">Click here to register</a>
         </p>
     </div>
+    <div>
+        <p>
+            If you've already registered, but haven't received your confirmation letter,
+            <a href="{{ url_for('users.resend') }}">click here to resend it</a>
+        </p>
+    </div>
 
 {% endblock %}

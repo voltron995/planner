@@ -23,6 +23,9 @@ class LoginForm(Form):
         if not user.verify_password(self.password.data):
             self.password.errors.append('Wrong password.')
             return False
+        if not user.is_active:
+            self.email.errors.append('You have not confirmed you account yet.')
+            return False
         return True
 
 

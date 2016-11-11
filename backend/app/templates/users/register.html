@@ -11,13 +11,13 @@
         <h1>Register</h1>
     </div>
     <div>
-        {{ wtf.quick_form(form) }}
-    </div>
-    <div>
         <p>
-            If you haven't got your confirmation letter,
+            If you've already registered, but haven't received your confirmation letter,
             <a href="{{ url_for('users.resend') }}">click here to resend it</a>
         </p>
+    </div>
+    <div>
+        {{ wtf.quick_form(form) }}
     </div>
 
 {% endblock %}

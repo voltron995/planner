@@ -1,9 +1,8 @@
-from flask import current_app
 from flask.views import MethodView
 from flask import flash, redirect, render_template, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
 
-from app import db, login_manager
+from app import app, db, login_manager
 
 from app.email import send_email
 
@@ -12,7 +11,6 @@ from .forms import LoginForm, RegisterForm, ResendForm
 from .models import User
 
 HOME_PAGE = 'events.list'
-
 
 @login_manager.user_loader
 def load_user(uuid):
