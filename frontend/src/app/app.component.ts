@@ -8,6 +8,8 @@ import {EventService} from './event.service';
 import '../../public/css/styles.css'
 import '../../public/images/avatar-default.png'
 import '../../public/images/logo.png'
+import '../../public/images/sorry.jpg'
+import '../../public/images/404.gif'
 
 @Component({
     selector: 'planner-app',

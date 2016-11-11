@@ -24,7 +24,7 @@ class LoginForm(Form):
             self.password.errors.append('Wrong password.')
             return False
         if not user.is_active:
-            self.email.errors.append('You have not confirmed you account yet.')
+            self.email.errors.append('You have not confirmed you account yet. Follow the link in the email.')
             return False
         return True
 
