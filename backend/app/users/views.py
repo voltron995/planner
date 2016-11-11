@@ -12,6 +12,7 @@ from .models import User
 
 HOME_PAGE = 'events.list'
 
+
 @login_manager.user_loader
 def load_user(uuid):
     return User.query.filter_by(uuid=uuid).first()
@@ -24,7 +25,7 @@ def unauthorized_callback():
 
 class UsersLogin(MethodView):
     def get(self):
-        1/0
+        1 / 0
         if current_user.is_authenticated:
             return redirect(url_for(HOME_PAGE))
         return render_template('users/login.html', form=LoginForm())
