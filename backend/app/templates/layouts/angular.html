@@ -1,13 +1,13 @@
 {% extends "main.html" %}
 
 {% block page_content %}
-    <planner-app id="main-app">
-        <i class="loading"></i>
-        <div id="content">
-            {% block angular_content %}{% endblock %}
-        </div>
-    </planner-app>
-    <script src="{{ url_for('static', filename='polyfills.js') }}"></script>
-    <script src="{{ url_for('static', filename='vendor.js') }}"></script>
-    <script src="{{ url_for('static', filename='app.js') }}"></script>
+<planner-app id="main-app">
+    <i class="loading"></i>
+    <div id="content">
+        {% block angular_content %}{% endblock %}
+    </div>
+</planner-app>
+<script src="{{ url_for('static', filename='polyfills.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor.js') }}"></script>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
 {% endblock %}

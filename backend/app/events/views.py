@@ -4,7 +4,6 @@ from flask import render_template, request
 
 
 class EventsList(MethodView):
-
     @login_required
     def get(self):
         # fasfsdfsdf
@@ -12,7 +11,6 @@ class EventsList(MethodView):
 
 
 class EventsSingle(MethodView):
-
     @login_required
     def get(self, event_id):
         return render_template('events/single.html', event_id=event_id)

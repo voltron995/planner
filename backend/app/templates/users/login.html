@@ -2,22 +2,28 @@
 {% extends "layouts/default.html" %}
 
 {% block title %}
-    Log In
+Log In
 {% endblock %}
 
 
 {% block page_content %}
-    <div class="page-header">
-        <h1>Log In</h1>
-    </div>
-    <div>
-        {{ wtf.quick_form(form) }}
-    </div>
-    <div>
-        <p>
-            New user?
-            <a href="{{ url_for('users.register') }}">Click here to register</a>
-        </p>
-    </div>
+<div class="page-header">
+    <h1>Log In</h1>
+</div>
+<div>
+    {{ wtf.quick_form(form) }}
+</div>
+<div>
+    <p>
+        New user?
+        <a href="{{ url_for('users.register') }}">Click here to register</a>
+    </p>
+</div>
+<div>
+    <p>
+        If you've already registered, but haven't received your confirmation letter,
+        <a href="{{ url_for('users.resend') }}">click here to resend it</a>
+    </p>
+</div>
 
 {% endblock %}

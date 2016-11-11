@@ -3,19 +3,14 @@ from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 
 
 class Token:
-
     @staticmethod
-    def get_secret_key():
-        return current_app.config['SECRET_KEY']
-
-    @classmethod
-    def encrypt_token(cls, purpose, key, expiration):
-        s = Serializer(cls.get_secret_key(), expiration)
+    def encrypt_token(purpose, key, expiration):
+        s = Serializer(current_app.config['SECRET_KEY'], expiration)
         return s.dumps({purpose: key})
 
-    @classmethod
-    def decrypt_token(cls, purpose, token):
-        s = Serializer(cls.get_secret_key())
+    @staticmethod
+    def decrypt_token(purpose, token):
+        s = Serializer(current_app.config['SECRET_KEY'])
         try:
             data = s.loads(token)
             return data[purpose]

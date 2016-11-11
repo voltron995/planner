@@ -1,11 +1,10 @@
-from flask import current_app
 from flask.views import MethodView
 from flask import flash, redirect, render_template, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
 
-from app import db, login_manager
+from app import app, db, login_manager
 
-from app.email import send_email
+from app.mail import send_email
 
 from .tokens import Token
 from .forms import LoginForm, RegisterForm, ResendForm
@@ -15,8 +14,8 @@ HOME_PAGE = 'events.list'
 
 
 @login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(user_id)
+def load_user(uuid):
+    return User.query.filter_by(uuid=uuid).first()
 
 
 @login_manager.unauthorized_handler
@@ -33,17 +32,12 @@ class UsersLogin(MethodView):
     def post(self):
         form = LoginForm()
 
-        if not form.validate_on_submit():
-            flash('Invalid password or email.', 'login_error')
-            return redirect(url_for('.login'))
-
-        user = User.query.filter_by(email=form.email.data).first()
-        if user is None or not user.verify_password(form.password.data):
-            flash('User with such password or email does not exist.', 'login_error')
-            return redirect(url_for('.login'))
-
-        login_user(user)
-        return redirect(request.args.get('next') or url_for(HOME_PAGE))
+        if form.validate_on_submit():
+            user = User.query.filter_by(email=form.email.data).first()
+            login_user(user)
+            return redirect(url_for(HOME_PAGE))
+        form.flash_errors()
+        return redirect(url_for('users.login'))
 
 
 class UsersLogout(MethodView):
@@ -66,8 +60,7 @@ class UsersRegister(MethodView):
             user = User(login=form.username.data, email=form.email.data, password=form.password.data)
             db.session.add(user)
             db.session.commit()
-            token = Token.encrypt_confirmation_token(user.id)
-            # todo: make it asynchronous
+            token = Token.encrypt_confirmation_token(user.uuid)
             send_email(user.email, 'Account Confirmation', 'confirmation', username=user.login, token=token)
             flash("The confirmation letter has been sent to you via email.")
             return redirect(url_for('users.login'))
@@ -79,16 +72,16 @@ class UsersConfirm(MethodView):
     def get(self, token):
         if current_user.is_authenticated:
             return redirect(url_for(HOME_PAGE))
-        id = Token.decrypt_confirmation_token(token)
-        if id:
-            user = User.query.filter_by(id=id).first()
-            if user.is_active:
-                return redirect(url_for(HOME_PAGE))
-            user.is_active = True
-            db.session.add(user)
-            db.session.commit()
-            flash('You have confirmed your account. Thanks! You can log in now.')
-            return redirect(url_for('users.login'))
+        uuid = Token.decrypt_confirmation_token(token)
+        if uuid:
+            user = User.query.filter_by(uuid=uuid).first()
+            if user:
+                if user.is_active:
+                    return redirect(url_for(HOME_PAGE))
+                user.is_active = True
+                db.session.commit()
+                flash('You have confirmed your account. Thanks! You can log in now.')
+                return redirect(url_for('users.login'))
         flash('The confirmation link is invalid or has expired.')
         return redirect(url_for('users.resend'))
 

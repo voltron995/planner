@@ -1,0 +1,20 @@
+{% import "bootstrap/wtf.html" as wtf %}
+{% extends "layouts/default.html" %}
+
+{% block title %}
+Mail Error
+{% endblock %}
+
+
+{% block page_content %}
+<div class="page-header">
+    <h1>Internal Server Error</h1>
+</div>
+<div>
+    <p>
+        There was an error while sending the email. Try again later.
+    </p>
+    <img src="{{ url_for('static', filename='assets/sorry.jpg') }}" alt="We are deeply sorry.">
+</div>
+
+{% endblock %}

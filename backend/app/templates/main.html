@@ -1,18 +1,17 @@
 {%- extends "bootstrap/base.html" %}
 {% block head %}
-    {{ super() }}
-    <base href="/">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
+{{ super() }}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
 {% endblock %}
 
 {% block navbar %}
-    {% include 'partials/header.html' %}
+{% include 'partials/header.html' %}
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        {% block page_content %}{% endblock %}
-    </div>
+<div class="container">
+    {% block page_content %}{% endblock %}
+</div>
 {% endblock %}

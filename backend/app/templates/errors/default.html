@@ -1,0 +1,20 @@
+{% import "bootstrap/wtf.html" as wtf %}
+{% extends "layouts/default.html" %}
+
+{% block title %}
+Server Error
+{% endblock %}
+
+
+{% block page_content %}
+<div class="page-header">
+    <h1>Internal Server Error</h1>
+</div>
+<div>
+    <p>
+        The server encountered a temporary error and could not complete your request.
+    </p>
+    <img src="{{ url_for('static', filename='assets/sorry.jpg') }}" alt="We are deeply sorry.">
+</div>
+
+{% endblock %}
