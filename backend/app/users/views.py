@@ -25,7 +25,6 @@ def unauthorized_callback():
 
 class UsersLogin(MethodView):
     def get(self):
-        1 / 0
         if current_user.is_authenticated:
             return redirect(url_for(HOME_PAGE))
         return render_template('users/login.html', form=LoginForm())
