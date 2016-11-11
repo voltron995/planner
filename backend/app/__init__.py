@@ -31,3 +31,7 @@ from app.events import events_blueprint
 from app.users import users_blueprint
 app.register_blueprint(events_blueprint)
 app.register_blueprint(users_blueprint)
+
+# from app.events.api import api_events_blueprint
+# app.register_blueprint(api_events_blueprint)
+

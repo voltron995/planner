@@ -7,6 +7,7 @@ class EventsList(MethodView):
 
     @login_required
     def get(self):
+        # fasfsdfsdf
         return render_template('events/list.html')
 
 

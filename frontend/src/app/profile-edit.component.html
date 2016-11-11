@@ -1,0 +1,50 @@
+<div class="container">
+    <h1>Edit Profile Form</h1>
+    <form (ngSubmit)="onSubmit()" #profileEditForm="ngForm">
+
+        <!-- First Name -->
+        <div class="form-group">
+            <label for="first-name">First Name</label>
+            <input
+                    [(ngModel)]="model.firstName"
+                    #firstName="ngModel"
+                    class="form-control"
+                    id="first-name"
+                    name="first_name"
+                    required
+                    type="text">
+            <div
+                    [hidden]="firstName.valid || firstName.pristine"
+                    class="alert alert-danger">
+                First name is required.
+            </div>
+        </div>
+
+        <!-- Last Name -->
+        <div class="form-group">
+            <label for="last-name">Last Name</label>
+            <input
+                    [(ngModel)]="model.lastName"
+                    #lastName="ngModel"
+                    class="form-control"
+                    id="last-name"
+                    name="last_name"
+                    required
+                    type="text">
+            <div
+                    [hidden]="lastName.valid || lastName.pristine"
+                    class="alert alert-danger">
+                Last name is required.
+            </div>
+        </div>
+
+        <!-- Submit -->
+        <button
+                class="btn btn-default"
+                type="submit"
+                [disabled]="!profileEditForm.form.valid">
+            Submit
+        </button>
+
+    </form>
+</div>

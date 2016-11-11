@@ -4,3 +4,4 @@ events_blueprint = Blueprint('events', __name__, url_prefix='/events', template_
 
 from . import urls
 from . import models
+from . import api
