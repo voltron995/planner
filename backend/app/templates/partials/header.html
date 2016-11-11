@@ -8,32 +8,32 @@
         </div>
         <ul class="nav navbar-nav navbar-right">
             {% if current_user.is_authenticated %}
-                <li class="navbar-brand"><img class="img-responsive" id="user-avatar"
-                                              src="{{ url_for('static', filename='assets/avatar-default.png') }}"/>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                       aria-expanded="false">
-                        {{ current_user.login }}
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <form class="navbar-form" action="" method="">
-                                <button class="btn btn-link" type="submit">Edit Profile</button>
-                            </form>
-                        </li>
-                        <li>
-                            <form class="navbar-form" action="{{ url_for('users.logout') }}" method="post">
-                                <button class="btn btn-link" type="submit">Log Out</button>
-                            </form>
-                        </li>
-                    </ul>
-                </li>
+            <li class="navbar-brand"><img class="img-responsive" id="user-avatar"
+                                          src="{{ url_for('static', filename='assets/avatar-default.png') }}"/>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                   aria-expanded="false">
+                    {{ current_user.login }}
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <form class="navbar-form" action="" method="">
+                            <button class="btn btn-link" type="submit">Edit Profile</button>
+                        </form>
+                    </li>
+                    <li>
+                        <form class="navbar-form" action="{{ url_for('users.logout') }}" method="post">
+                            <button class="btn btn-link" type="submit">Log Out</button>
+                        </form>
+                    </li>
+                </ul>
+            </li>
             {% else %}
-                <li>
-                    <a href="{{ url_for('users.login') }}">Log In</a>
-                </li>
+            <li>
+                <a href="{{ url_for('users.login') }}">Log In</a>
+            </li>
             {% endif %}
         </ul>
     </div>

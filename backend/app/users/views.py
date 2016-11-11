@@ -4,7 +4,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 
 from app import app, db, login_manager
 
-from app.email import send_email
+from app.mail import send_email
 
 from .tokens import Token
 from .forms import LoginForm, RegisterForm, ResendForm
@@ -35,7 +35,7 @@ class UsersLogin(MethodView):
         if form.validate_on_submit():
             user = User.query.filter_by(email=form.email.data).first()
             login_user(user)
-            return redirect(request.args.get('next') or url_for(HOME_PAGE))
+            return redirect(url_for(HOME_PAGE))
         form.flash_errors()
         return redirect(url_for('users.login'))
 

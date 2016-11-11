@@ -2,12 +2,11 @@ from flask import current_app
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 
 
-class Token():
-
+class Token:
     @staticmethod
     def encrypt_token(purpose, key, expiration):
         s = Serializer(current_app.config['SECRET_KEY'], expiration)
-        return s.dumps({purpose:key})
+        return s.dumps({purpose: key})
 
     @staticmethod
     def decrypt_token(purpose, token):

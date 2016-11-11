@@ -1,9 +1,8 @@
-from app.form import Form
-from flask import flash
 from wtforms import SubmitField, PasswordField, StringField
 from wtforms.fields.html5 import EmailField
 from wtforms.validators import Email, DataRequired, Length, Regexp, EqualTo, ValidationError
 
+from app.form import Form
 from .models import User
 
 
@@ -40,8 +39,8 @@ class RegisterForm(Form):
     )
     password = PasswordField(
         'Password',
-         validators=[DataRequired(), EqualTo('confirm', message='Passwords must match.')]
-     )
+        validators=[DataRequired(), EqualTo('confirm', message='Passwords must match.')]
+    )
     confirm = PasswordField('Confirm password', validators=[DataRequired()])
     submit = SubmitField('Register')
 

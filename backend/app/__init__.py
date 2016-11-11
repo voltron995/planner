@@ -6,7 +6,6 @@ from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_session import Session
 
-
 app = Flask(__name__, static_url_path='/dist')
 
 app.config.from_object('app.settings.base')
@@ -29,5 +28,6 @@ from . import msclient
 
 from app.events import events_blueprint
 from app.users import users_blueprint
+
 app.register_blueprint(events_blueprint)
 app.register_blueprint(users_blueprint)
