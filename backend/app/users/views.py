@@ -8,7 +8,7 @@ from app.mail import send_email
 
 from .tokens import Token
 from .forms import LoginForm, RegisterForm, ResendForm
-from .models import User
+from .models import User, Profile
 
 HOME_PAGE = 'events.list'
 
@@ -58,6 +58,7 @@ class UsersRegister(MethodView):
 
         if form.validate_on_submit():
             user = User(login=form.username.data, email=form.email.data, password=form.password.data)
+            user.profile = Profile()
             db.session.add(user)
             db.session.commit()
             token = Token.encrypt_confirmation_token(user.uuid)

@@ -1,4 +1,4 @@
-class EventsSchema():
+class EventsSchema:
 
     post = {
         'type': 'object',

@@ -1,4 +1,14 @@
-from . import api_events
+from . import api_users, api_profiles
 from . import views, validators
 
-api_events.add_url_rule('/<user_id>', view_func=views.UserSingle.as_view('single'), validator=validators.Single)
+api_users.add_url_rule(
+    '/<user_uuid>',
+    view_func=views.UserSingle.as_view('single'),
+    validator=validators.UserSingle
+)
+
+api_profiles.add_url_rule(
+    '/<profile_uuid>',
+    view_func=views.ProfileSingle.as_view('single'),
+    validator=validators.ProfileSingle
+)

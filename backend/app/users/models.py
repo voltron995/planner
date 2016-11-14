@@ -35,6 +35,8 @@ class User(db.Model, BaseModel, UserMixin):
 class Profile(db.Model, BaseModel):
     __tablename__ = 'profiles'
 
+    #todo: uuid
+    uuid = 'fkfsdkjvlnervjnerkvjnevjkn'
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     first_name = db.Column(db.String(255))
     last_name = db.Column(db.String(255))

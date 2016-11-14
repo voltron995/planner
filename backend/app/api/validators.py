@@ -1,7 +1,10 @@
 from flask import request, jsonify
+from werkzeug.exceptions import BadRequest
 
 from app import app
 from app.api.exceptions import ValidationError
+from app.api.schemas import ExceptionSchema, BaseSchema
+from app.errors import DefaultException, Error, InvalidAttribute
 
 
 def validation_callback():
@@ -17,15 +20,16 @@ def validation_callback():
         validate_func()
 
 
-@app.errorhandler(ValidationError)
 @app.errorhandler(Exception)
-def handle_invalid_usage(error):
-    if issubclass(error.__class__, ValidationError):
-        response = jsonify(error.to_dict())
-        response.status_code = error.status_code
-    else:
-        response = jsonify({'status_code': 413, 'message': 'polomalos'})
-        response.status_code = 400
+def handle_invalid_usage(exception):
+    if not issubclass(exception.__class__, DefaultException):
+        error = Error(detail=str(exception))
+        exception = DefaultException()
+        exception.add_error(error)
+
+    data, _ = ExceptionSchema().dump(exception)
+    response = jsonify(data)
+    response.status_code = exception.status
 
     return response
 
@@ -33,10 +37,26 @@ def handle_invalid_usage(error):
 class Validator:
     def __init__(self, req: request) -> None:
         self._request = req
+        self._json = self._parse_json()
 
     def validate(self):
         print('common is good')
         return True
+
+    def _parse_json(self):
+        try:
+            return self._request.get_json()
+        except Exception as e:
+            raise DefaultException(status=400).add_error(Error(status=400))
+
+    def validate_schema(self, schema: BaseSchema):
+        errors = schema().validate(self._json)
+        if errors:
+            exception = DefaultException(status=400)
+            for attr, messages in errors.items():
+                for msg in messages:
+                    exception.add_error(InvalidAttribute(source=attr, detail=msg))
+            raise exception
 
 
 class ValidatorFactory:
