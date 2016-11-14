@@ -1,5 +1,4 @@
 from flask import jsonify
-from flask_login import login_required
 from flask.views import MethodView
 
 
