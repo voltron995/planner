@@ -1,6 +1,4 @@
-from app.users.api import permitters
-from . import api_users, api_profiles
-from . import views, validators
+from app.users.api import api_profiles, api_users, permitters, validators, views
 
 api_users.add_url_rule(
     '/<user_uuid>',

@@ -1,13 +1,19 @@
-class ValidationError(Exception):
-    status_code = 400
+from flask import jsonify
 
-    def __init__(self, message, status_code=None):
-        super().__init__()
-        self.message = message
-        if status_code is not None:
-            self.status_code = status_code
+from app import app
+from app.api.schemas import ExceptionSchema
+from app.errors import Error, DefaultException
 
-    def to_dict(self):
-        return {
-            'message': self.message
-        }
+
+@app.errorhandler(Exception)
+def handle_invalid_usage(exception):
+    if not issubclass(exception.__class__, DefaultException):
+        error = Error(detail=str(exception))
+        exception = DefaultException()
+        exception.add_error(error)
+
+    data, _ = ExceptionSchema().dump(exception)
+    response = jsonify(data)
+    response.status_code = exception.status
+
+    return response

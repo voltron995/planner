@@ -1,6 +1,7 @@
 from marshmallow import Schema, fields, validate, pre_load, post_dump
 
-from app.api.exceptions import ValidationError
+from app.errors import BadRequest
+from app.errors import Error
 
 
 class BaseSchema(Schema):
@@ -21,17 +22,17 @@ class BaseSchema(Schema):
     @pre_load
     def process_input(self, json_input):
         if 'data' not in json_input:
-            raise ValidationError('Required DATA member is missing.')
+            raise BadRequest(Error('Required DATA member is missing.'))
 
         data = json_input['data']
         if self._type != data['type']:
-            raise ValidationError('Invalid schema type.')
+            raise BadRequest(Error('Invalid schema type.'))
 
         if 'uuid' not in data:
-            raise ValidationError('Required UUID member is missing.')
+            raise BadRequest(Error('Required UUID member is missing.'))
 
         if 'attributes' not in data:
-            raise ValidationError('Required UUID member is missing.')
+            raise BadRequest(Error('Required UUID member is missing.'))
 
         output = data['attributes']
 

@@ -1,17 +1,26 @@
 from flask import request
+from flask_login import current_user
+
+from app.errors import Forbidden, AccessDenied
 
 
 def permission_callback():
     try:
-        permitter = PermitterFactory.get_permitter(request.endpoint)(request)
-        permitter_func = getattr(permitter, request.method.lower())
+        permitter = PermitterFactory.get_permitter(request.endpoint)
+        permitter = permitter(request)
     except KeyError as err:
+        # todo: log
         print('Permitter is not registered for ', err)
-    except NameError as err:
-        print('Permitter has no method ', err)
     else:
         permitter.general()
-        permitter_func()
+        try:
+            method = request.method.lower()
+            permitter_func = getattr(permitter, method)
+        except AttributeError as err:
+            # todo: log
+            print('Permitter has no method ', err)
+        else:
+            permitter_func()
 
 
 class Permitter:
@@ -19,15 +28,23 @@ class Permitter:
         self._request = req
 
     def general(self):
-        # todo: CSRF token
-        return True
+        self.permit_authenticated_user()
+        self.permit_active_user()
+
+    def permit_authenticated_user(self):
+        if not current_user.is_authenticated:
+            raise Forbidden(AccessDenied())
+
+    def permit_active_user(self):
+        if not current_user.is_active:
+            raise Forbidden(AccessDenied())
 
 
 class PermitterFactory:
     _permitters = {}
 
     @classmethod
-    def get_permitter(cls, endpoint: str) -> Permitter:
+    def get_permitter(cls, endpoint: str) -> Permitter.__class__:
         return cls._permitters[endpoint]
 
     @classmethod

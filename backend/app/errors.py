@@ -32,7 +32,7 @@ class Error:
 
     def __init__(self, title: str = None, detail: str = None, status: int = None, source: str = None) -> None:
         if title is not None:
-            self.message = title
+            self.title = title
         if detail is not None:
             self.detail = detail
         if status is not None:
@@ -43,15 +43,21 @@ class Error:
 
 class InvalidAttribute(Error):
     title = 'Invalid Attribute'
-    detail = 'Invalid Attribute'
+    detail = 'Invalid Attribute.'
     status = 422
+
+
+class AccessDenied(Error):
+    title = 'Access Denied'
+    detail = 'User is not permitted to perform the requested operation.'
+    status = 403
 
 
 class DefaultException(Exception):
     status = 503
     errors = []
 
-    def __init__(self, errors=(), status=None):
+    def __init__(self, *errors, status=None):
         super().__init__()
         self.errors = list(errors)
         if status is not None:
@@ -59,3 +65,11 @@ class DefaultException(Exception):
 
     def add_error(self, error: Error):
         self.errors.append(error)
+
+
+class Forbidden(DefaultException):
+    status = 403
+
+
+class BadRequest(DefaultException):
+    status = 400

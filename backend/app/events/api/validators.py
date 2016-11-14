@@ -1,22 +1,17 @@
-from app.api.validators import Validator, ValidationError
+from app.api.validators import Validator
 
 
 class List(Validator):
-
     def post(self):
         pass
 
     def get(self):
-        print('???????????????????????????????????????????????????')
         pass
 
 
 class Single(Validator):
-
     def post(self):
         pass
 
     def get(self):
-        print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1')
-        # raise ValidationError('vasya vse ploho')
         pass

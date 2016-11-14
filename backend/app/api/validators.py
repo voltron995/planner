@@ -1,37 +1,26 @@
-from flask import request, jsonify
-from werkzeug.exceptions import BadRequest
+from flask import request
 
-from app import app
-from app.api.exceptions import ValidationError
-from app.api.schemas import ExceptionSchema, BaseSchema
-from app.errors import DefaultException, Error, InvalidAttribute
+from app.api.schemas import BaseSchema
+from app.errors import Error, InvalidAttribute, BadRequest
 
 
 def validation_callback():
     try:
-        validator = ValidatorFactory.get_validator(request.endpoint)(request)
-        validate_func = getattr(validator, request.method.lower())
+        validator = ValidatorFactory.get_validator(request.endpoint)
+        validator = validator(request)
     except KeyError as err:
+        # todo: log
         print('Validator is not registered for ', err)
-    except NameError as err:
-        print('Validator has no method ', err)
     else:
-        validator.validate()
-        validate_func()
-
-
-@app.errorhandler(Exception)
-def handle_invalid_usage(exception):
-    if not issubclass(exception.__class__, DefaultException):
-        error = Error(detail=str(exception))
-        exception = DefaultException()
-        exception.add_error(error)
-
-    data, _ = ExceptionSchema().dump(exception)
-    response = jsonify(data)
-    response.status_code = exception.status
-
-    return response
+        validator.general()
+        try:
+            method = request.method.lower()
+            validate_func = getattr(validator, method)
+        except AttributeError as err:
+            # todo: log
+            print('Validator has no method ', err)
+        else:
+            validate_func()
 
 
 class Validator:
@@ -39,7 +28,7 @@ class Validator:
         self._request = req
         self._json = self._parse_json()
 
-    def validate(self):
+    def general(self):
         print('common is good')
         return True
 
@@ -47,23 +36,27 @@ class Validator:
         try:
             return self._request.get_json()
         except Exception as e:
-            raise DefaultException(status=400).add_error(Error(status=400))
+            raise BadRequest(Error(str(e)))
 
-    def validate_schema(self, schema: BaseSchema):
+    def validate_schema(self, schema: BaseSchema.__class__):
         errors = schema().validate(self._json)
         if errors:
-            exception = DefaultException(status=400)
+            exception = BadRequest()
             for attr, messages in errors.items():
                 for msg in messages:
                     exception.add_error(InvalidAttribute(source=attr, detail=msg))
             raise exception
+
+    def validate_uuid(self, url_param: str = 'uuid'):
+        if self._request.view_args[url_param] != self._json['data']['uuid']:
+            raise BadRequest(InvalidAttribute('uuid in url and uuid in json mismatch.'))
 
 
 class ValidatorFactory:
     _validators = {}
 
     @classmethod
-    def get_validator(cls, endpoint: str) -> Validator:
+    def get_validator(cls, endpoint: str) -> Validator.__class__:
         # todo: exceptions
         return cls._validators[endpoint]
 

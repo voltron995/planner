@@ -1,40 +1,19 @@
-from app.api.validators import Validator, ValidationError
-from app.errors import InvalidAttribute, DefaultException
+from app.api.validators import Validator
+from app.errors import InvalidAttribute, BadRequest
 from app.users.api.schemas import ProfileSchema, UserSchema
-from app.users.models import User
 
 
 class UserSingle(Validator):
     def put(self):
         self.validate_schema(UserSchema)
+        self.validate_uuid('user_uuid')
 
-        if self._request.view_args['user_uuid'] != self._json['data']['uuid']:
-            raise ValidationError('Profile uuid in url and profile uuid in json input mismatch.')
-
-        # current_user = User.query.all()[3]
-        # if current_user.uuid != json_input['data']['uuid']:
-        #     raise ValidationError('This is not your user')
-        #
-        # if json_input['data']['attributes']['password'] != json_input['data']['attributes']['confirm']:
-        #     raise ValidationError('Passwords mismatch.')
-
-    def get(self):
-        print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&7')
-        pass
+        if self._json['data']['attributes']['password'] != self._json['data']['attributes']['confirm']:
+            raise BadRequest(InvalidAttribute('Password and confirmation mismatch.'))
 
 
 class ProfileSingle(Validator):
     def put(self):
-        json_input = self._request.get_json()
-        errors = ProfileSchema().validate(json_input)
-        if errors:
-            raise ValidationError('bad request')
-
-        if self._request.view_args['profile_uuid'] != json_input['data']['uuid']:
-            raise ValidationError('Profile uuid in url and profile uuid in json input mismatch.')
-
-        current_user = User.query.all()[3]
-        if current_user.profile.uuid != json_input['data']['uuid']:
-            raise ValidationError('This is not your profile')
-
-            # todo check image path
+        self.validate_schema(ProfileSchema)
+        self.validate_uuid('profile_uuid')
+        # todo: validate image path
