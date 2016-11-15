@@ -11,6 +11,7 @@ class Api:
     def __init__(self, name: str, url_prefix: str = None) -> None:
         self.name = self._prepare_name(name)
         self.url_prefix = url_prefix
+        self._register_error_handler()
 
     def add_url_rule(
             self,
@@ -52,4 +53,8 @@ class Api:
         callbacks = app.before_request_funcs.setdefault(self.name, [])
         if permission_callback not in callbacks:
             callbacks.append(permission_callback)
+
+    def _register_error_handler(self):
+        app._register_error_handler(self.name, Exception, handle_invalid_usage)
+
 

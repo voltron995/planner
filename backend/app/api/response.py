@@ -22,6 +22,4 @@ def error(status: int, *errors):
 
 
 def response(data: dict, status: int) -> object:
-    resp = jsonify(data)
-    resp.status_code = status
-    return resp
+    return jsonify(data), status

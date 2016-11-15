@@ -3,6 +3,7 @@ from flask.views import MethodView
 
 from app import db
 from app.api import response
+from app.errors import InvalidAttribute, AccessDenied
 from app.users.api.schemas import UserSchema, ProfileSchema
 from app.users.models import User, Profile
 
