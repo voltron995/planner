@@ -1,7 +1,5 @@
-from flask import jsonify
-
 from app import app
-from app.api.schemas import ExceptionSchema
+from app.api import response
 from app.errors import Error, DefaultException
 
 
@@ -12,8 +10,4 @@ def handle_invalid_usage(exception):
         exception = DefaultException()
         exception.add_error(error)
 
-    data, _ = ExceptionSchema().dump(exception)
-    response = jsonify(data)
-    response.status_code = exception.status
-
-    return response
+    return response.error(exception.status, *exception.errors)
