@@ -28,8 +28,9 @@ class Permitter:
         self._request = req
 
     def general(self):
-        self.permit_authenticated_user()
-        self.permit_active_user()
+        pass
+        # self.permit_authenticated_user()
+        # self.permit_active_user()
 
     def permit_authenticated_user(self):
         if not current_user.is_authenticated:

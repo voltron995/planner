@@ -24,7 +24,7 @@ mail = Mail(app)
 
 from . import events
 from . import users
-from . import msclient
+from . import plugins
 
 from app.events import events_blueprint
 from app.users import users_blueprint

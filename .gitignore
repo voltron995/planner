@@ -22,3 +22,5 @@ nginx.conf
 uwsgi.ini
 
 backend/app/settings/local.py
+
+*.rdb
