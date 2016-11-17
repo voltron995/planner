@@ -1,32 +1,19 @@
 from flask import jsonify
+from flask_login import current_user
 from flask.views import MethodView
+
+from app.api import response
+from app.events.api.schemas import EventSchema
+from app.events.models import Event
 
 
 class EventList(MethodView):
     def get(self):
-        events = [
-            {'id': 11, 'name': 'Wake Up!', 'start_time': 1477904400},
-            {'id': 12, 'name': 'Eat', 'start_time': 1477905400},
-            {'id': 13, 'name': 'Drink', 'start_time': 1477906400},
-            {'id': 14, 'name': 'Sleep', 'start_time': 1477907400},
-            {'id': 15, 'name': 'Write Code', 'start_time': 1477908400},
-            {'id': 16, 'name': 'Eat', 'start_time': 1477904400},
-            {'id': 17, 'name': 'Play Football', 'start_time': 1477909400},
-            {'id': 18, 'name': 'Write Code', 'start_time': 1477910400},
-            {'id': 19, 'name': 'Sleep', 'start_time': 1477911400},
-            {'id': 20, 'name': 'Drink', 'start_time': 1477912400}
-        ]
-        return jsonify(data=events)
+        events = current_user.events
+        return response.success(data=events, schema=EventSchema, many=True)
 
 
 class EventSingle(MethodView):
-    def get(self, event_id):
-        event = {
-            'id': event_id,
-            'attributes': {
-                'name': 'Wake Up!',
-                'start_time': 1477904400
-            }
-        }
-
-        return jsonify(data=event)
+    def get(self, event_uuid):
+        event = Event.query.filter_by(uuid=event_uuid).first()
+        return response.success(data=event, schema=EventSchema)

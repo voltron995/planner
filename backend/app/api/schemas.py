@@ -13,10 +13,20 @@ class BaseSchema(Schema):
 
     @post_dump(pass_many=True)
     def wrap(self, data, many):
+        if many:
+            data = list(map(
+                lambda item: self._item_wrap(item),
+                data
+            ))
+        else:
+            data = self._item_wrap(data)
+        return data
+
+    def _item_wrap(self, item):
         return {
-            'uuid': data.pop('uuid', None),
+            'uuid': item.pop('uuid', None),
             'type': self._type,
-            'attributes': data
+            'attributes': item
         }
 
     @pre_load
