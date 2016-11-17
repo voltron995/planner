@@ -1,4 +1,5 @@
 from app.api.validators import Validator
+from app.events.api.schemas import EventSchema
 
 
 class List(Validator):
@@ -10,7 +11,7 @@ class List(Validator):
 
 
 class Single(Validator):
-    def post(self):
+    def put(self):
         pass
 
     def get(self):

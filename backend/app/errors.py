@@ -53,6 +53,12 @@ class AccessDenied(Error):
     status = 403
 
 
+class ElementNotFound(Error):
+    title = 'Not Found'
+    detail = 'The page cannot be found'
+    status = 404
+
+
 class DefaultException(Exception):
     status = 503
     errors = []
@@ -73,3 +79,7 @@ class Forbidden(DefaultException):
 
 class BadRequest(DefaultException):
     status = 400
+
+
+class NotFound(DefaultException):
+    status = 404
