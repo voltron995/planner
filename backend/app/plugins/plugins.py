@@ -13,12 +13,15 @@ class BasePlugin:
         self._init_actions()
 
     def execute_action(self, action_name: str, **data):
-        if action_name not in self.actions:
+        if not self.is_action_exist(action_name):
             raise DefaultException(Error('Action not found.'))
 
         url = self._get_action_url(action_name)
         method = self._get_action_method(action_name)
         return MSClient.send_request(url, data, method)
+
+    def is_action_exist(self, action_name):
+        return action_name in self.actions
 
     def _init_actions(self):
         url = self._get_url('/actions')
@@ -59,7 +62,7 @@ class PluginFactory:
 
     @classmethod
     def get_plugin(cls, name: str) -> BasePlugin:
-        return cls._plugins[name]
+        return cls._plugins.get(name, None)
 
     @classmethod
     def register_plugin(cls, plugin: BasePlugin):
