@@ -12,7 +12,7 @@ import {User} from './user';
 
 export class ProfileEditComponent {
 
-    model = new User(13, 'Vasyl', 'Vasyltsev', 'vasya@exampe.com', 'vasya');
+    model = new User(13, 'vasya@exampe.com', 'vasya');
     submitted = false;
 
     onSubmit() {

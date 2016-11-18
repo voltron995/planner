@@ -1,13 +1,10 @@
 <div *ngIf="event">
-    <h2>{{ event.name }} details!</h2>
+    <h2>{{ event.attributes.name }} details!</h2>
     <div>
         <label>id: </label>{{ event.id }}
     </div>
     <div>
         <label>name: </label>
-        <input [(ngModel)]="event.name" placeholder="name">
-    </div>
-    <div>
-        <label>starts at: </label>{{ event.start_time * 1000 | date: 'medium' }}
+        <input [(ngModel)]="event.attributes.name" placeholder="name">
     </div>
 </div>
