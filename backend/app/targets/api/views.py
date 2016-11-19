@@ -1,26 +1,19 @@
 from flask import jsonify
+from flask_login import current_user
 from flask.views import MethodView
+
+from app.api import response
+from app.targets.api.schemas import TargetSchema
+from app.targets.models import Target
 
 
 class TargetsList(MethodView):
     def get(self):
-        targets = [
-            {'id': 1, 'name': 'Lose weight!', 'status': 'in progress'},
-            {'id': 2, 'name': 'Gain weight', 'status': 'achieved'},
-            {'id': 3, 'name': 'Balanced nutrition', 'status': 'failed'},
-
-        ]
-        return jsonify(data=targets)
+        targets = current_user.events
+        return response.success(data=targets, schema=TargetSchema, many=True)
 
 
-class TargetsSingle(MethodView):
-    def get(self, target_id):
-        target = {
-            'id': target_id,
-            'attributes': {
-                'name': 'Lose weight!',
-                'status': 'in progress'
-            }
-        }
-
-        return jsonify(data=target)
+class TargetSingle(MethodView):
+    def get(self, target_uuid):
+        target_data = Target.query.filter_by(uuid=target_uuid).first()
+        return response.success(data=target_data, schema=TargetSchema)

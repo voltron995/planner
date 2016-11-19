@@ -4,7 +4,7 @@
             <li *ngFor="let event of events"
                 [class.selected]="event === selectedEvent"
                 (click)="onSelect(event)">
-                <span class="badge">{{ event.start_time * 1000 | date: 'hh:mm a' }}</span> {{ event.name }}
+                {{ event.attributes.name }}
             </li>
         </ul>
         <event-detail

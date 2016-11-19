@@ -7,6 +7,7 @@ __pycache__
 env
 venv
 log
+npm*.log
 *.sock
 
 nginx.conf
@@ -22,3 +23,5 @@ nginx.conf
 uwsgi.ini
 
 backend/app/settings/local.py
+
+*.rdb

@@ -7,13 +7,13 @@ from app.targets.models import Target
 
 class List(Permitter):
     def get(self):
-        print('list of events permitter')
+        print('list of targets permitter')
 
 
 class Single(Permitter):
     def get(self):
-        event = Target.query.filter_by(uuid=self._request.view_args['event_uuid']).first()
-        if not event:
-            raise NotFound(ElementNotFound(detail='Event with this uuid cannot be found'))
-        if event.user_id != current_user.id:
+        target = Target.query.filter_by(uuid=self._request.view_args['target_uuid']).first()
+        if not target:
+            raise NotFound(ElementNotFound(detail='Target with this uuid cannot be found'))
+        if target.user_id != current_user.id:
             raise Forbidden(AccessDenied())
