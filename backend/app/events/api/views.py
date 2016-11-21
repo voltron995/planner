@@ -29,4 +29,7 @@ class EventSingle(MethodView):
         return response.success(data=event, schema=EventSchema)
 
     def put(self, event_uuid):
-        pass
+        event = Event.query.filter_by(uuid=event_uuid).first()
+        event.query.update(request.json["data"]["attributes"])
+        db.session.commit()
+        return response.success(data=event, schema=EventSchema)

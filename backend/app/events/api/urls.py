@@ -6,12 +6,12 @@ api_events.add_url_rule(
     '/',
     view_func=views.EventList.as_view('list'),
     validator=validators.EventListValidator,
-    permitter=permitters.List
+    permitter=permitters.EventListPermitter
 )
 api_events.add_url_rule(
     '/<event_uuid>',
     view_func=views.EventSingle.as_view('single'),
     validator=validators.EventSingleValidator,
-    permitter=permitters.Single
+    permitter=permitters.EventSinglePermitter
 )
 
