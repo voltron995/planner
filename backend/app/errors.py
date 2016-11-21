@@ -6,7 +6,7 @@ from flask import render_template
 
 logger = logging.getLogger('root')
 
-
+#todo: api check
 @app.errorhandler(Exception)
 def default_errorhandler(error):
     logger.error(error)

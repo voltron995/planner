@@ -5,13 +5,13 @@ from . import views, validators
 api_events.add_url_rule(
     '/',
     view_func=views.EventList.as_view('list'),
-    validator=validators.List,
+    validator=validators.EventListValidator,
     permitter=permitters.List
 )
 api_events.add_url_rule(
     '/<event_uuid>',
     view_func=views.EventSingle.as_view('single'),
-    validator=validators.Single,
+    validator=validators.EventSingleValidator,
     permitter=permitters.Single
 )
 

@@ -7,7 +7,10 @@ from app.events.models import Event
 
 class List(Permitter):
     def get(self):
-        print('list of events permitter')
+        print('get list of events permitter')
+
+    def post(self):
+        print('post an event permitter')
 
 
 class Single(Permitter):
