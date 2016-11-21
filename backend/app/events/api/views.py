@@ -9,6 +9,15 @@ from app.events.models import Event
 from app.users.models import User
 
 
+def process_single_event(method_view):
+    def wrapper(self, event_uuid):
+        event = Event.query.filter_by(uuid=event_uuid).first()
+        method_view(self, event)
+        return response.success(data=event, schema=EventSchema)
+
+    return wrapper
+
+
 class EventList(MethodView):
     def get(self):
         events = current_user.events
@@ -24,12 +33,16 @@ class EventList(MethodView):
 
 
 class EventSingle(MethodView):
-    def get(self, event_uuid):
-        event = Event.query.filter_by(uuid=event_uuid).first()
-        return response.success(data=event, schema=EventSchema)
+    @process_single_event
+    def get(self, event):
+        pass
 
-    def put(self, event_uuid):
-        event = Event.query.filter_by(uuid=event_uuid).first()
+    @process_single_event
+    def put(self, event):
         event.query.update(request.json["data"]["attributes"])
         db.session.commit()
-        return response.success(data=event, schema=EventSchema)
+
+    @process_single_event
+    def delete(self, event):
+        db.session.delete(event)
+        db.session.commit()

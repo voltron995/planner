@@ -21,9 +21,6 @@ class EventListValidator(Validator):
         self.validate_schema(EventSchema)
         self.validate_date()
 
-    def get(self):
-        pass
-
     @validate_date_decorator
     def validate_date(self, attributes):
         return attributes['start_time'], attributes['end_time']
@@ -33,9 +30,6 @@ class EventSingleValidator(Validator):
     def put(self):
         self.validate_schema(EventSchema, partial=True)
         self.validate_date()
-
-    def get(self):
-        pass
 
     @validate_date_decorator
     def validate_date(self, attributes):

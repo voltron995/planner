@@ -5,14 +5,6 @@ from app.errors import NotFound, Forbidden, AccessDenied, ElementNotFound
 from app.events.models import Event
 
 
-class EventListPermitter(Permitter):
-    def get(self):
-        print('get list of events permitter')
-
-    def post(self):
-        print('post an event permitter')
-
-
 class EventSinglePermitter(Permitter):
     def any_method(self):
         event = Event.query.filter_by(uuid=self._request.view_args['event_uuid']).first()
@@ -25,4 +17,7 @@ class EventSinglePermitter(Permitter):
         self.any_method()
 
     def put(self):
+        self.any_method()
+
+    def delete(self):
         self.any_method()
