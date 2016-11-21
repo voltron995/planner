@@ -11,9 +11,22 @@ class List(Permitter):
 
 
 class Single(Permitter):
-    def get(self):
+
+    def check_if_users_target(self):
         target = Target.query.filter_by(uuid=self._request.view_args['target_uuid']).first()
         if not target:
             raise NotFound(ElementNotFound(detail='Target with this uuid cannot be found'))
         if target.user_id != current_user.id:
             raise Forbidden(AccessDenied())
+
+    def get(self):
+        self.check_if_users_target()
+
+    def put(self):
+        self.check_if_users_target()
+
+    def delete(self):
+        self.check_if_users_target()
+
+    def post(self):
+        print('No permissions needed')

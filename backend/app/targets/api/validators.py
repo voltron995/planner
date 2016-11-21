@@ -1,15 +1,18 @@
 from app.api.validators import Validator
+from app.errors import InvalidAttribute, BadRequest
+from app.targets.api.schemas import TargetSchema
 
 
-class List(Validator):
-    def post(self):
-        pass
+class TargetSingle(Validator):
+    def put(self):
+        self.validate_schema(TargetSchema)
+        self.validate_uuid('target_uuid')
 
-    def get(self):
-        pass
+        if self._json['data']['attributes'] != self._json['data']['attributes']:
+            raise BadRequest(InvalidAttribute('Wrong data'))
 
 
-class Single(Validator):
+class TargetsList(Validator):
     def post(self):
         pass
 

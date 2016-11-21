@@ -24,7 +24,6 @@ mail = Mail(app)
 
 from . import events
 from . import users
-from . import msclient
 from . import targets
 from . import plugins
 
