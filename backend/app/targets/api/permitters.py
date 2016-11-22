@@ -7,7 +7,10 @@ from app.targets.models import Target
 
 class List(Permitter):
     def get(self):
-        print('list of targets permitter')
+        print('Basic permissions')
+
+    def post(self):
+        print('Basic permissions')
 
 
 class Single(Permitter):
@@ -16,7 +19,7 @@ class Single(Permitter):
         target = Target.query.filter_by(uuid=self._request.view_args['target_uuid']).first()
         if not target:
             raise NotFound(ElementNotFound(detail='Target with this uuid cannot be found'))
-        if target.user_id != current_user.id:
+        if target.user_id != current_user.id:  # current_user.id should be here
             raise Forbidden(AccessDenied())
 
     def get(self):
@@ -28,5 +31,3 @@ class Single(Permitter):
     def delete(self):
         self.check_if_users_target()
 
-    def post(self):
-        print('No permissions needed')

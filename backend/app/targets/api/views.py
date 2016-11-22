@@ -3,14 +3,30 @@ from flask.views import MethodView
 from flask import request
 from app.api import response
 from app import db
+import json
 from app.targets.api.schemas import TargetSchema
 from app.targets.models import Target
+from app.users.models import User
+
+OK = json.dumps({"OK": 200})
 
 
 class TargetsList(MethodView):
+
     def get(self):
+        current_user = User.query.first()
         targets = current_user.targets
         return response.success(data=targets, schema=TargetSchema, many=True)
+
+    def post(self):
+        current_user = User.query.first()
+        target_data = request.json.get("data").get("attributes")
+        target_data['user_id'] = current_user.id
+        new_target = Target(**target_data)
+
+        db.session.add(new_target)
+        db.session.commit()
+        return response.success(data=new_target, schema=TargetSchema)
 
 
 class TargetSingle(MethodView):
@@ -19,20 +35,9 @@ class TargetSingle(MethodView):
         return response.success(data=target_data, schema=TargetSchema)
 
     def put(self, target_uuid):
-        new_target_data = request.json
         target_data = Target.query.filter_by(uuid=target_uuid).first()
-        target_data.name = new_target_data.get("name") or target_data.name
-        target_data.is_done = new_target_data.get("is_done") or target_data.is_done
-        db.session.commit()
-        return response.success(data=target_data, schema=TargetSchema)
+        target_data.query.update(request.json["data"]["attributes"])
 
-    def post(self):
-        target = request.json
-        target_data = Target(
-                        name=target.get('name'),
-                        is_done=target.get("is_done")
-                        )
-        db.session.add(target_data)
         db.session.commit()
         return response.success(data=target_data, schema=TargetSchema)
 
@@ -40,4 +45,4 @@ class TargetSingle(MethodView):
         target_to_delete = Target.query.filter_by(uuid=target_uuid).first()
         db.session.delete(target_to_delete)
         db.session.commit()
-
+        return OK
