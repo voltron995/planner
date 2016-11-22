@@ -35,11 +35,12 @@ class BaseSchema(Schema):
             raise BadRequest(Error('Required DATA member is missing.'))
 
         data = json_input['data']
+
+        if 'type' not in data:
+            raise BadRequest(Error('Required type member is missing'))
+
         if self._type != data['type']:
             raise BadRequest(Error('Invalid schema type.'))
-
-        if 'uuid' not in data:
-            raise BadRequest(Error('Required UUID member is missing.'))
 
         if 'attributes' not in data:
             raise BadRequest(Error('Required UUID member is missing.'))

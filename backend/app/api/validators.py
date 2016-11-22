@@ -38,8 +38,14 @@ class Validator:
         except Exception as e:
             raise BadRequest(Error(str(e)))
 
-    def validate_schema(self, schema: BaseSchema.__class__):
-        errors = schema().validate(self._json)
+    def validate_schema(self, schema: BaseSchema.__class__, partial=None):
+        '''
+        :param bool|tuple partial: Whether to ignore missing fields. If its value is an iterable,
+            only missing fields listed in that iterable will be ignored.
+        '''
+        errors = schema().validate(self._json, partial=partial)
+        if self._request.method != 'POST' and 'uuid' not in self._json['data']:
+            raise BadRequest(Error('Required UUID member is missing.'))
         if errors:
             exception = BadRequest()
             for attr, messages in errors.items():
