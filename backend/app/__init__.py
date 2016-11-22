@@ -24,6 +24,7 @@ mail = Mail(app)
 
 from . import events
 from . import users
+from . import targets
 from . import plugins
 
 from app.events import events_blueprint
