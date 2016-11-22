@@ -1,7 +1,6 @@
 from app.api.validators import Validator
 from app.errors import InvalidAttribute, BadRequest
 from app.targets.api.schemas import TargetSchema
-from app.users.models import User
 from flask_login import current_user
 
 
@@ -12,7 +11,6 @@ class TargetSingle(Validator):
         self.validate_uuid('target_uuid')
 
         if "target_id" in self._json['data']['attributes']:
-            #current_user = User.query.first()
             targets = current_user.targets
             target_ids = {target.id for target in targets}
             if self._json['data']['attributes']["target_id"] not in target_ids:
@@ -25,7 +23,6 @@ class TargetsList(Validator):
         self.validate_schema(TargetSchema)
 
         if "target_id" in self._json['data']['attributes']:
-            #current_user = User.query.first()
             targets = current_user.targets
             target_ids = {target.id for target in targets}
             if self._json['data']['attributes']["target_id"] not in target_ids:
