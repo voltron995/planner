@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {FileUploader} from 'ng2-file-upload'
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {ProfileService} from '../services/profile.service';
-import {User} from '../../user';
+import {User} from '../../users/models/user';
 
 @Component({
     selector: 'profile-edit-form',

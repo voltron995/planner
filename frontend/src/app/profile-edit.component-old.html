@@ -1,61 +1,64 @@
 <div class="container">
     <h1>Edit Profile Form</h1>
-    <form (ngSubmit)="onSubmit()" #profileEditForm="ngForm">
+    <div *ngIf="model">
+        <form (ngSubmit)="onSubmit()" #profileEditForm="ngForm">
 
-        <!-- First Name -->
-        <div class="form-group">
-            <label for="first-name">First Name</label>
-            <input
-                    [(ngModel)]="model.profile.firstName"
-                    #firstName="ngModel"
-                    class="form-control"
-                    id="first-name"
-                    name="first_name"
-                    required
-                    type="text">
-            <div
-                    [hidden]="firstName.valid || firstName.pristine"
-                    class="alert alert-danger">
-                First name is required.
+            <div class="form-group">
+
+                <img [src]="model.profile.imageLink" alt="Profile image">
+                <input
+                        [uploader]="uploader"
+                        id="profile-image"
+                        name="profile_image"
+                        ng2FileSelect
+                        type="file">
             </div>
-        </div>
 
-        <!-- Last Name -->
-        <div class="form-group">
-            <label for="last-name">Last Name</label>
-            <input
-                    [(ngModel)]="model.profile.lastName"
-                    #lastName="ngModel"
-                    class="form-control"
-                    id="last-name"
-                    name="last_name"
-                    required
-                    type="text">
-            <div
-                    [hidden]="lastName.valid || lastName.pristine"
-                    class="alert alert-danger">
-                Last name is required.
+
+            <!-- First Name -->
+            <div class="form-group">
+                <label for="first-name">First Name</label>
+                <input
+                        [(ngModel)]="model.profile.firstName"
+                        #firstName="ngModel"
+                        class="form-control"
+                        id="first-name"
+                        name="first_name"
+                        type="text">
             </div>
-        </div>
 
-        <div class="form-group">
-            <img [src]="model.profile.image" alt="Profile image">
-            <label for="profile-image">Single</label>
-            <input
-                    [uploader]="uploader"
-                    id="profile-image"
-                    name="profile_image"
-                    ng2FileSelect
-                    type="file">
-        </div>
+            <!-- Last Name -->
+            <div class="form-group">
+                <label for="last-name">Last Name</label>
+                <input
+                        [(ngModel)]="model.profile.lastName"
+                        #lastName="ngModel"
+                        class="form-control"
+                        id="last-name"
+                        name="last_name"
+                        type="text">
+            </div>
 
-        <!-- Submit -->
-        <button
-                class="btn btn-default"
-                type="submit"
-                [disabled]="!profileEditForm.form.valid">
-            Submit
-        </button>
+            <!-- Birth Date -->
+            <div class="form-group">
+                <label for="birth-date">Birth Date</label>
+                <input
+                        [(ngModel)]="model.profile.birthDate"
+                        #birthDate="ngModel"
+                        class="form-control"
+                        id="birth-date"
+                        name="birth_date"
+                        type="date">
+            </div>
 
-    </form>
+            <!-- Submit -->
+            <button
+                    class="btn btn-default"
+                    type="submit"
+                    [disabled]="!profileEditForm.form.valid">
+                Submit
+            </button>
+
+        </form>
+    </div>
 </div>

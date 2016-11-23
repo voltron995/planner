@@ -1,4 +1,4 @@
-import {Profile} from './profiles/models/profile';
+import {Profile} from '../../profiles/models/profile';
 
 export class User {
 
