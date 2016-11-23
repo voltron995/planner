@@ -1,0 +1,8 @@
+<div class="container">
+        <div *ngIf="user">
+
+            <h1>Profile {{ user.login }}</h1>
+            <profile-edit-form [user]="user"></profile-edit-form>
+
+        </div>
+</div>

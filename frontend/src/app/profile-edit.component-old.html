@@ -6,7 +6,7 @@
         <div class="form-group">
             <label for="first-name">First Name</label>
             <input
-                    [(ngModel)]="model.firstName"
+                    [(ngModel)]="model.profile.firstName"
                     #firstName="ngModel"
                     class="form-control"
                     id="first-name"
@@ -24,7 +24,7 @@
         <div class="form-group">
             <label for="last-name">Last Name</label>
             <input
-                    [(ngModel)]="model.lastName"
+                    [(ngModel)]="model.profile.lastName"
                     #lastName="ngModel"
                     class="form-control"
                     id="last-name"
@@ -36,6 +36,17 @@
                     class="alert alert-danger">
                 Last name is required.
             </div>
+        </div>
+
+        <div class="form-group">
+            <img [src]="model.profile.image" alt="Profile image">
+            <label for="profile-image">Single</label>
+            <input
+                    [uploader]="uploader"
+                    id="profile-image"
+                    name="profile_image"
+                    ng2FileSelect
+                    type="file">
         </div>
 
         <!-- Submit -->
