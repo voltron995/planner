@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
 import {EventsComponent} from './events.component';
-import {ProfileEditComponent} from './profile-edit.component';
+import {ProfileComponent} from './profiles/components/profile.component';
 
 const routes: Routes = [
   {
@@ -11,7 +11,7 @@ const routes: Routes = [
   },
   {
     path: 'profile',
-    component: ProfileEditComponent
+    component: ProfileComponent
   }
 ];
 

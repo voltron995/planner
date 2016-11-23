@@ -33,10 +33,13 @@ class Validator:
         return True
 
     def _parse_json(self):
-        try:
-            return self._request.get_json()
-        except Exception as e:
-            raise BadRequest(Error(str(e)))
+        json = {}
+        if self._request.is_json:
+            try:
+                json = self._request.get_json()
+            except Exception as e:
+                raise BadRequest(Error(title='JSON decode exception.', detail=str(e)))
+        return json
 
     def validate_schema(self, schema: BaseSchema.__class__, partial=None):
         '''
@@ -54,7 +57,7 @@ class Validator:
             raise exception
 
     def validate_uuid(self, url_param: str = 'uuid'):
-        if self._request.view_args[url_param] != self._json['data']['uuid']:
+        if self._request.view_args[url_param] != str(self._json['data']['uuid']):
             raise BadRequest(InvalidAttribute('uuid in url and uuid in json mismatch.'))
 
 

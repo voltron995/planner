@@ -26,6 +26,7 @@ from . import events
 from . import users
 from . import targets
 from . import plugins
+from . import uploads
 
 from app.events import events_blueprint
 from app.users import users_blueprint

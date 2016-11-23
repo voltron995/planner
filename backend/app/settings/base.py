@@ -54,3 +54,9 @@ SQLALCHEMY_DATABASE_URI = '{DRIVER}://{USER}:{PASSWORD}@{HOST}:{PORT}/{NAME}'.fo
 SESSION_TYPE = 'redis'
 
 SESSION_REDIS = Redis(**REDIS_CONFIG)
+
+UPLOAD_FOLDER = basedir + '/uploads'
+
+MAX_CONTENT_LENGTH = 8 * 1024 * 1024
+
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}

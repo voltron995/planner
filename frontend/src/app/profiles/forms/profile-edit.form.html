@@ -1,0 +1,59 @@
+<div class="container">
+
+    <form [formGroup]="form" (submit)="onSubmit()">
+
+        <!-- Image -->
+        <div class="form-group">
+            <img
+                    [src]="imagePreview"
+                    alt="Profile image">
+            <input
+                    [uploader]="uploader"
+                    id="image-upload"
+                    ng2FileSelect
+                    type="file">
+            <input
+                    formControlName="image"
+                    type="hidden">
+        </div>
+
+        <!-- First Name -->
+        <div class="form-group">
+            <label for="first-name">First Name</label>
+            <input
+                    class="form-control"
+                    formControlName="first_name"
+                    id="first-name"
+                    type="text">
+        </div>
+
+        <!-- Last Name -->
+        <div class="form-group">
+            <label for="last-name">Last Name</label>
+            <input
+                    class="form-control"
+                    formControlName="last_name"
+                    id="last-name"
+                    type="text">
+        </div>
+
+        <!-- Birth Date -->
+        <div class="form-group">
+            <label for="birth-date">Birth Date</label>
+            <input
+                    class="form-control"
+                    formControlName="birth_date"
+                    id="birth-date"
+                    type="date">
+        </div>
+
+        <!-- Submit -->
+        <button
+                class="btn btn-default"
+                type="submit">
+            Submit
+        </button>
+
+    </form>
+
+</div>
