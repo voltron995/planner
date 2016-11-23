@@ -1,9 +1,11 @@
+from flask import url_for
 from flask_login import UserMixin
 from sqlalchemy.orm import relationship
 from passlib.handlers.sha2_crypt import sha256_crypt
 
 from app import db
 from app.models import BaseModel
+from app.uploads.uploads_manager import UploadsManager
 
 
 class User(db.Model, BaseModel, UserMixin):
@@ -39,4 +41,13 @@ class Profile(db.Model, BaseModel):
     first_name = db.Column(db.String(255))
     last_name = db.Column(db.String(255))
     birth_date = db.Column(db.Date)
-    image_path = db.Column(db.String(255))
+    image = db.Column(db.String(64))
+
+    @property
+    def image_link(self):
+        # todo: is this ugly or not?
+        if self.image:
+            return UploadsManager.get_link(self.image, 'profile_images')
+        else:
+            return url_for('static', filename='assets/avatar-default.png')
+

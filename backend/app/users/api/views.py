@@ -1,29 +1,38 @@
 from flask import request
+from flask_login import current_user
 from flask.views import MethodView
 
 from app import db
 from app.api import response
+from app.uploads.uploads_manager import UploadsManager
 from app.users.api.schemas import UserSchema, ProfileSchema
-from app.users.models import User, Profile
 
 
-class UserSingle(MethodView):
-    def get(self, user_uuid):
-        user = User.query.filter_by(login='masha').first()
-        return response.success(data=user, schema=UserSchema)
+class UserCurrent(MethodView):
+    def get(self):
+        return response.success(data=current_user, schema=UserSchema)
 
-    def put(self, user_uuid):
-        user = User.query.filter_by(login='masha').first()
-        user.password = request.json['data']['attributes']['password']
+    def put(self):
+        user = current_user
+        attrs = request.json['data']['attributes']
+
+        user.password = attrs.get('password')
+        db.session.add(user)
         db.session.commit()
         return response.success(data=user, schema=UserSchema)
 
 
-class ProfileSingle(MethodView):
-    def put(self, profile_uuid):
-        profile = Profile.query.get(1)
-        profile.query.update(request.json['data']['attributes'])
+class ProfileCurrent(MethodView):
+    def put(self):
+        profile = current_user.profile
+        attrs = request.json['data']['attributes']
+
+        if 'image' in attrs and attrs['image'] != profile.image:
+            image_uuid = attrs['image']
+            image = UploadsManager.get_tmp_file(image_uuid)
+            UploadsManager.move_file(image, 'profile_images')
+
+        profile.query.update(attrs)
         db.session.commit()
 
         return response.success(data=profile, schema=ProfileSchema)
-
