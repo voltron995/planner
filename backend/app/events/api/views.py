@@ -1,48 +1,39 @@
 from flask import request
-from flask_login import current_user
 from flask.views import MethodView
-from app import db
+from flask_login import current_user
 
+from app import db
 from app.api import response
 from app.events.api.schemas import EventSchema
 from app.events.models import Event
-from app.users.models import User
-
-
-def process_single_event_request(method_view):
-    def wrapper(self, event_uuid):
-        event = Event.query.filter_by(uuid=event_uuid).first()
-        method_view(self, event)
-        return response.success(data=event, schema=EventSchema)
-
-    return wrapper
 
 
 class EventList(MethodView):
     def get(self):
-        events = current_user.events
-        return response.success(data=events, schema=EventSchema, many=True)
+        return response.success(data=current_user.events, schema=EventSchema, many=True)
 
     def post(self):
-        event_attributes = request.json['data']['attributes']
-        event_attributes['user'] = current_user
-        event = Event(**event_attributes)
+        data = request.json
+        data['user'] = current_user
+
+        event = Event(**data)
         db.session.add(event)
         db.session.commit()
+
         return response.success(data=event, schema=EventSchema)
 
 
 class EventSingle(MethodView):
-    @process_single_event_request
-    def get(self, event):
-        pass
+    def get(self, id):
+        return response.success(data=Event.query.get(id), schema=EventSchema)
 
-    @process_single_event_request
-    def put(self, event):
-        event.query.update(request.json["data"]["attributes"])
+    def put(self, id):
+        event = Event.query.get(id)
+        event.query.update(request.json)
         db.session.commit()
+        return response.success(data=event, schema=EventSchema)
 
-    @process_single_event_request
     def delete(self, event):
         db.session.delete(event)
         db.session.commit()
+        return response.success()
