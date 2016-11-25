@@ -10,7 +10,7 @@ api_events.add_url_rule(
     permitter=Permitter
 )
 api_events.add_url_rule(
-    '/<event_uuid>',
+    '/<id>',
     view_func=views.EventSingle.as_view('single'),
     validator=validators.EventSingleValidator,
     permitter=permitters.EventSinglePermitter

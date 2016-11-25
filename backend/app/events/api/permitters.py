@@ -7,7 +7,7 @@ from app.events.models import Event
 
 class EventSinglePermitter(Permitter):
     def any_method(self):
-        event = Event.query.filter_by(uuid=self._request.view_args['event_uuid']).first()
+        event = Event.query.get(self._request.view_args.get('id'))
         if not event:
             raise NotFound(ElementNotFound(detail='Event with this uuid cannot be found'))
         if event.user_id != current_user.id:
