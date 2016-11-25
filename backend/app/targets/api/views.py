@@ -9,7 +9,6 @@ from app.targets.models import Target
 
 
 class TargetsList(MethodView):
-
     def get(self):
         return response.success(data=current_user.targets, schema=TargetSchema, many=True)
 
@@ -17,8 +16,7 @@ class TargetsList(MethodView):
         data = request.json
         data['user_id'] = current_user.id
 
-        target = Target(**data)
-        db.session.add(target)
+        target = Target.create(**data)
         db.session.commit()
 
         return response.success(data=target, schema=TargetSchema)
@@ -26,16 +24,15 @@ class TargetsList(MethodView):
 
 class TargetSingle(MethodView):
     def get(self, id):
-        return response.success(data=Target.query.get(id), schema=TargetSchema)
+        return response.success(data=Target.get_or_404(id), schema=TargetSchema)
 
     def put(self, id):
-        target = Target.query.get(id)
-        target.query.update(request.json)
+        target = Target.get_or_404(id)
+        target.update(request.json)
         db.session.commit()
         return response.success(data=target, schema=TargetSchema)
 
     def delete(self, id):
-        target = Target.query.get(id)
-        db.session.delete(target)
+        Target.get_or_404(id).delete()
         db.session.commit()
         return response.success()

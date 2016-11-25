@@ -13,8 +13,7 @@ class UserCurrent(MethodView):
         return response.success(data=current_user, schema=UserSchema)
 
     def put(self):
-        current_user.password = request.json.get('password')
-        db.session.add(current_user)
+        current_user.update({'password': request.json.get('password')})
         db.session.commit()
         return response.success(data=current_user, schema=UserSchema)
 
@@ -29,7 +28,7 @@ class ProfileCurrent(MethodView):
             image = UploadsManager.get_tmp_file(image_uuid)
             UploadsManager.move_file(image, 'profile_images')
 
-        profile.query.update(data)
+        profile.update(data)
         db.session.commit()
 
         return response.success(data=profile, schema=ProfileSchema)

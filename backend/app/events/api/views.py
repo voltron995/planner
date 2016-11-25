@@ -16,8 +16,7 @@ class EventList(MethodView):
         data = request.json
         data['user'] = current_user
 
-        event = Event(**data)
-        db.session.add(event)
+        event = Event.create(**data)
         db.session.commit()
 
         return response.success(data=event, schema=EventSchema)
@@ -25,15 +24,15 @@ class EventList(MethodView):
 
 class EventSingle(MethodView):
     def get(self, id):
-        return response.success(data=Event.query.get(id), schema=EventSchema)
+        return response.success(data=Event.get_or_404(id), schema=EventSchema)
 
     def put(self, id):
-        event = Event.query.get(id)
-        event.query.update(request.json)
+        event = Event.get_or_404(id)
+        event.update(request.json)
         db.session.commit()
         return response.success(data=event, schema=EventSchema)
 
-    def delete(self, event):
-        db.session.delete(event)
+    def delete(self, id):
+        Event.get_or_404(id).delete()
         db.session.commit()
         return response.success()

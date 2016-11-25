@@ -28,6 +28,6 @@ class EventSchema(ModelSchema):
             start_time = data['start_time']
         if 'end_time' in data:
             end_time = data['end_time']
-        #todo: fix 'can't compare offset-naive and offset-aware datetimes'
+        # todo: fix 'can't compare offset-naive and offset-aware datetimes'
         if start_time > end_time:
             raise BadRequest(InvalidAttribute(detail='Start_time cannot be later than end_time.'))
