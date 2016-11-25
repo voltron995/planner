@@ -5,12 +5,13 @@ from app.api import response
 from app.plugins.plugins import PluginFactory
 
 
+# todo: This should be totally rewritten!
+
 class PluginAction(MethodView):
     def post(self):
-        attrs = request.json['data']['attributes']
-
-        plugin = PluginFactory.get_plugin(attrs.get('plugin_name'))
-        ms_response = plugin.execute_action(attrs.get('action_name'), **attrs.get('action_data'))
+        data = request.json
+        plugin = PluginFactory.get_plugin(data.get('plugin_name'))
+        ms_response = plugin.execute_action(data.get('action_name'), **data.get('action_data'))
 
         if ms_response.ok:
             return response.success(data=ms_response.data)

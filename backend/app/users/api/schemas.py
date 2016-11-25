@@ -15,7 +15,7 @@ class ProfileSchema(ModelSchema):
     image = fields.Str(validate=[validate.Length(max=64)], allow_none=True)
     image_link = fields.Str(validate=[validate.Length(max=64)], dump_only=True)
 
-    @validates('target_id')
+    @validates('image')
     def is_tmp_image_exists(self, image_id):
         if image_id and image_id != current_user.profile.image:
             if not UploadsManager.is_tmp_file(image_id):

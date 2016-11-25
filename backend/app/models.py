@@ -1,17 +1,13 @@
-from random import randint
 import uuid as uuid
+
 from sqlalchemy.dialects.postgresql import UUID
 
 from app import db
 from app.errors import NotFound
 
 
-def generate_uuid():
-    return uuid.uuid1(randint(1, 281474976710656)).hex
-
-
 class BaseModel:
-    id = db.Column(UUID, primary_key=True, default=generate_uuid)
+    id = db.Column(UUID, primary_key=True, default=lambda: uuid.uuid4().hex)
     created_at = db.Column(db.DateTime, nullable=False, default=db.func.now())
     updated_at = db.Column(db.DateTime, nullable=False, default=db.func.now(), onupdate=db.func.now())
 
@@ -29,6 +25,10 @@ class BaseModel:
         if model is None:
             raise NotFound()
         return model
+
+    @classmethod
+    def filter_by(cls, **kw):
+        return cls.query.filter_by(**kw)
 
     @classmethod
     def create(cls, **kw):
