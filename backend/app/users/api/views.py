@@ -13,26 +13,23 @@ class UserCurrent(MethodView):
         return response.success(data=current_user, schema=UserSchema)
 
     def put(self):
-        user = current_user
-        attrs = request.json['data']['attributes']
-
-        user.password = attrs.get('password')
-        db.session.add(user)
+        current_user.password = request.json.get('password')
+        db.session.add(current_user)
         db.session.commit()
-        return response.success(data=user, schema=UserSchema)
+        return response.success(data=current_user, schema=UserSchema)
 
 
 class ProfileCurrent(MethodView):
     def put(self):
+        data = request.json
         profile = current_user.profile
-        attrs = request.json['data']['attributes']
 
-        if 'image' in attrs and attrs['image'] != profile.image:
-            image_uuid = attrs['image']
+        if 'image' in data and data['image'] != profile.image:
+            image_uuid = data['image']
             image = UploadsManager.get_tmp_file(image_uuid)
             UploadsManager.move_file(image, 'profile_images')
 
-        profile.query.update(attrs)
+        profile.query.update(data)
         db.session.commit()
 
         return response.success(data=profile, schema=ProfileSchema)

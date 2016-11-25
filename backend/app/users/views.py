@@ -1,14 +1,12 @@
+from flask import flash, redirect, render_template, url_for
 from flask.views import MethodView
-from flask import flash, redirect, render_template, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
 
-from app import app, db, login_manager
-
+from app import db, login_manager
 from app.mail import send_email
-
-from .tokens import Token
 from .forms import LoginForm, RegisterForm, ResendForm
 from .models import User, Profile
+from .tokens import Token
 
 HOME_PAGE = 'events.list'
 
@@ -61,9 +59,9 @@ class UsersRegister(MethodView):
             user.profile = Profile()
             db.session.add(user)
             db.session.commit()
-            token = Token.encrypt_confirmation_token(user.uuid)
+            token = Token.encrypt_confirmation_token(user.id)
             send_email(user.email, 'Account Confirmation', 'confirmation', username=user.login, token=token)
-            flash("The confirmation letter has been sent to you via email.")
+            flash('The confirmation letter has been sent to you via email.')
             return redirect(url_for('users.login'))
         form.flash_errors()
         return redirect(url_for('users.register'))
@@ -73,9 +71,9 @@ class UsersConfirm(MethodView):
     def get(self, token):
         if current_user.is_authenticated:
             return redirect(url_for(HOME_PAGE))
-        uuid = Token.decrypt_confirmation_token(token)
-        if uuid:
-            user = User.query.filter_by(uuid=uuid).first()
+        id = Token.decrypt_confirmation_token(token)
+        if id:
+            user = User.query.get(id)
             if user:
                 if user.is_active:
                     return redirect(url_for(HOME_PAGE))
@@ -90,7 +88,7 @@ class UsersConfirm(MethodView):
 class UsersResend(MethodView):
     def get(self):
         if current_user.is_authenticated:
-            return redirect(HOME_PAGE)
+            return redirect(url_for(HOME_PAGE))
         return render_template('users/resend.html', form=ResendForm())
 
     def post(self):
@@ -99,7 +97,7 @@ class UsersResend(MethodView):
             user = User.query.filter_by(email=form.email.data).first()
             token = Token.encrypt_confirmation_token(user.id)
             send_email(user.email, 'Account Confirmation', 'confirmation', username=user.login, token=token)
-            flash("The new confirmation letter has been sent to you via email.")
+            flash('The new confirmation letter has been sent to you via email.')
             return redirect(url_for('users.login'))
         form.flash_errors()
         return redirect(url_for(HOME_PAGE))
