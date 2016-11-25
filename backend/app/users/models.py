@@ -1,6 +1,7 @@
 from flask import url_for
 from flask_login import UserMixin
 from sqlalchemy.orm import relationship
+from sqlalchemy.dialects.postgresql import UUID
 from passlib.handlers.sha2_crypt import sha256_crypt
 
 from app import db
@@ -10,6 +11,7 @@ from app.uploads.uploads_manager import UploadsManager
 
 class User(db.Model, BaseModel, UserMixin):
     __tablename__ = 'users'
+
     login = db.Column(db.String(120), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(255), nullable=False)
@@ -31,13 +33,13 @@ class User(db.Model, BaseModel, UserMixin):
         return sha256_crypt.verify(password, self.password_hash)
 
     def get_id(self):
-        return self.uuid
+        return self.id
 
 
 class Profile(db.Model, BaseModel):
     __tablename__ = 'profiles'
 
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    user_id = db.Column(UUID, db.ForeignKey('users.id'), nullable=False)
     first_name = db.Column(db.String(255))
     last_name = db.Column(db.String(255))
     birth_date = db.Column(db.Date)
@@ -50,4 +52,3 @@ class Profile(db.Model, BaseModel):
             return UploadsManager.get_link(self.image, 'profile_images')
         else:
             return url_for('static', filename='assets/avatar-default.png')
-

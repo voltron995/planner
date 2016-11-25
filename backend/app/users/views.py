@@ -14,8 +14,8 @@ HOME_PAGE = 'events.list'
 
 
 @login_manager.user_loader
-def load_user(uuid):
-    return User.query.filter_by(uuid=uuid).first()
+def load_user(id):
+    return User.query.get(id)
 
 
 @login_manager.unauthorized_handler
