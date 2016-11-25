@@ -1,6 +1,6 @@
 from flask import request
 
-from app.api.schemas import BaseSchema
+from app.api.schemas import ModelSchema
 from app.errors import Error, InvalidAttribute, BadRequest
 
 
@@ -41,7 +41,7 @@ class Validator:
                 raise BadRequest(Error(title='JSON decode exception.', detail=str(e)))
         return json
 
-    def validate_schema(self, schema: BaseSchema.__class__, partial=None):
+    def validate_schema(self, schema: ModelSchema.__class__, partial=None):
         '''
         :param bool|tuple partial: Whether to ignore missing fields. If its value is an iterable,
             only missing fields listed in that iterable will be ignored.

@@ -3,16 +3,9 @@ from flask import jsonify
 from app.api.schemas import ErrorSchema
 
 
-def success(data, schema=None, meta=None, many=False):
+def success(data=None, schema=None, many=False):
     if schema:
         data, _ = schema().dump(data, many=many)
-
-
-    # todo:
-    data = {'data': data}
-
-    if meta:
-        data['meta'] = meta
 
     return response(data=data, status=200)
 
@@ -24,5 +17,10 @@ def error(status: int, *errors):
     return response(data=data, status=status)
 
 
-def response(data: dict, status: int) -> object:
+def response(data, status):
+    """
+    :type data: dict|list|None
+    :type status: int
+    :rtype: object
+    """
     return jsonify(data), status
