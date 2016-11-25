@@ -13,9 +13,6 @@ class BasePlugin:
         self._init_actions()
 
     def execute_action(self, action_name: str, **data):
-        if not self.is_action_exist(action_name):
-            raise DefaultException(Error('Action not found.'))
-
         url = self._get_action_url(action_name)
         method = self._get_action_method(action_name)
         return MSClient.send_request(url, data, method)

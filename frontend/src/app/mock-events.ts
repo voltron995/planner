@@ -1,4 +1,4 @@
-import {Event} from './event'
+import {Event} from './events/models/event'
 
 export const EVENTS: Event[] = [
     {id: 11, name: 'Wake Up', start_time: 1477904400},

@@ -17,4 +17,4 @@ class UploadView(MethodView):
 class DownloadView(MethodView):
     def get(self, group, file_uuid):
         file = UploadsManager.get_file(file_uuid, group)
-        return send_file(file.path)
+        return send_file(file.path, mimetype='image/jpeg')

@@ -7,6 +7,8 @@ def success(data, schema=None, meta=None, many=False):
     if schema:
         data, _ = schema().dump(data, many=many)
 
+
+    # todo:
     data = {'data': data}
 
     if meta:
@@ -16,6 +18,7 @@ def success(data, schema=None, meta=None, many=False):
 
 
 def error(status: int, *errors):
+    # todo: group
     data, _ = ErrorSchema().dump(errors, many=True)
     data = {'errors': data}
     return response(data=data, status=status)

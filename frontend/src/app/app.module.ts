@@ -10,9 +10,9 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {AppRoutingModule} from './app-routing.module';
 
 import {AppComponent} from './app.component';
-import {EventDetailComponent} from './event-detail.component';
-import {EventsComponent} from './events.component';
-import {EventService} from './event.service';
+import {EventDetailComponent} from './events/components/event-detail.component';
+import {EventsComponent} from './events/components/events.component';
+import {EventService} from './events/services/event.service';
 import {ProfileService} from './profiles/services/profile.service';
 import {ProfileComponent} from './profiles/components/profile.component';
 import {ProfileEditForm} from './profiles/forms/profile-edit.form';

@@ -11,6 +11,7 @@ class BaseSchema(Schema):
     created_at = fields.DateTime(dump_only=True)
     updated_at = fields.DateTime(dump_only=True)
 
+    # todo: remove all this
     @post_dump(pass_many=True)
     def wrap(self, data, many):
         if many:

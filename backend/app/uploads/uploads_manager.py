@@ -14,6 +14,7 @@ class UploadedFile:
         self.group = group
         self.path = path
         self.link = link
+        self.mimetype = 'image/jpeg'
 
 
 # todo: do we need class where all methods are class methods?

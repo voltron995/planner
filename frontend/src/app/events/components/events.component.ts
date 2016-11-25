@@ -1,14 +1,14 @@
 import {Component} from '@angular/core';
 import {OnInit} from '@angular/core';
 
-import {Event} from './event';
-import {EventService} from './event.service';
+import {Event} from '../models/event';
+import {EventService} from '../services/event.service';
 
 @Component({
     selector: 'events',
-    templateUrl: './events.component.html',
+    templateUrl: 'events.component.html',
     styleUrls: [
-        './events.component.css'
+        'events.component.css'
     ],
     providers: [
         EventService
@@ -27,7 +27,9 @@ export class EventsComponent implements OnInit {
     }
 
     getEvents(): void {
-        this.eventService.getEvents().then(events => this.events = events);
+        this.eventService
+            .list()
+            .then(events => this.events = events);
     }
 
     onSelect(event: Event): void {

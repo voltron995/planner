@@ -1,11 +1,11 @@
 import {Component, Input} from '@angular/core';
-import {Event} from './event';
+import {Event} from '../models/event';
 
 @Component({
     selector: 'event-detail',
-    templateUrl: './event-detail.component.html',
+    templateUrl: 'event-detail.component.html',
     styleUrls: [
-        './event-detail.component.css'
+        'event-detail.component.css'
     ],
 
 })
