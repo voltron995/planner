@@ -5,7 +5,7 @@ from app import db
 from app.models import BaseModel
 
 
-class Target(db.Model, BaseModel):
+class Target(BaseModel):
     __tablename__ = 'targets'
 
     name = db.Column(db.String(255), nullable=False)

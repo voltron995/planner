@@ -9,7 +9,7 @@ from app.models import BaseModel
 from app.uploads.uploads_manager import UploadsManager
 
 
-class User(db.Model, BaseModel, UserMixin):
+class User(BaseModel, UserMixin):
     __tablename__ = 'users'
 
     login = db.Column(db.String(120), unique=True, nullable=False)
@@ -36,7 +36,7 @@ class User(db.Model, BaseModel, UserMixin):
         return self.id
 
 
-class Profile(db.Model, BaseModel):
+class Profile(BaseModel):
     __tablename__ = 'profiles'
 
     user_id = db.Column(UUID, db.ForeignKey('users.id'), nullable=False)
