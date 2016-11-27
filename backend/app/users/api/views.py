@@ -4,7 +4,8 @@ from flask_login import current_user
 from app import db
 from app.api import response
 from app.api.views import BaseView
-from app.uploads.uploads_manager import UploadsManager
+from app.uploads import groups
+from app.uploads.manager import UploadsManager
 from app.users.api.schemas import UserSchema, ProfileSchema
 from app.users.models import User, Profile
 
@@ -37,7 +38,7 @@ class ProfileCurrent(BaseView):
         if 'image' in data and data['image'] != profile.image:
             image_uuid = data['image']
             image = UploadsManager.get_tmp_file(image_uuid)
-            UploadsManager.move_file(image, 'profile_images')
+            UploadsManager.move_file(image, groups.PROFILE_IMAGES)
 
         profile.update(data)
         db.session.commit()

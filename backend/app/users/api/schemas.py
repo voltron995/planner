@@ -5,7 +5,7 @@ from marshmallow import validates_schema
 
 from app.api.schemas import ModelSchema
 from app.errors import BadRequest, InvalidAttribute
-from app.uploads.uploads_manager import UploadsManager
+from app.uploads.manager import UploadsManager
 
 
 class ProfileSchema(ModelSchema):
