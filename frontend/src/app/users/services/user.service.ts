@@ -31,11 +31,11 @@ export class UserService {
     }
 
 
-    putCurrent(uuid: string, attrs: any): Promise<User> {
+    putCurrent(data: any): Promise<User> {
         const url = `${this.usersUrl}/current`;
 
         return this.requestSrv
-            .put(url, this.type, uuid, attrs)
+            .put(url, data)
             .then(response => User.newFromResponseData(this.responseSrv.parseData(response)))
             .catch(response => this.responseSrv.parseErrors(response));
     }

@@ -21,11 +21,11 @@ export class Event {
 
     public static newFromResponseData(data: any) {
         return new this(data.uuid, {
-            name: data.attributes.name,
-            description: data.attributes.description,
-            startTime: data.attributes.start_time,
-            endTime: data.attributes.end_time,
-            isDone: data.attributes.is_done,
+            name: data.name,
+            description: data.description,
+            startTime: data.start_time,
+            endTime: data.end_time,
+            isDone: data.is_done,
         });
     }
 

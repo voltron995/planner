@@ -5,7 +5,7 @@ import {Injectable} from '@angular/core';
 export class ResponseService {
 
     parseData(response: Body): any {
-        return response.json().data;
+        return response.json();
     }
 
     parseErrors(response: Body): Array<any> {

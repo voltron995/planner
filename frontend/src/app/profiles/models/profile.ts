@@ -21,11 +21,11 @@ export class Profile {
 
     public static newFromResponseData(data: any) {
         return new this(data.uuid, {
-            firstName: data.attributes.first_name,
-            lastName: data.attributes.last_name,
-            birthDate: data.attributes.birth_date,
-            image: data.attributes.image,
-            imageLink: data.attributes.image_link,
+            firstName: data.first_name,
+            lastName: data.last_name,
+            birthDate: data.birth_date,
+            image: data.image,
+            imageLink: data.image_link,
         });
     }
 

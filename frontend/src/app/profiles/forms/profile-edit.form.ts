@@ -53,8 +53,8 @@ export class ProfileEditForm implements OnInit {
 
         uploader.onCompleteItem = function (item, response: string, status: number) {
             var json = JSON.parse(response);
-            _this.imagePreview = json.data.attributes.link;
-            _this.form.patchValue({'image': json.data.uuid});
+            _this.imagePreview = json.link;
+            _this.form.patchValue({'image': json.uuid});
         };
 
         _this.uploader = uploader;
@@ -65,7 +65,7 @@ export class ProfileEditForm implements OnInit {
         console.log('submit');
         let values = this.form.value;
         this.profileService
-            .putCurrent(this.user.profile.uuid, values)
+            .putCurrent(values)
             .then(profile => console.log(profile, 'success'))
             .catch(errors => console.log(errors, 'errors'));
     }

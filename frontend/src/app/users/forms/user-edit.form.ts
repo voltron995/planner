@@ -42,7 +42,7 @@ export class UserEditForm implements OnInit {
         let values = this.form.value;
         this.form.reset();
         this.userService
-            .putCurrent(this.user.uuid, values)
+            .putCurrent(values)
             .then(profile => console.log(profile, 'success'))
             .catch(errors => console.log(errors, 'errors'));
     }
