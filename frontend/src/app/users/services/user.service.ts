@@ -12,8 +12,6 @@ export class UserService {
 
     private headers = new Headers({'Content-Type': 'application/json'});
 
-    private type = 'users';
-
     private usersUrl = 'api/v1.0/users';
 
     constructor(

@@ -46,7 +46,7 @@ export class ProfileEditForm implements OnInit {
     initUploader() {
         var _this = this;
         var uploader = new FileUploader({
-            url: '/api/v1.0/uploads/',
+            url: '/api/v1.0/uploads/profile-images',
             autoUpload: true,
             removeAfterUpload: true
         });

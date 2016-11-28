@@ -2,26 +2,26 @@ import {Profile} from '../../profiles/models/profile';
 
 export class User {
 
-    public uuid: string;
+    public id: string;
     public email: string;
     public login: string;
     public profile: Profile;
 
     constructor(
-        uuid: string,
+        id: string,
         attributes: any
     ) {
-        this.uuid = uuid;
+        this.id = id;
         this.email = attributes.email;
         this.login = attributes.login;
         this.profile = attributes.profile;
     }
 
     public static newFromResponseData(data: any) {
-        return new this(data.uuid, {
-            email: data.attributes.email,
-            login: data.attributes.login,
-            profile: Profile.newFromResponseData(data.attributes.profile)
+        return new this(data.id, {
+            email: data.email,
+            login: data.login,
+            profile: Profile.newFromResponseData(data.profile)
         });
     }
 
