@@ -1,5 +1,42 @@
-from app.errors import Error, DefaultException
+import re
+
+from app.errors import NotFound
 from app.plugins.msclient import MSClient
+
+# A dictionary with plugins. The key of the dictionary
+# is the name of the plugin and the value is the plugin
+# class.
+_plugins = {}
+
+
+def register_plugin(plugin_class):
+    """
+    :type plugin_class: BasePlugin
+    """
+    _plugins[plugin_class.name] = plugin_class()
+
+
+def get_plugin(name: str):
+    """
+    Returns a plugin instance.
+    :param name: str
+    :return: BasePlugin
+    """
+    try:
+        return _plugins[name]
+    except KeyError:
+        raise NotFound()
+
+
+def register(cls):
+    """
+    Decorator to register plugin.
+    :param cls:
+    :return:
+    """
+    if cls.name:
+        register_plugin(cls)
+    return cls
 
 
 class BasePlugin:
@@ -7,13 +44,27 @@ class BasePlugin:
     port = ''
     host = ''
 
-    actions = {}
+    actions = {
+        'dish_get': {
+            'path': '/dishes/<id>',
+            'method': 'GET',
+        },
+        'dish_list': {
+            'path': '/dishes',
+            'method': 'GET',
+        },
+        'dish_create': {
+            'path': '/dishes',
+            'method': 'POST',
+        }
+    }
 
     def __init__(self):
-        self._init_actions()
+        # self._init_actions()
+        pass
 
-    def execute_action(self, action_name: str, **data):
-        url = self._get_action_url(action_name)
+    def execute_action(self, action_name: str, view_args: dict, **data):
+        url = self._get_action_url(action_name, view_args)
         method = self._get_action_method(action_name)
         return MSClient.send_request(url, data, method)
 
@@ -30,43 +81,16 @@ class BasePlugin:
     def _get_url(self, path: str = '/') -> str:
         return 'http://{host}:{port}{path}'.format(host=self.host, port=self.port, path=path)
 
-    def _get_action_url(self, action_name):
-        return self._get_url(self.actions[action_name]['path'])
+    def _get_action_url(self, action_name: str, view_args: dict):
+        view_args = list(view_args.values())
+        url = self._get_url(self.actions[action_name]['path'])
+        return re.sub(r'<.+?>', lambda match: str(view_args.pop(0)), url)
 
     def _get_action_method(self, action_name):
         return self.actions[action_name]['method']
-
-
-class Recipes(BasePlugin):
-    name = 'recipes'
-    port = '5000'
-    host = '192.168.96.154'
 
 
 class Custom(BasePlugin):
     name = 'custom'
     port = '5050'
     host = '127.0.0.1'
-
-
-plugins = [
-    Custom
-]
-
-
-class PluginFactory:
-    _plugins = {}
-
-    @classmethod
-    def get_plugin(cls, name: str) -> BasePlugin:
-        return cls._plugins.get(name, None)
-
-    @classmethod
-    def register_plugin(cls, plugin: BasePlugin):
-        cls._plugins[plugin.name] = plugin
-
-
-def register_plugins():
-    for plugin_class in plugins:
-        if issubclass(plugin_class, BasePlugin):
-            PluginFactory.register_plugin(plugin_class())

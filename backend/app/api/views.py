@@ -18,7 +18,7 @@ class BaseView(MethodView):
         :param bool|tuple partial: Whether to ignore missing fields. If its value is an iterable,
             only missing fields listed in that iterable will be ignored.
         """
-        errors = self.schema().validate(self.__parse_json(), partial=partial)
+        errors = self.schema().validate(self.__get_request_data(), partial=partial)
         if errors:
             exception = BadRequest()
             for attr, messages in errors.items():
@@ -26,14 +26,14 @@ class BaseView(MethodView):
                     exception.add_error(InvalidAttribute(source=attr, detail=msg))
             raise exception
 
+    def __get_request_data(self) -> dict:
+        return self.__parse_json() if request.is_json else request.args
+
     def __parse_json(self):
-        json = {}
-        if request.is_json:
-            try:
-                json = request.get_json()
-            except Exception as e:
-                raise BadRequest(Error(title='JSON decode exception.', detail=str(e)))
-        return json
+        try:
+            return request.get_json()
+        except Exception as e:
+            raise BadRequest(Error(title='JSON decode exception.', detail=str(e)))
 
 
 class ReadUpdateDeleteView(BaseView):
