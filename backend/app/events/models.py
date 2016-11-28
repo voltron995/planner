@@ -14,7 +14,6 @@ class Event(db.Model, BaseModel):
     user = relationship('User', backref='events')
     target_id = db.Column(UUID, db.ForeignKey('targets.id'))
     target = relationship('Target', backref='event')
-    start_time = db.Column(db.DateTime, nullable=False)
-    end_time = db.Column(db.DateTime, nullable=False)
-    # todo: default false
-    is_done = db.Column(db.Boolean, nullable=False)
+    start_time = db.Column(db.DateTime(timezone=True), nullable=False)
+    end_time = db.Column(db.DateTime(timezone=True), nullable=False)
+    is_done = db.Column(db.Boolean, nullable=False, default=False)
