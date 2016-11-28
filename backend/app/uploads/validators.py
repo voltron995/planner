@@ -1,4 +1,4 @@
-from abc import ABCMeta
+from abc import ABC
 
 from PIL import Image
 from werkzeug.datastructures import FileStorage
@@ -6,10 +6,46 @@ from werkzeug.datastructures import FileStorage
 from app.errors import BadRequest, NotFound, Error
 from app.uploads import groups
 
+# A dictionary with file validators. The key of the dictionary
+# is the name of the uploaded file group and the value is the
+# validator class.
+_validators = {}
 
-class UploadValidator(metaclass=ABCMeta):
-    MIME_TYPES = NotImplementedError  # type: tuple
-    MAX_SIZE = NotImplementedError  # type: int
+
+def register_validator(validator_class):
+    """
+    :type validator_class: UploadValidator
+    """
+    _validators[validator_class.UPLOAD_GROUP] = validator_class
+
+
+def get_validator(group: str):
+    """
+    Returns a validator class for a given upload group.
+    :param group: str
+    :return: UploadValidator
+    """
+    try:
+        return _validators[group]
+    except KeyError:
+        raise NotFound()
+
+
+def register(cls):
+    """
+    Decorator to register validator.
+    :param cls:
+    :return:
+    """
+    if cls.UPLOAD_GROUP:
+        register_validator(cls)
+    return cls
+
+
+class UploadValidator(ABC):
+    MIME_TYPES = None  # type: tuple
+    MAX_SIZE = None  # type: int
+    UPLOAD_GROUP = None  # type: str
 
     def __init__(self, file: FileStorage):
         self.file = file
@@ -51,28 +87,10 @@ class ImageValidator(UploadValidator):
             raise BadRequest(Error('Max width.'))
 
 
+@register
 class ProfileImageValidator(ImageValidator):
+    UPLOAD_GROUP = groups.PROFILE_IMAGES
     MIME_TYPES = 'image/jpg', 'image/jpeg', 'image/png'
     MAX_SIZE = 100 * 1024
     MAX_HEIGHT = 250
     MAX_WIDTH = 250
-
-
-# A dictionary with file validators. The key of the dictionary
-# is the name of the uploaded file group and the value is the
-# validator class.
-_validators = {
-    groups.PROFILE_IMAGES: ProfileImageValidator
-}
-
-
-def get_validator(group: str) -> UploadValidator.__class__:
-    """
-    Returns a validator class for a given upload group.
-    :param group: str
-    :return: UploadValidator
-    """
-    try:
-        return _validators[group]
-    except KeyError:
-        raise NotFound()

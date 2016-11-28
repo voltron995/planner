@@ -2,8 +2,6 @@ import os
 from datetime import datetime, timedelta
 from uuid import uuid4
 
-from flask import url_for
-
 from app import app
 from app.uploads import groups
 from app.uploads.files import UploadedFile

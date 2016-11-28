@@ -10,8 +10,8 @@ from app.models import BaseModel
 
 
 class BaseView(MethodView):
-    model = NotImplementedError  # type: BaseModel
-    schema = NotImplementedError  # type: ModelSchema
+    model = None  # type: BaseModel
+    schema = None  # type: ModelSchema
 
     def _validate_schema(self, partial=None):
         """
