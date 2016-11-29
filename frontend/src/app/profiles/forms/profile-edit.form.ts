@@ -51,7 +51,7 @@ export class ProfileEditForm implements OnInit {
             removeAfterUpload: true
         });
 
-        uploader.onCompleteItem = function (item, response: string, status: number) {
+        uploader.onCompleteItem = function (item: any, response: string, status: number) {
             var json = JSON.parse(response);
             _this.imagePreview = json.link;
             _this.form.patchValue({'image': json.uuid});
