@@ -60,7 +60,7 @@ class BasePlugin:
     }
 
     def __init__(self):
-        # self._init_actions()
+        self._init_actions()
         pass
 
     def execute_action(self, action_name: str, view_args: dict, **data):

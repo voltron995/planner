@@ -9,13 +9,16 @@ class PluginView(BaseView):
     plugin = None  # type: BasePlugin
     actions = None  # type: dict
 
-    def _execute_action(self, method, view_args, **data):
+    def _execute_action(self, method, view_args, data, many=False):
         self._validate_schema()
+
+        if not data:
+            data = {}
 
         ms_response = self.plugin.execute_action(self.actions[method], view_args, **data)
 
         if ms_response.ok:
-            return response.success(data=ms_response.data, schema=self.schema)
+            return response.success(data=ms_response.data, schema=self.schema, many=many)
         else:
             return response.error(ms_response.status_code, *ms_response.errors)
 
@@ -38,20 +41,20 @@ class ListCreateView(PluginView):
     methods = ['GET', 'POST']
 
     def get(self, **view_args):
-        return self._execute_action('GET', view_args, **request.args)
+        return self._execute_action('GET', view_args, request.args, many=True)
 
     def post(self, **view_args):
-        return self._execute_action('POST', view_args, **request.json)
+        return self._execute_action('POST', view_args, request.json)
 
 
 class ReadUpdateDeleteView(PluginView):
     methods = ['GET', 'PUT', 'DELETE']
 
     def get(self, **view_args):
-        return self._execute_action('GET', view_args, **request.args)
+        return self._execute_action('GET', view_args, request.args)
 
     def put(self, **view_args):
-        return self._execute_action('PUT', view_args, **request.json)
+        return self._execute_action('PUT', view_args, request.json)
 
     def delete(self, **view_args):
-        return self._execute_action('DELETE', view_args, **request.json)
+        return self._execute_action('DELETE', view_args, request.get_json(silent=True))
