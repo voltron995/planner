@@ -1,4 +1,6 @@
+import pytz
 from dateutil import parser
+from dateutil.tz import tzutc
 from flask import request
 from marshmallow import fields, validate
 from marshmallow import validates_schema
@@ -27,9 +29,14 @@ class EventSchema(ModelSchema):
             end_time = event.end_time
 
         if 'start_time' in data:
-            start_time = data['start_time']
+            start_time = self.make_datetime_aware(data['start_time'])
+
         if 'end_time' in data:
-            end_time = data['end_time']
-        # todo: fix 'can't compare offset-naive and offset-aware datetimes'
+            end_time = self.make_datetime_aware(data['end_time'])
         if start_time > end_time:
             raise BadRequest(InvalidAttribute(detail='Start_time cannot be later than end_time.'))
+
+    def make_datetime_aware(self, time):
+        if not time.tzinfo:
+            time = time.replace(tzinfo=pytz.UTC)
+        return time

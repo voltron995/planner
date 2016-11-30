@@ -66,7 +66,9 @@ class BasePlugin:
     def execute_action(self, action_name: str, view_args: dict, **data):
         url = self._get_action_url(action_name, view_args)
         method = self._get_action_method(action_name)
-        return MSClient.send_request(url, data, method)
+        if method == 'GET':
+            return MSClient.send_request(url, method=method, params=data)
+        return MSClient.send_request(url, method=method, json=data)
 
     def is_action_exist(self, action_name):
         return action_name in self.actions

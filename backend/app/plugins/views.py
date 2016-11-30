@@ -14,7 +14,10 @@ class PluginView(BaseView):
         self.plugin = get_plugin(self.__class__.plugin)
 
     def _execute_action(self, method, view_args, data, many=False):
-        self._validate_schema()
+        if method in ('GET', 'DELETE'):
+            pass
+        else:
+            self._validate_schema()
 
         if not data:
             data = {}
