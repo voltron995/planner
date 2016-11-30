@@ -11,4 +11,4 @@ class Recipes(BasePlugin):
     host = '127.0.0.1'
 
 
-from . import dishes
+from . import dishes, recipes, suppliers, ingredients, products
