@@ -7,8 +7,8 @@ api_recipes = Api('plugins.recipes', url_prefix='/plugins/recipes')
 @register
 class Recipes(BasePlugin):
     name = 'recipes'
-    port = '6001'
+    port = '6000'
     host = '127.0.0.1'
 
 
-from . import dishes
+from . import dishes, recipes, suppliers, ingredients, products

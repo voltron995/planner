@@ -46,9 +46,9 @@ class MSResponseBuilder:
 
 class MSClient:
     @staticmethod
-    def send_request(url: str, data=None, method='GET') -> MSResponse:
+    def send_request(url: str, method='GET', params=None, json=None) -> MSResponse:
         try:
-            response = request(method, url, json=data, headers={'Content-Type': 'application/json'})
+            response = request(method, url, params=params, json=json, headers={'Content-Type': 'application/json'})
             ms_response = MSResponseBuilder.from_response(response)
         except Exception as exception:
             ms_response = MSResponseBuilder.from_exception(exception)
