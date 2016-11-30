@@ -4,7 +4,7 @@ from app.plugins.views import ListCreateView, ReadUpdateDeleteView
 
 
 class DishesList(ListCreateView):
-    plugin = get_plugin('recipes')
+    plugin = 'recipes'
     schema = DishSchema
     actions = {
         'GET': 'DishList_get',
@@ -13,7 +13,7 @@ class DishesList(ListCreateView):
 
 
 class DishesSingle(ReadUpdateDeleteView):
-    plugin = get_plugin('recipes')
+    plugin = 'recipes'
     schema = DishSchema
     actions = {
         'GET': 'DishEntity_get',

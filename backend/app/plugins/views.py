@@ -2,12 +2,16 @@ from flask import request
 
 from app.api import response
 from app.api.views import BaseView
-from app.plugins.plugins import BasePlugin
+from app.plugins.plugins import BasePlugin, get_plugin
 
 
 class PluginView(BaseView):
-    plugin = None  # type: BasePlugin
+    plugin = None  # type: str
     actions = None  # type: dict
+
+    def __init__(self):
+        super().__init__()
+        self.plugin = get_plugin(self.__class__.plugin)
 
     def _execute_action(self, method, view_args, data, many=False):
         self._validate_schema()
