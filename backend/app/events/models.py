@@ -5,7 +5,7 @@ from app import db
 from app.models import BaseModel
 
 
-class Event(db.Model, BaseModel):
+class Event(BaseModel):
     __tablename__ = 'events'
 
     name = db.Column(db.String, nullable=False)

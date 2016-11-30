@@ -2,40 +2,27 @@ import os
 from datetime import datetime, timedelta
 from uuid import uuid4
 
-from flask import url_for
-from flask_login import current_user
-
 from app import app
+from app.uploads import groups
+from app.uploads.files import UploadedFile
 
 
-class UploadedFile:
-    def __init__(self, uuid: str, group: str, path: str, link: str):
-        self.uuid = uuid
-        self.group = group
-        self.path = path
-        self.link = link
-        self.mimetype = 'image/jpeg'
-
-
-# todo: do we need class where all methods are class methods?
 class UploadsManager:
-    TMP_GROUP = 'tmp'
-
     @classmethod
     def get_tmp_file(cls, uuid: str) -> UploadedFile:
-        return cls.get_file(uuid, group=cls.TMP_GROUP)
+        return cls.get_file(uuid, group=groups.TEMPORARY_FILES)
 
     @classmethod
     def save_tmp_file(cls, file):
-        return cls.save_file(file, group=cls.TMP_GROUP)
+        return cls.save_file(file, group=groups.TEMPORARY_FILES)
 
     @classmethod
     def is_tmp_file(cls, uuid: str):
-        return cls.is_file(uuid, cls.TMP_GROUP)
+        return cls.is_file(uuid, groups.TEMPORARY_FILES)
 
     @classmethod
     def remove_tmp_files(cls):
-        return cls.remove_files(cls.TMP_GROUP)
+        return cls.remove_files(groups.TEMPORARY_FILES)
 
     @classmethod
     def get_file(cls, uuid: str, group: str) -> UploadedFile:
@@ -71,11 +58,8 @@ class UploadsManager:
         return os.path.join(cls.get_folder(group), uuid)
 
     @classmethod
-    def get_folder(cls, group: str, user=current_user) -> str:
-        path = os.path.join(app.config['UPLOAD_FOLDER'], group)
-        if user:
-            path = os.path.join(path, user.uuid)
-        return path
+    def get_folder(cls, group: str) -> str:
+        return os.path.join(app.config.get('UPLOAD_FOLDER'), group)
 
     @classmethod
     def unique_identifier(cls) -> str:
@@ -83,15 +67,13 @@ class UploadsManager:
 
     @classmethod
     def get_link(cls, uuid: str, group: str) -> str:
-        return url_for('api.uploads.download', group=group, file_uuid=uuid)
+        return os.path.join(app.config.get('UPLOADED_FILES_URL'), group, uuid)
 
     @classmethod
     def remove_files(cls, group: str, older_than: timedelta = timedelta(hours=24)):
-        raise NotImplementedError
         files_removed = 0
         current_time = datetime.now()
-        for f in os.listdir(cls.get_folder(group, user=None)):
-            # todo: "f" is user folder, not a file yet. Files are inside user folder.
+        for f in os.listdir(cls.get_folder(group)):
             f_path = cls.get_path(f, group)
             creation_time = datetime.fromtimestamp(os.path.getmtime(f_path))
             if (current_time - creation_time) >= older_than:

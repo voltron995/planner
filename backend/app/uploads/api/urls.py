@@ -1,19 +1,9 @@
 from app.uploads.api import api_uploads
-from app.uploads.api.permitters import UploadPermitter, DownloadPermitter
-from app.uploads.api.validators import UploadValidator, DownloadValidator
-from app.uploads.api.views import UploadView, DownloadView
+from app.uploads.api.permitters import UploadPermitter
+from app.uploads.api.views import UploadView
 
 api_uploads.add_url_rule(
-    '/',
+    '/<group>',
     view_func=UploadView.as_view('upload'),
     permitter=UploadPermitter,
-    validator=UploadValidator
-)
-
-
-api_uploads.add_url_rule(
-    '/<group>/<file_uuid>',
-    view_func=DownloadView.as_view('download'),
-    permitter=DownloadPermitter,
-    validator=DownloadValidator
 )

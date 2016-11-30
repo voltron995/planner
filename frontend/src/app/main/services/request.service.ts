@@ -17,19 +17,16 @@ export class RequestService {
             .toPromise()
     }
 
-    put(url: string, type: string, uuid: string, attributes: any): Promise<any> {
-        let body = {
-            data: {
-                uuid: uuid,
-                type: type,
-                attributes: attributes
-            }
-        };
+    put(url: string, data: any): Promise<any> {
         return this.http
-            .put(url, body, {headers: this.headers})
+            .put(url, data, {headers: this.headers})
             .toPromise();
     }
 
-
+    post(url: string, data: any): Promise<any> {
+        return this.http
+            .post(url, data, {headers: this.headers})
+            .toPromise();
+    }
 
 }

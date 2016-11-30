@@ -6,10 +6,11 @@ from passlib.handlers.sha2_crypt import sha256_crypt
 
 from app import db
 from app.models import BaseModel
-from app.uploads.uploads_manager import UploadsManager
+from app.uploads import groups
+from app.uploads.manager import UploadsManager
 
 
-class User(db.Model, BaseModel, UserMixin):
+class User(BaseModel, UserMixin):
     __tablename__ = 'users'
 
     login = db.Column(db.String(120), unique=True, nullable=False)
@@ -36,7 +37,7 @@ class User(db.Model, BaseModel, UserMixin):
         return self.id
 
 
-class Profile(db.Model, BaseModel):
+class Profile(BaseModel):
     __tablename__ = 'profiles'
 
     user_id = db.Column(UUID, db.ForeignKey('users.id'), nullable=False)
@@ -49,6 +50,6 @@ class Profile(db.Model, BaseModel):
     def image_link(self):
         # todo: is this ugly or not?
         if self.image:
-            return UploadsManager.get_link(self.image, 'profile_images')
+            return UploadsManager.get_link(self.image, groups.PROFILE_IMAGES)
         else:
             return url_for('static', filename='assets/avatar-default.png')

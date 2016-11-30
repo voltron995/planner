@@ -1,15 +1,20 @@
 import {Body} from '@angular/http/src/body';
 import {Injectable} from '@angular/core';
+import {Response} from "@angular/http";
 
 @Injectable()
 export class ResponseService {
 
-    parseData(response: Body): any {
-        return response.json().data;
+    parseData(response: Response): any {
+        return response.json();
     }
 
-    parseErrors(response: Body): Array<any> {
-        return response.json().errors;
+    parseErrors(response: Response): Array<any> {
+        if (response instanceof Response) {
+            return response.json().errors;
+        } else {
+            return [response]
+        }
     }
 
 }

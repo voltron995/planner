@@ -28,11 +28,11 @@ export class ProfileService {
             .catch(response => this.responseSrv.parseErrors(response));
     }
 
-    putCurrent(uuid: string, attrs: any): Promise<Profile> {
+    putCurrent(data: any): Promise<Profile> {
         const url = `${this.profilesUrl}/current`;
 
         return this.requestSrv
-            .put(url, this.type, uuid, attrs)
+            .put(url, data)
             .then(response => Profile.newFromResponseData(this.responseSrv.parseData(response)))
             .catch(response => this.responseSrv.parseErrors(response));
     }

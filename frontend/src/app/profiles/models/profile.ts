@@ -1,6 +1,6 @@
 export class Profile {
 
-    public uuid: string;
+    public id: string;
     public firstName: string;
     public lastName: string;
     public birthDate: string;
@@ -8,10 +8,10 @@ export class Profile {
     public imageLink: string;
 
     constructor(
-        uuid: string,
+        id: string,
         attributes: any
     ) {
-        this.uuid = uuid;
+        this.id = id;
         this.firstName = attributes.firstName;
         this.lastName = attributes.lastName;
         this.birthDate = attributes.birthDate;
@@ -20,12 +20,12 @@ export class Profile {
     }
 
     public static newFromResponseData(data: any) {
-        return new this(data.uuid, {
-            firstName: data.attributes.first_name,
-            lastName: data.attributes.last_name,
-            birthDate: data.attributes.birth_date,
-            image: data.attributes.image,
-            imageLink: data.attributes.image_link,
+        return new this(data.id, {
+            firstName: data.first_name,
+            lastName: data.last_name,
+            birthDate: data.birth_date,
+            image: data.image,
+            imageLink: data.image_link,
         });
     }
 

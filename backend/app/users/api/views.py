@@ -1,34 +1,46 @@
 from flask import request
 from flask_login import current_user
-from flask.views import MethodView
 
 from app import db
 from app.api import response
-from app.uploads.uploads_manager import UploadsManager
+from app.api.views import BaseView
+from app.uploads import groups
+from app.uploads.manager import UploadsManager
 from app.users.api.schemas import UserSchema, ProfileSchema
+from app.users.models import User, Profile
 
 
-class UserCurrent(MethodView):
+class UserCurrent(BaseView):
+    model = User
+    schema = UserSchema
+
     def get(self):
-        return response.success(data=current_user, schema=UserSchema)
+        return response.success(data=current_user, schema=self.schema)
 
     def put(self):
+        self._validate_schema()
+
         current_user.update({'password': request.json.get('password')})
         db.session.commit()
-        return response.success(data=current_user, schema=UserSchema)
+        return response.success(data=current_user, schema=self.schema)
 
 
-class ProfileCurrent(MethodView):
+class ProfileCurrent(BaseView):
+    model = Profile
+    schema = ProfileSchema
+
     def put(self):
+        self._validate_schema()
+
         data = request.json
         profile = current_user.profile
 
         if 'image' in data and data['image'] != profile.image:
             image_uuid = data['image']
             image = UploadsManager.get_tmp_file(image_uuid)
-            UploadsManager.move_file(image, 'profile_images')
+            UploadsManager.move_file(image, groups.PROFILE_IMAGES)
 
         profile.update(data)
         db.session.commit()
 
-        return response.success(data=profile, schema=ProfileSchema)
+        return response.success(data=profile, schema=self.schema)
