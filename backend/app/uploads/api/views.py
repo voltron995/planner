@@ -14,7 +14,7 @@ class UploadView(MethodView):
             raise BadRequest(Error('File attribute is required.'))
 
         file = request.files['file']
-        get_validator(group)(file).validate()
+        # get_validator(group)(file).validate()
 
         data = UploadsManager.save_tmp_file(file)
 

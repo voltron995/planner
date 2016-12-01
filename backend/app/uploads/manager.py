@@ -34,7 +34,7 @@ class UploadsManager:
 
     @classmethod
     def save_file(cls, file, group: str) -> UploadedFile:
-        uuid = cls.unique_identifier()
+        uuid = cls.unique_identifier(file)
         folder = cls.get_folder(group)
         if not os.path.exists(folder):
             os.makedirs(folder)
@@ -46,8 +46,8 @@ class UploadsManager:
         folder = cls.get_folder(to_group)
         if not os.path.exists(folder):
             os.makedirs(folder)
-        os.rename(file.path, cls.get_path(file.uuid, to_group))
-        return cls.get_file(uuid=file.uuid, group=to_group)
+        os.rename(file.path, cls.get_path(file.id, to_group))
+        return cls.get_file(uuid=file.id, group=to_group)
 
     @classmethod
     def is_file(cls, uuid: str, group: str) -> bool:
@@ -62,8 +62,8 @@ class UploadsManager:
         return os.path.join(app.config.get('UPLOAD_FOLDER'), group)
 
     @classmethod
-    def unique_identifier(cls) -> str:
-        return uuid4().hex
+    def unique_identifier(cls, file) -> str:
+        return uuid4().hex + '.' + file.filename.split('.').pop()
 
     @classmethod
     def get_link(cls, uuid: str, group: str) -> str:

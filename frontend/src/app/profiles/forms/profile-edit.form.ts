@@ -54,7 +54,8 @@ export class ProfileEditForm implements OnInit {
         uploader.onCompleteItem = function (item: any, response: string, status: number) {
             var json = JSON.parse(response);
             _this.imagePreview = json.link;
-            _this.form.patchValue({'image': json.uuid});
+            console.log(json, 'json');
+            _this.form.patchValue({'image': json.id});
         };
 
         _this.uploader = uploader;
