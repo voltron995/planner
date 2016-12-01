@@ -7,7 +7,8 @@ from app.plugins.plugins import get_plugin
 
 class ItemSchema(ModelSchema):
     plugin = fields.Str(required=True)
-    attributes = fields.Dict(required=True)
+    plugin_item_id = fields.Int(dump_only=True)
+    attributes = fields.Dict(required=True, load_only=True)
 
     @validates_schema
     def validate_data(self, data):

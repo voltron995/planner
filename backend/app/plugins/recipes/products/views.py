@@ -1,10 +1,11 @@
 from app.plugins.plugins import get_plugin
+from app.plugins.recipes.plugin import Recipes
 from app.plugins.recipes.products.schemas import ProductSchema
 from app.plugins.views import ListCreateView, ReadUpdateDeleteView
 
 
 class ProductsList(ListCreateView):
-    plugin = get_plugin('recipes')
+    plugin = Recipes
     schema = ProductSchema
     actions = {
         'GET': 'ProductList_get',
@@ -12,7 +13,7 @@ class ProductsList(ListCreateView):
 
 
 class ProductsSingle(ReadUpdateDeleteView):
-    plugin = get_plugin('recipes')
+    plugin = Recipes
     schema = ProductSchema
     actions = {
         'GET': 'ProductEntity_get',

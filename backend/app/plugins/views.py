@@ -11,7 +11,7 @@ class PluginView(BaseView):
 
     def __init__(self):
         super().__init__()
-        self.plugin = get_plugin(self.__class__.plugin)
+        self.plugin = get_plugin(self.__class__.plugin.name)
 
     def _execute_action(self, method, view_args, data, many=False):
         if method in ('GET', 'DELETE'):

@@ -1,6 +1,4 @@
 import pytz
-from dateutil import parser
-from dateutil.tz import tzutc
 from flask import request
 from marshmallow import fields, validate
 from marshmallow import validates_schema
@@ -8,7 +6,6 @@ from marshmallow import validates_schema
 from app.api.schemas import ModelSchema
 from app.errors import BadRequest, InvalidAttribute
 from app.events.models import Event
-from app.items.api.schemas import ItemSchema
 
 
 class EventSchema(ModelSchema):
@@ -19,7 +16,6 @@ class EventSchema(ModelSchema):
     is_done = fields.Boolean()
     user_id = fields.Str(required=True, dump_only=True)
     target_id = fields.Str()
-    items = fields.Nested(ItemSchema, many=True)
 
     @validates_schema
     def validate_time(self, data):

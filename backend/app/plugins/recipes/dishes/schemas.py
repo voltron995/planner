@@ -1,6 +1,5 @@
 from marshmallow import Schema, fields
 
-from app.api.schemas import ModelSchema
 from ..ingredients.schemas import IngredientListSchema
 
 
@@ -15,4 +14,5 @@ class DishSchema(Schema):
         required=True
     )
     price = fields.String(dump_only=True)
+    event_id = fields.Str(required=True)
 

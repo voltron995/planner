@@ -63,7 +63,7 @@ class BasePlugin:
         self._init_actions()
         pass
 
-    def execute_action(self, action_name: str, view_args: dict, **data):
+    def execute_action(self, action_name: str, view_args: dict = None, **data):
         url = self._get_action_url(action_name, view_args)
         method = self._get_action_method(action_name)
         if method == 'GET':
@@ -83,8 +83,8 @@ class BasePlugin:
     def _get_url(self, path: str = '/') -> str:
         return 'http://{host}:{port}{path}'.format(host=self.host, port=self.port, path=path)
 
-    def _get_action_url(self, action_name: str, view_args: dict):
-        view_args = list(view_args.values())
+    def _get_action_url(self, action_name: str, view_args: dict = None):
+        view_args = [] if not view_args else list(view_args.values())
         url = self._get_url(self.actions[action_name]['path'])
         return re.sub(r'<.+?>', lambda match: str(view_args.pop(0)), url)
 
