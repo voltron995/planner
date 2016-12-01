@@ -16,6 +16,8 @@ class DishesList(ListCreateView):
         'POST': 'DishList_create',
     }
 
+    methods = ['POST']
+
     def post(self, **view_args):
         self._validate_schema()
 

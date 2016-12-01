@@ -1,6 +1,8 @@
 from marshmallow import Schema, fields
+from marshmallow import validates
 
-from ..ingredients.schemas import IngredientListSchema
+from app.events.models import Event
+from app.plugins.recipes.ingredients.schemas import IngredientListSchema
 
 
 class DishSchema(Schema):
@@ -16,3 +18,6 @@ class DishSchema(Schema):
     price = fields.String(dump_only=True)
     event_id = fields.Str(required=True)
 
+    @validates('event_id')
+    def validate_event(self, data):
+        Event.get_or_404(data)
