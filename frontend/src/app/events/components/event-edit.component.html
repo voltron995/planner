@@ -1,0 +1,6 @@
+<div class="container">
+    <div *ngIf="event">
+        <h1>Edit {{ event.name }}</h1>
+        <event-edit-form [event]="event"></event-edit-form>
+    </div>
+</div>

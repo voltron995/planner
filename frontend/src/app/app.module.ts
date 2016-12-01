@@ -10,7 +10,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {AppRoutingModule} from './app-routing.module';
 
 import {AppComponent} from './app.component';
-import {EventDetailComponent} from './events/components/event-detail.component';
+import {EventComponent} from './events/components/event.component';
 import {EventsComponent} from './events/components/events.component';
 import {EventService} from './events/services/event.service';
 import {ProfileService} from './profiles/services/profile.service';
@@ -20,6 +20,8 @@ import {RequestService} from './main/services/request.service';
 import {ResponseService} from './main/services/response.service';
 import {UserEditForm} from "./users/forms/user-edit.form";
 import {UserService} from './users/services/user.service';
+import {EventEditComponent} from "./events/components/event-edit.component";
+import {EventEditForm} from "./events/forms/event-edit.form";
 
 
 @NgModule({
@@ -34,8 +36,10 @@ import {UserService} from './users/services/user.service';
     ],
     declarations: [
         AppComponent,
-        EventDetailComponent,
+        EventComponent,
+        EventEditComponent,
         EventsComponent,
+        EventEditForm,
         FileSelectDirective,
         ProfileComponent,
         ProfileEditForm,

@@ -1,0 +1,21 @@
+<div *ngIf="event">
+    <h1>{{ event.name }}</h1>
+    <div class="description">
+        {{ event.description }}
+    </div>
+    <div class="date">
+        <div class="start-time">
+            <span>Start Time:</span>
+            <span class="value">{{ event.startTime | date: 'dd/MM/yyyy' }}</span>
+        </div>
+        <div class="end-time">
+            <span>End Time:</span>
+            <span class="value">{{ event.endTime | date: 'dd/MM/yyyy' }}</span>
+        </div>
+    </div>
+
+    <a [routerLink]="['/events', event.id, 'edit']">
+        Edit
+    </a>
+
+</div>

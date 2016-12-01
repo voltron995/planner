@@ -25,4 +25,22 @@ export class EventService {
             .catch(response => this.responseSrv.parseErrors(response));
     }
 
+    get(id: string): Promise<Event> {
+        const url = `${this.eventsUrl}/${id}`;
+
+        return this.requestSrv
+            .get(url)
+            .then(response => Event.newFromResponseData(this.responseSrv.parseData(response)))
+            .catch(response => this.responseSrv.parseErrors(response));
+    }
+
+    put(id: string, data: any): Promise<Event> {
+        const url = `${this.eventsUrl}/${id}`;
+
+        return this.requestSrv
+            .put(url, data)
+            .then(response => Event.newFromResponseData(this.responseSrv.parseData(response)))
+            .catch(response => this.responseSrv.parseErrors(response));
+    }
+
 }
