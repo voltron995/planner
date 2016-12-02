@@ -6,6 +6,7 @@ export class Event {
     public startTime: string;
     public endTime: string;
     public isDone: boolean;
+    public items: Array<any>;
 
     constructor(
         id: string,
@@ -17,6 +18,7 @@ export class Event {
         this.startTime = attributes.startTime;
         this.endTime = attributes.endTime;
         this.isDone = attributes.isDone;
+        this.items = attributes.items;
     }
 
     public static newFromResponseData(data: any) {
@@ -26,6 +28,7 @@ export class Event {
             startTime: data.start_time,
             endTime: data.end_time,
             isDone: data.is_done,
+            items: data.items,
         });
     }
 

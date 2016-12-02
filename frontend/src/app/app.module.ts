@@ -22,6 +22,8 @@ import {UserEditForm} from "./users/forms/user-edit.form";
 import {UserService} from './users/services/user.service';
 import {EventEditComponent} from "./events/components/event-edit.component";
 import {EventEditForm} from "./events/forms/event-edit.form";
+import {EventCreateComponent} from "./events/components/event-create.component";
+import {EventCreateForm} from "./events/forms/event-create.form";
 
 
 @NgModule({
@@ -37,8 +39,10 @@ import {EventEditForm} from "./events/forms/event-edit.form";
     declarations: [
         AppComponent,
         EventComponent,
+        EventCreateComponent,
         EventEditComponent,
         EventsComponent,
+        EventCreateForm,
         EventEditForm,
         FileSelectDirective,
         ProfileComponent,

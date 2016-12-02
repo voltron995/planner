@@ -43,4 +43,13 @@ export class EventService {
             .catch(response => this.responseSrv.parseErrors(response));
     }
 
+    post(data: any): Promise<Event> {
+        const url = `${this.eventsUrl}/`;
+
+        return this.requestSrv
+            .post(url, data)
+            .then(response => Event.newFromResponseData(this.responseSrv.parseData(response)))
+            .catch(response => this.responseSrv.parseErrors(response));
+    }
+
 }

@@ -14,6 +14,13 @@
         </div>
     </div>
 
+    <div class="items">
+        <ul *ngFor="let item of event.items" class="item row">
+            <li class="item-id">Item Id: {{ item.id }}</li>
+            <li class="item-plugin">Plugin: {{ item.plugin }}</li>
+        </ul>
+    </div>
+
     <a [routerLink]="['/events', event.id, 'edit']">
         Edit
     </a>

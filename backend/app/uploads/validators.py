@@ -60,7 +60,10 @@ class UploadValidator(ABC):
             raise BadRequest()
 
     def _validate_max_size(self):
-        if len(self.file.read()) > self.MAX_SIZE:
+        # todo: better way to get file length.
+        file_size = len(self.file.read())
+        self.file.seek(0)
+        if file_size > self.MAX_SIZE:
             raise BadRequest()
 
     def _validate_mime_type(self):
@@ -77,6 +80,7 @@ class ImageValidator(UploadValidator):
     def __init__(self, file: FileStorage):
         super().__init__(file)
         self.image = Image.open(file)
+        file.seek(0)
 
     def validate(self):
         super().validate()
