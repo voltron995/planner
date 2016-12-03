@@ -32,20 +32,6 @@ class PluginView(BaseView):
             return response.error(ms_response.status_code, *ms_response.errors)
 
 
-def response_decorator(method):
-    def wrap(self, **view_args):
-
-        self._validate_schema()
-        ms_response = method(self, **view_args)
-
-        if ms_response.ok:
-            return response.success(data=ms_response.data, schema=self.schema)
-        else:
-            return response.error(ms_response.status_code, *ms_response.errors)
-
-    return wrap
-
-
 class ListCreateView(PluginView):
     methods = ['GET', 'POST']
 
@@ -70,7 +56,7 @@ class ReadUpdateDeleteView(PluginView):
 
 
 class ListCreateItemView(ListCreateView):
-    methods = ['POST']
+    methods = ['POST', 'GET']
 
     def post(self, **view_args):
         self._validate_schema()

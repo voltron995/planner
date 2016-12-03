@@ -1,4 +1,3 @@
-from app.plugins.plugins import get_plugin
 from app.plugins.recipes.plugin import Recipes
 from app.plugins.recipes.recipes.schemas import RecipeSchema
 from app.plugins.views import ListCreateView, ReadUpdateDeleteView

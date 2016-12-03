@@ -44,24 +44,10 @@ class BasePlugin:
     port = ''
     host = ''
 
-    actions = {
-        'dish_get': {
-            'path': '/dishes/<id>',
-            'method': 'GET',
-        },
-        'dish_list': {
-            'path': '/dishes',
-            'method': 'GET',
-        },
-        'dish_create': {
-            'path': '/dishes',
-            'method': 'POST',
-        }
-    }
+    actions = {}
 
     def __init__(self):
         self._init_actions()
-        pass
 
     def execute_action(self, action_name: str, view_args: dict = None, **data):
         url = self._get_action_url(action_name, view_args)
@@ -90,9 +76,3 @@ class BasePlugin:
 
     def _get_action_method(self, action_name):
         return self.actions[action_name]['method']
-
-
-class Custom(BasePlugin):
-    name = 'custom'
-    port = '5050'
-    host = '127.0.0.1'
