@@ -1,7 +1,8 @@
+from app.error_handlers.errors import AccessDenied
 from flask_login import current_user
 
 from app.api import Permitter
-from app.errors import Forbidden, AccessDenied
+from app.error_handlers.exceptions import APIForbidden
 from app.targets.models import Target
 
 
@@ -17,7 +18,7 @@ class Single(Permitter):
     def check_if_users_target(self):
         target = Target.get_or_404(self._request.view_args.get('id'))
         if target.user_id != current_user.id:
-            raise Forbidden(AccessDenied())
+            raise APIForbidden(AccessDenied())
 
     def get(self):
         self.check_if_users_target()

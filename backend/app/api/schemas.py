@@ -1,6 +1,7 @@
+from app.error_handlers.errors import InvalidAttribute
 from marshmallow import Schema, fields
 
-from app.errors import BadRequest, InvalidAttribute
+from app.error_handlers.exceptions import APIBadRequest
 
 
 class ModelSchema(Schema):
@@ -15,7 +16,7 @@ class ModelSchema(Schema):
         """
         errors = super().validate(data, many=many, partial=partial)
         if errors:
-            exception = BadRequest()
+            exception = APIBadRequest()
             for attr, messages in errors.items():
                 for msg in messages:
                     exception.add_error(InvalidAttribute(source=attr, detail=msg))

@@ -1,6 +1,6 @@
 from app import app
-from app.api.exceptions import handle_invalid_usage
 from app.api.permitters import Permitter, PermitterFactory, permission_callback
+from app.error_handlers.error_handlers import api_error_handler
 
 
 class Api:
@@ -45,4 +45,4 @@ class Api:
             callbacks.append(permission_callback)
 
     def _register_error_handler(self):
-        app._register_error_handler(self.name, Exception, handle_invalid_usage)
+        app._register_error_handler(self.name, Exception, api_error_handler)

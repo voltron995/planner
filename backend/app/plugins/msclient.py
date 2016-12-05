@@ -2,7 +2,7 @@ from requests import Response
 from requests import request
 
 from app.api.schemas import ErrorSchema
-from app.errors import Error
+from app.error_handlers.errors import Error
 
 
 class MSResponse:

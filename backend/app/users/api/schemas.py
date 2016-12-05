@@ -1,10 +1,11 @@
+from app.error_handlers.errors import InvalidAttribute
 from flask_login import current_user
 from marshmallow import fields, validate
 from marshmallow import validates
 from marshmallow import validates_schema
 
 from app.api.schemas import ModelSchema
-from app.errors import BadRequest, InvalidAttribute
+from app.error_handlers.exceptions import APIBadRequest
 from app.uploads.manager import UploadsManager
 
 
@@ -19,12 +20,12 @@ class ProfileSchema(ModelSchema):
     def is_tmp_image_exists(self, image_id):
         if image_id and image_id != current_user.profile.image:
             if not UploadsManager.is_tmp_file(image_id):
-                raise BadRequest(InvalidAttribute('Uploaded image not found'))
+                raise APIBadRequest(InvalidAttribute('Uploaded image not found'))
 
     @validates_schema
     def validate_password_confirmation(self, data):
         if data.get('password') != data.get('confirm'):
-            raise BadRequest(InvalidAttribute('Password confirmation mismatch.'))
+            raise APIBadRequest(InvalidAttribute('Password confirmation mismatch.'))
 
 
 class UserSchema(ModelSchema):

@@ -62,3 +62,5 @@ UPLOADED_FILES_URL = '/uploads'
 MAX_CONTENT_LENGTH = 8 * 1024 * 1024
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+TRAP_HTTP_EXCEPTIONS = True

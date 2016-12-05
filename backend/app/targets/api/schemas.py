@@ -1,9 +1,10 @@
+from app.error_handlers.errors import InvalidAttribute
 from flask_login import current_user
 from marshmallow import fields, validate
 from marshmallow import validates
 
 from app.api.schemas import ModelSchema
-from app.errors import BadRequest, InvalidAttribute
+from app.error_handlers.exceptions import APIBadRequest
 
 
 class TargetSchema(ModelSchema):
@@ -17,4 +18,4 @@ class TargetSchema(ModelSchema):
         # todo: rewrite
         target_ids = {target.id for target in current_user.targets}
         if target_id not in target_ids:
-            raise BadRequest(InvalidAttribute('Wrong data'))
+            raise APIBadRequest(InvalidAttribute('Wrong data'))
