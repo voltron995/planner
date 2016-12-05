@@ -1,22 +1,20 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {EventService} from '../services/event.service';
-import {Event} from '../../events/models/event';
+import {EventService} from '../../services/event.service';
 
 @Component({
-    selector: 'event-edit-form',
-    templateUrl: './event-edit.form.html',
+    selector: 'event-create-form',
+    templateUrl: 'event-create.form.html',
     styleUrls: [
-        './event-edit.form.css'
+        'event-create.form.css'
     ],
     providers: [
         FormBuilder
     ]
 })
 
-export class EventEditForm implements OnInit {
+export class EventCreateForm implements OnInit {
 
-    @Input() event: Event;
     form: FormGroup;
 
     constructor(
@@ -32,17 +30,17 @@ export class EventEditForm implements OnInit {
 
     initForm() {
         this.form = this.fb.group({
-          name: [this.event.name],
-          description: [this.event.description],
-          start_time: [this.event.startTime],
-          end_time: [this.event.endTime],
+          name: [''],
+          description: [''],
+          start_time: [''],
+          end_time: [''],
         });
     }
 
     onSubmit() {
         let values = this.form.value;
         this.eventService
-            .put(this.event.id, values)
+            .post(values)
             .then(profile => console.log(profile, 'success'))
             .catch(errors => console.log(errors, 'errors'));
     }

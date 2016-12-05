@@ -1,13 +1,13 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {User} from '../../users/models/user';
-import {UserService} from '../services/user.service';
+import {User} from '../../models/user';
+import {UserService} from '../../services/user.service';
 
 @Component({
     selector: 'user-edit-form',
-    templateUrl: './user-edit.form.html',
+    templateUrl: 'user-edit.form.html',
     styleUrls: [
-        './user-edit.form.css'
+        'user-edit.form.css'
     ],
     providers: [
         FormBuilder

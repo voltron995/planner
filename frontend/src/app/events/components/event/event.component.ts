@@ -1,7 +1,7 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {Event} from '../models/event'
-import {EventService} from "../services/event.service";
+import {Event} from '../../models/event'
+import {EventService} from "../../services/event.service";
 
 
 @Component({

@@ -7,23 +7,23 @@ import {ModalModule} from 'angular2-modal';
 import {BootstrapModalModule} from 'angular2-modal/plugins/bootstrap';
 import {ReactiveFormsModule} from '@angular/forms';
 
-import {AppRoutingModule} from './app-routing.module';
+import {AppRoutingModule} from './main/modules/app-routing.module';
 
-import {AppComponent} from './app.component';
-import {EventComponent} from './events/components/event.component';
-import {EventsComponent} from './events/components/events.component';
+import {AppComponent} from './main/components/app/app.component';
+import {EventComponent} from './events/components/event/event.component';
+import {EventsComponent} from './events/components/events/events.component';
 import {EventService} from './events/services/event.service';
 import {ProfileService} from './profiles/services/profile.service';
-import {ProfileComponent} from './profiles/components/profile.component';
-import {ProfileEditForm} from './profiles/forms/profile-edit.form';
+import {ProfileComponent} from './profiles/components/profile/profile.component';
+import {ProfileEditForm} from './profiles/forms/profile-edit/profile-edit.form';
 import {RequestService} from './main/services/request.service';
 import {ResponseService} from './main/services/response.service';
-import {UserEditForm} from "./users/forms/user-edit.form";
+import {UserEditForm} from "./users/forms/user-edit/user-edit.form";
 import {UserService} from './users/services/user.service';
-import {EventEditComponent} from "./events/components/event-edit.component";
-import {EventEditForm} from "./events/forms/event-edit.form";
-import {EventCreateComponent} from "./events/components/event-create.component";
-import {EventCreateForm} from "./events/forms/event-create.form";
+import {EventEditComponent} from "./events/components/event-edit/event-edit.component";
+import {EventEditForm} from "./events/forms/event-edit/event-edit.form";
+import {EventCreateComponent} from "./events/components/event-create/event-create.component";
+import {EventCreateForm} from "./events/forms/event-create/event-create.form";
 
 
 @NgModule({

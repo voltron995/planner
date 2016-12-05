@@ -1,14 +1,14 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FileUploader} from 'ng2-file-upload'
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {ProfileService} from '../services/profile.service';
-import {User} from '../../users/models/user';
+import {ProfileService} from '../../services/profile.service';
+import {User} from '../../../users/models/user';
 
 @Component({
     selector: 'profile-edit-form',
-    templateUrl: './profile-edit.form.html',
+    templateUrl: 'profile-edit.form.html',
     styleUrls: [
-        './profile-edit.form.css'
+        'profile-edit.form.css'
     ],
     providers: [
         FormBuilder
