@@ -3,30 +3,31 @@ import {ActivatedRoute} from "@angular/router";
 
 
 @Component({
-    selector: 'item-create',
-    templateUrl: 'item-create.component.html',
-    styleUrls: [
-        'item-create.component.css'
-    ],
-
+    selector: 'plugin',
+    templateUrl: 'plugin.component.html',
 })
 
-export class ItemCreateComponent {
+export class PluginComponent {
     constructor(
         private route: ActivatedRoute
     ) {}
 
-    event_id: string;
+    plugin: string;
     private sub: any;
 
     ngOnInit() {
         this.initParams();
+        this.initPluginComponent();
     }
 
     private initParams() {
         this.sub = this.route.params.subscribe(params => {
-            this.event_id = params['id'];
+            this.plugin = params['plugin'];
         });
+    }
+
+    private initPluginComponent() {
+        console.log(this.plugin, 'this.plugin')
     }
 
 }
