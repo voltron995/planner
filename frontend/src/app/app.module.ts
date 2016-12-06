@@ -24,6 +24,7 @@ import {EventEditComponent} from "./events/components/event-edit/event-edit.comp
 import {EventEditForm} from "./events/forms/event-edit/event-edit.form";
 import {EventCreateComponent} from "./events/components/event-create/event-create.component";
 import {EventCreateForm} from "./events/forms/event-create/event-create.form";
+import {RecipesModule} from "./plugins/recipes/recipes.module";
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import {EventCreateForm} from "./events/forms/event-create/event-create.form";
         AppRoutingModule,
         ModalModule.forRoot(),
         BootstrapModalModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        RecipesModule
     ],
     declarations: [
         AppComponent,
