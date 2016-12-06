@@ -6,6 +6,7 @@
 
     <div class="events-wrapper">
         <div class="events container">
+            <calendar></calendar>
             <div *ngFor="let event of events" class="event row">
                 <h2 class="name">
                     <a [routerLink]="['/events', event.id]">

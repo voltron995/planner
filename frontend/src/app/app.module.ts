@@ -25,8 +25,8 @@ import {EventEditForm} from "./events/forms/event-edit/event-edit.form";
 import {EventCreateComponent} from "./events/components/event-create/event-create.component";
 import {EventCreateForm} from "./events/forms/event-create/event-create.form";
 import {RecipesModule} from "./plugins/recipes/recipes.module";
-import {CalendarModule} from '../../node_modules/angular-calendar';
-
+import { CalendarModule } from 'angular-calendar';
+import {CalendarComponent} from "./events/components/calendar/calendar.component";
 
 @NgModule({
     imports: [
@@ -52,6 +52,7 @@ import {CalendarModule} from '../../node_modules/angular-calendar';
         ProfileComponent,
         ProfileEditForm,
         UserEditForm,
+        CalendarComponent,
     ],
     providers: [
         EventService,
