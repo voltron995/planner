@@ -1,5 +1,6 @@
 import re
 
+from app.error_handlers.errors import ElementNotFound
 from app.error_handlers.exceptions import APINotFound
 from app.plugins.msclient import MSClient
 
@@ -25,7 +26,7 @@ def get_plugin(name: str):
     try:
         return _plugins[name]
     except KeyError:
-        raise APINotFound()
+        raise APINotFound(ElementNotFound(detail='The plugin cannot be found'))
 
 
 def register(cls):

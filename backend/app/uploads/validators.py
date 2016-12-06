@@ -1,7 +1,7 @@
 from abc import ABC
 
 from PIL import Image
-from app.error_handlers.errors import Error
+from app.error_handlers.errors import Error, ElementNotFound
 from werkzeug.datastructures import FileStorage
 
 from app.error_handlers.exceptions import APINotFound, APIBadRequest
@@ -29,7 +29,7 @@ def get_validator(group: str):
     try:
         return _validators[group]
     except KeyError:
-        raise APINotFound()
+        raise APINotFound(ElementNotFound(detail='The validator cannot be found.'))
 
 
 def register(cls):
