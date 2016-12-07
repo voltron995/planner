@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import {Router} from '@angular/router'
 import {
   startOfDay,
   subDays,
@@ -18,6 +19,9 @@ import {
   CalendarEventAction,
   CalendarEventTimesChangedEvent
 } from 'angular-calendar'; // import should be from `angular-calendar` in your app
+import {EventComponent} from "../event/event.component";
+import {EventEditComponent} from "../event-edit/event-edit.component";
+
 
 const colors: any = {
   red: {
@@ -50,6 +54,8 @@ const colors: any = {
 
 export class CalendarComponent {
 
+  constructor(private router: Router) {}
+
   @Input()
   eventsList: any[];
 
@@ -58,16 +64,23 @@ export class CalendarComponent {
   viewDate: Date = new Date();
 
   actions: CalendarEventAction[] = [{
+      label: '<i class="fa fa-fw fa-eye"></i>',
+      onClick: ({event}: {event: CalendarEvent}): void => {      
+      this.router.navigate(['/events', event.cssClass])
+    }
+  }, {
     label: '<i class="fa fa-fw fa-pencil"></i>',
     onClick: ({event}: {event: CalendarEvent}): void => {
-      console.log('Edit event', event);
+        console.log(event)
+        this.router.navigate(['/events', event.cssClass, 'edit'])
     }
   }, {
     label: '<i class="fa fa-fw fa-times"></i>',
     onClick: ({event}: {event: CalendarEvent}): void => {      
-      this.events = this.events.filter(iEvent => iEvent !== event);
+      console.log("delete event ", event.cssClass)
     }
   }];
+  // cal-event-title
 
   refresh: Subject<any> = new Subject();
 
@@ -131,7 +144,8 @@ export class CalendarComponent {
               end: new Date(event.endTime),
               title: event.name,
               color: colors.yellow,
-              actions: this.actions
+              actions: this.actions,
+              cssClass: event.id
           }
           this.events.push(eventObj)
       };
