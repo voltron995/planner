@@ -11,6 +11,4 @@ import '../../../../../public/css/forms.css'
         'app.component.css'
     ],
 })
-export class AppComponent {
-    title = 'Welcome To Planner';
-}
+export class AppComponent {}

@@ -26,6 +26,7 @@ import {EventCreateComponent} from "./events/components/event-create/event-creat
 import {EventCreateForm} from "./events/forms/event-create/event-create.form";
 import {RecipesPlugin} from "./plugins/recipes/plugin.module";
 import {ItemCreateComponent} from "./items/components/item-create/item-create.component";
+import {PluginComponent} from "./items/components/plugin/plugin.component";
 
 
 @NgModule({
@@ -49,6 +50,7 @@ import {ItemCreateComponent} from "./items/components/item-create/item-create.co
         EventEditForm,
         FileSelectDirective,
         ItemCreateComponent,
+        PluginComponent,
         ProfileComponent,
         ProfileEditForm,
         UserEditForm,
