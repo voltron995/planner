@@ -26,19 +26,26 @@ config_dict = {
             "level": "INFO",
             "filename": basedir + '/log/planner.log'
         },
-        "console": {
-            "class": "logging.StreamHandler",
-            "formatter": "brief",
-            "level": "WARN",
-            "stream": "ext://sys.stderr"
+        "api_errors": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "formatter": "full",
+            "level": "ERROR",
+            "filename": basedir + '/log/api.log'
         }
     },
-    "root": {
-        "level": "DEBUG",
-        "handlers": [
-            "filelog",
-            "console"
-        ]
+    "loggers": {
+        "api_logger": {
+            "level": "ERROR",
+            "handlers": [
+                "api_errors"
+            ]
+        },
+        "root": {
+            "level": "DEBUG",
+            "handlers": [
+                "filelog"
+            ]
+        },
     }
 }
 

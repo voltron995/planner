@@ -1,5 +1,6 @@
 import os
 import re
+from logging import getLogger
 from os.path import join, isfile, splitext
 from smtplib import SMTPException
 
@@ -27,6 +28,8 @@ def http_error_handler(error):
 
 
 def api_error_handler(exception):
+    api_logger = getLogger('api_logger')
+    api_logger.exception('{} {}'.format(request.method, request.path))
     if not issubclass(exception.__class__, APIException):
         error = Error(detail=str(exception))
         exception = APIException()
