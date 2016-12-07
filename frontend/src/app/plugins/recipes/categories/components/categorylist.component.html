@@ -1,0 +1,20 @@
+<main>
+
+    <div class="recipes-wrapper">
+        <div class="recipes container">
+            <div *ngFor="let category of categories" class="category row">
+                <h2 class="name">
+                    <a [routerLink]="['/categories', category.id]">
+                        {{ category.name }}
+                    </a>
+
+                </h2>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</main>

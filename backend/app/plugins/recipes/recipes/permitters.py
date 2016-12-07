@@ -7,3 +7,9 @@ class RecipesListPermitter(Permitter):
 
 class RecipesSinglePermitter(Permitter):
     pass
+
+class CategoryListPermitter(Permitter):
+    pass
+
+class CategorySinglePermitter(Permitter):
+    pass

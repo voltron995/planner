@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 
 
 @Component({
@@ -6,19 +6,19 @@ import {Component, OnInit} from '@angular/core';
     templateUrl: 'plugin.component.html',
 })
 
-export class PluginComponent implements OnInit {
-
-    categories: Array<any>;
-
-    constructor() {
-    }
-
-    ngOnInit() {
-        this.initCategories();
-    }
-
-    protected initCategories() {
-        this.categories = [1, 2, 3, 4, 5];
-    }
+export class PluginComponent  {
+// implements OnInit
+    // categories: Array<any>;
+    //
+    // constructor() {
+    // }
+    //
+    // ngOnInit() {
+    //     this.initCategories();
+    // }
+    //
+    // protected initCategories() {
+    //     this.categories = [1, 2, 3, 4, 5];
+    // }
 
 }
