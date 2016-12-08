@@ -1,20 +1,25 @@
 <main>
-
-    <div class="recipes-wrapper">
-        <div class="recipes container">
+    <h1>
+        List of categories
+    </h1>
+    <div class="events-wrapper">
+        <div class="events container">
             <div *ngFor="let category of categories" class="category row">
-                <h2 class="name">
-                    <a [routerLink]="['/categories', category.id]">
-                        {{ category.name }}
-                    </a>
+              <h2 (click)="onSelect(category)">{{ category.name }}</h2>
 
-                </h2>
-
-
-                </div>
-            </div>
+              </div>
         </div>
     </div>
 
+     <h1>
+        List of recipe by categories
+    </h1>
+
+              <div *ngFor="let recipe of recipes">
+                <h2 class="name">
+                    {{ recipe.name }}
+
+                </h2>
+             </div>
 
 </main>

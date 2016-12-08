@@ -4,6 +4,7 @@ import {PluginComponent} from "./plugin.component";
 import {BrowserModule} from "@angular/platform-browser";
 import {RecipeService} from "./recipes/services/recipe.service";
 import {CategoryService} from "./categories/services/category.service";
+import {CategoryListComponent} from "./categories/components/categorylist.component";
 
 @NgModule({
     imports: [
@@ -11,6 +12,7 @@ import {CategoryService} from "./categories/services/category.service";
     ],
     declarations: [
         PluginComponent,
+        CategoryListComponent,
     ],
     providers: [
         DishService,
@@ -18,7 +20,8 @@ import {CategoryService} from "./categories/services/category.service";
         CategoryService
     ],
     exports: [
-        PluginComponent
+        PluginComponent,
+        CategoryListComponent
     ]
 })
 export class RecipesPlugin {
