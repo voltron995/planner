@@ -1,7 +1,3 @@
-from flask import logging
-
-logger = logging.getLogger('root')
-
 HTTP_ERROR_CODES = {
     400:    'Bad Request',
     401:    'Unauthorized',

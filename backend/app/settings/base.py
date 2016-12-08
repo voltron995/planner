@@ -31,6 +31,18 @@ config_dict = {
             "formatter": "full",
             "level": "ERROR",
             "filename": basedir + '/log/api.log'
+        },
+        "app_errors": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "formatter": "full",
+            "level": "ERROR",
+            "filename": basedir + '/log/app.log'
+        },
+        "mail_handler": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "formatter": "full",
+            "level": "INFO",
+            "filename": basedir + '/log/mail.log'
         }
     },
     "loggers": {
@@ -38,6 +50,18 @@ config_dict = {
             "level": "ERROR",
             "handlers": [
                 "api_errors"
+            ]
+        },
+        "app_logger": {
+            "level": "ERROR",
+            "handlers": [
+                "app_errors"
+            ]
+        },
+        "mail_logger": {
+            "level": "INFO",
+            "handlers": [
+                "mail_handler"
             ]
         },
         "root": {

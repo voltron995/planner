@@ -9,8 +9,12 @@ from flask import request
 
 from app import app
 from app.api import response
-from app.error_handlers.errors import logger, Error
+from app.error_handlers.errors import Error
 from app.error_handlers.exceptions import APIExceptions, APIException
+
+api_logger = getLogger('api_logger')
+app_logger = getLogger('app_logger')
+mail_logger = getLogger('mail_logger')
 
 
 def get_templates():
@@ -22,13 +26,14 @@ def get_templates():
 def http_error_handler(error):
     if re.match(r'/api', request.path):
         return api_error_handler(APIExceptions.get(error.code, APIException)())
+    app_logger.exception('{} {}'.format(request.method, request.path))
     if error.code in get_templates():
         return render_template('errors/{}.html'.format(error.code))
     return render_template('errors/default.html')
 
 
 def api_error_handler(exception):
-    api_logger = getLogger('api_logger')
+    app_logger.error('API caught an exception. Check details in api.log.')
     api_logger.exception('{} {}'.format(request.method, request.path))
     if not issubclass(exception.__class__, APIException):
         error = Error(detail=str(exception))
@@ -39,14 +44,15 @@ def api_error_handler(exception):
 
 
 @app.errorhandler(Exception)
-def default_errorhandler(error):
-    logger.error(error)
+def default_error_handler(error):
     if re.match(r'/api', request.path):
         return api_error_handler(APIExceptions.get(error.code, APIException)())
+    app_logger.exception()
     return render_template('errors/default.html')
 
 
 @app.errorhandler(SMTPException)
 def mail_error(error):
-    logger.error(error)
+    app_logger.error('A mailer error occurred. Check details in mail.log.')
+    mail_logger.exception()
     return render_template('errors/email.html')
