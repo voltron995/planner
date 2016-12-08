@@ -118,9 +118,17 @@ export class CalendarComponent {
 
   }
 
+  createEvent(): void {
+
+    this.router.navigate(['/events/new'])
+
+  }
+
   today(): void {
     this.viewDate = new Date();
   }
+
+
 
   dayClicked({date, events}: {date: Date, events: CalendarEvent[]}): void {
 
@@ -149,7 +157,7 @@ export class CalendarComponent {
               start: new Date(event.startTime),
               end: new Date(event.endTime),
               title: event.name,
-              color: colors.green,
+              color: colors.yellow,
               actions: this.actions,
               cssClass: event.id
           }
