@@ -1,0 +1,46 @@
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from "@angular/router";
+import {RecipesPluginComponent} from "../../recipes/recipes-plugin.component";
+import {PluginsFactory} from "../../plugins-factory";
+
+
+@Component({
+    selector: 'plugins',
+    templateUrl: 'plugins.component.html',
+    entryComponents: [
+        RecipesPluginComponent
+    ]
+})
+
+export class PluginsComponent implements OnInit {
+
+    constructor(
+        private route: ActivatedRoute,
+    ) {}
+
+    plugins: any[];
+
+    private params: {
+        eventId: string,
+    };
+
+    private sub: any;
+
+    ngOnInit() {
+        this.initParams();
+        this.initPlugins();
+    }
+
+    private initPlugins() {
+        this.plugins = PluginsFactory.listPlugins();
+    }
+
+    private initParams() {
+        this.sub = this.route.params.subscribe(params => {
+            this.params = {
+                eventId: params['id'],
+            };
+        });
+    }
+
+}

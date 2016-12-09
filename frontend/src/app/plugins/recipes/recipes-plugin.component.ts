@@ -1,12 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 
-
 @Component({
-    selector: 'plugin-recipes',
-    templateUrl: 'plugin.component.html',
+    templateUrl: 'recipes-plugin.component.html',
 })
 
-export class PluginComponent implements OnInit {
+export class RecipesPluginComponent implements OnInit {
 
     categories: Array<any>;
 
