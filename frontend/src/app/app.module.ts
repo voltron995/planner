@@ -24,7 +24,9 @@ import {EventEditComponent} from "./events/components/event-edit/event-edit.comp
 import {EventEditForm} from "./events/forms/event-edit/event-edit.form";
 import {EventCreateComponent} from "./events/components/event-create/event-create.component";
 import {EventCreateForm} from "./events/forms/event-create/event-create.form";
-import {RecipesModule} from "./plugins/recipes/recipes.module";
+import {RecipesPluginModule} from "./plugins/recipes/recipes-plugin.module";
+import {PluginsComponent} from "./plugins/components/plugins/plugins.component";
+import {PluginComponent} from "./plugins/components/plugin/plugin.component";
 
 
 @NgModule({
@@ -36,7 +38,7 @@ import {RecipesModule} from "./plugins/recipes/recipes.module";
         ModalModule.forRoot(),
         BootstrapModalModule,
         ReactiveFormsModule,
-        RecipesModule
+        RecipesPluginModule
     ],
     declarations: [
         AppComponent,
@@ -47,6 +49,8 @@ import {RecipesModule} from "./plugins/recipes/recipes.module";
         EventCreateForm,
         EventEditForm,
         FileSelectDirective,
+        PluginsComponent,
+        PluginComponent,
         ProfileComponent,
         ProfileEditForm,
         UserEditForm,

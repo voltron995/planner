@@ -6,6 +6,8 @@ import {ProfileComponent} from '../../profiles/components/profile/profile.compon
 import {EventComponent} from "../../events/components/event/event.component";
 import {EventEditComponent} from "../../events/components/event-edit/event-edit.component";
 import {EventCreateComponent} from "../../events/components/event-create/event-create.component";
+import {PluginsComponent} from "../../plugins/components/plugins/plugins.component";
+import {PluginComponent} from "../../plugins/components/plugin/plugin.component";
 
 const routes: Routes = [
   {
@@ -23,6 +25,14 @@ const routes: Routes = [
   {
     path: 'events/:id/edit',
     component: EventEditComponent
+  },
+  {
+    path: 'events/:id/plugins',
+    component: PluginsComponent
+  },
+  {
+    path: 'events/:id/plugins/:plugin',
+    component: PluginComponent
   },
   {
     path: 'profile',
