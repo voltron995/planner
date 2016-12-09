@@ -27,9 +27,8 @@ import {EventCreateForm} from "./events/forms/event-create/event-create.form";
 import {RecipesModule} from "./plugins/recipes/recipes.module";
 import { CalendarModule } from 'angular-calendar';
 import {CalendarComponent} from "./events/components/calendar/calendar.component";
-import {EventDeleteComponent} from "./events/components/event-delete/event-delete.component";
-import {EventDeleteForm} from "./events/forms/event-delete/event-delete.form";
 import {Ng2DatetimePickerModule} from "ng2-datetime-picker";
+import {EventDeleteComponent} from "./events/components/event-delete/event-delete.component";
 
 @NgModule({
     imports: [
@@ -53,7 +52,6 @@ import {Ng2DatetimePickerModule} from "ng2-datetime-picker";
         EventsComponent,
         EventCreateForm,
         EventEditForm,
-        EventDeleteForm,
         FileSelectDirective,
         ProfileComponent,
         ProfileEditForm,

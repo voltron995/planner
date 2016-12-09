@@ -83,10 +83,7 @@ export class CalendarComponent {
     label: '<i class="fa fa-fw fa-times"></i>',
     onClick: ({event}: {event: CalendarEvent}): void => {
       console.log("delete event ", event.cssClass)
-      this.eventSrv
-            .delete(event.cssClass)
-            .then(profile => console.log(profile, 'success'))
-            .catch(errors => console.log(errors, 'errors'));
+      this.router.navigate(['/events', event.cssClass, 'delete'])
     }
   }];
   // cal-event-title

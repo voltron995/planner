@@ -9,30 +9,30 @@ import {EventCreateComponent} from "../../events/components/event-create/event-c
 import {EventDeleteComponent} from "../../events/components/event-delete/event-delete.component";
 
 const routes: Routes = [
-  {
-    path: 'events',
-    component: EventsComponent
-  },
-  {
-    path: 'events/new',
-    component: EventCreateComponent
-  },
-  {
-    path: 'events/:id',
-    component: EventComponent
-  },
-  {
-    path: 'events/:id/edit',
-    component: EventEditComponent
-  },
     {
-    path: 'events/:id/delete',
-    component: EventDeleteComponent
-  },
-  {
-    path: 'profile',
-    component: ProfileComponent
-  }
+        path: 'events',
+        component: EventsComponent
+    },
+    {
+        path: 'events/new',
+        component: EventCreateComponent
+    },
+    {
+        path: 'events/:id',
+        component: EventComponent
+    },
+    {
+        path: 'events/:id/edit',
+        component: EventEditComponent
+    },
+    {
+        path: 'events/:id/delete',
+        component: EventDeleteComponent
+    },
+    {
+        path: 'profile',
+        component: ProfileComponent
+    }
 ];
 
 @NgModule({
