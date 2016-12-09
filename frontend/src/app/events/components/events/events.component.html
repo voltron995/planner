@@ -1,9 +1,7 @@
 <main>
-
     <a [routerLink]="['/events', 'new']">
         Create New Event
     </a>
-
     <div class="events-wrapper">
         <div class="events container">
             <div *ngFor="let event of events" class="event row">
@@ -27,3 +25,5 @@
         </div>
     </div>
 </main>
+
+<categorylist></categorylist>

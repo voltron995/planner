@@ -13,3 +13,13 @@ api_recipes.add_url_rule(
     view_func=views.RecipesSingle.as_view('recipes_single'),
     permitter=permitters.RecipesSinglePermitter,
 )
+api_recipes.add_url_rule(
+    '/recipes/categories',
+    view_func=views.CategoryList.as_view('recipe_category_list'),
+    permitter=permitters.CategoryListPermitter,
+)
+api_recipes.add_url_rule(
+    '/recipes/categories/<id>',
+    view_func=views.CategorySingle.as_view('recipe_category_single'),
+    permitter=permitters.CategorySinglePermitter,
+)

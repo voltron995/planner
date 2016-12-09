@@ -2,8 +2,9 @@ import {NgModule} from '@angular/core';
 import {DishService} from "./dishes/services/dish.service";
 import {BrowserModule} from "@angular/platform-browser";
 import {RecipesPluginComponent} from "./recipes-plugin.component";
-import {PluginsFactory} from "../plugins-factory";
-import {RecipesPlugin} from "./recipes-plugin";
+import {CategoryListComponent} from "./categories/components/categorylist.component";
+import {CategoryService} from "./categories/services/category.service";
+import {RecipeService} from "./recipes/services/recipe.service";
 
 
 @NgModule({
@@ -12,12 +13,16 @@ import {RecipesPlugin} from "./recipes-plugin";
     ],
     declarations: [
         RecipesPluginComponent,
+        CategoryListComponent,
     ],
     providers: [
         DishService,
+        RecipeService,
+        CategoryService
     ],
     exports: [
-        RecipesPluginComponent
+        RecipesPluginComponent,
+        CategoryListComponent
     ]
 })
 export class RecipesPluginModule {}
