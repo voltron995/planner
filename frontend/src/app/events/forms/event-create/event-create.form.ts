@@ -39,6 +39,7 @@ export class EventCreateForm implements OnInit {
 
     onSubmit() {
         let values = this.form.value;
+        console.log(values)
         this.eventService
             .post(values)
             .then(profile => console.log(profile, 'success'))

@@ -29,4 +29,10 @@ export class RequestService {
             .toPromise();
     }
 
+    delete(url: string, params?: URLSearchParams): Promise<any> {
+        return this.http
+            .delete(url, {search: params})
+            .toPromise()
+    }
+
 }

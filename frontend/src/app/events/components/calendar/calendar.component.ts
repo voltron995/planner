@@ -18,9 +18,8 @@ import {
   CalendarEvent,
   CalendarEventAction,
   CalendarEventTimesChangedEvent
-} from 'angular-calendar'; // import should be from `angular-calendar` in your app
-import {EventComponent} from "../event/event.component";
-import {EventEditComponent} from "../event-edit/event-edit.component";
+} from 'angular-calendar';
+import {EventService} from "../../services/event.service"; // import should be from `angular-calendar` in your app
 
 
 const colors: any = {
@@ -36,7 +35,7 @@ const colors: any = {
   yellow: {
     primary: '#e3bc08',
     secondary: '#FDF1BA'
-  }, 
+  },
 
   green: {
       primary: '#21b319',
@@ -60,7 +59,7 @@ const colors: any = {
 
 export class CalendarComponent {
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private eventSrv: EventService) {}
 
   @Input()
   eventsList: any[];
@@ -71,7 +70,7 @@ export class CalendarComponent {
 
   actions: CalendarEventAction[] = [{
       label: '<i class="fa fa-fw fa-eye"></i>',
-      onClick: ({event}: {event: CalendarEvent}): void => {      
+      onClick: ({event}: {event: CalendarEvent}): void => {
       this.router.navigate(['/events', event.cssClass])
     }
   }, {
@@ -82,8 +81,12 @@ export class CalendarComponent {
     }
   }, {
     label: '<i class="fa fa-fw fa-times"></i>',
-    onClick: ({event}: {event: CalendarEvent}): void => {      
+    onClick: ({event}: {event: CalendarEvent}): void => {
       console.log("delete event ", event.cssClass)
+      this.eventSrv
+            .delete(event.cssClass)
+            .then(profile => console.log(profile, 'success'))
+            .catch(errors => console.log(errors, 'errors'));
     }
   }];
   // cal-event-title
@@ -162,6 +165,6 @@ export class CalendarComponent {
               cssClass: event.id
           }
           this.events.push(eventObj)
-      };
+      }
   }
 }

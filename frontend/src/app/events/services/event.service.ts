@@ -52,4 +52,13 @@ export class EventService {
             .catch(response => this.responseSrv.parseErrors(response));
     }
 
+    delete(id: string): Promise<Event> {
+        const url = `${this.eventsUrl}/${id}`;
+
+        return this.requestSrv
+            .delete(url)
+            .then(response => this.responseSrv.parseData(response))
+            .catch(response => this.responseSrv.parseErrors(response));
+    }
+
 }
