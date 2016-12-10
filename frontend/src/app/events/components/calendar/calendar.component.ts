@@ -38,9 +38,15 @@ const colors: any = {
   },
 
   green: {
-      primary: '#21b319',
-      secondary: '#458c41'
+      primary: '#3d534b',
+      secondary: '#77986f'
+  },
+
+  gray: {
+    primary: '#bab2b7',
+    secondary: '#d9d6d8'
   }
+
 };
 
 @Component({
@@ -157,7 +163,7 @@ export class CalendarComponent {
               start: new Date(event.startTime),
               end: new Date(event.endTime),
               title: event.name,
-              color: colors.yellow,
+              color: colors.gray,
               actions: this.actions,
               cssClass: event.id
           }
