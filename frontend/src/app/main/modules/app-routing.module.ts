@@ -6,8 +6,8 @@ import {ProfileComponent} from '../../profiles/components/profile/profile.compon
 import {EventComponent} from "../../events/components/event/event.component";
 import {EventEditComponent} from "../../events/components/event-edit/event-edit.component";
 import {EventCreateComponent} from "../../events/components/event-create/event-create.component";
-import {ItemCreateComponent} from "../../items/components/item-create/item-create.component";
-import {PluginComponent} from "../../items/components/plugin/plugin.component";
+import {PluginsComponent} from "../../plugins/components/plugins/plugins.component";
+import {PluginComponent} from "../../plugins/components/plugin/plugin.component";
 
 const routes: Routes = [
   {
@@ -27,11 +27,11 @@ const routes: Routes = [
     component: EventEditComponent
   },
   {
-    path: 'events/:id/item/new',
-    component: ItemCreateComponent
+    path: 'events/:id/plugins',
+    component: PluginsComponent
   },
   {
-    path: 'events/:id/item/:plugin',
+    path: 'events/:id/plugins/:plugin',
     component: PluginComponent
   },
   {

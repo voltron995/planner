@@ -1,10 +1,12 @@
 import {NgModule} from '@angular/core';
 import {DishService} from "./dishes/services/dish.service";
-import {PluginComponent} from "./plugin.component";
 import {BrowserModule} from "@angular/platform-browser";
-import {RecipeService} from "./recipes/services/recipe.service";
-import {CategoryService} from "./categories/services/category.service";
-import {CategoryListComponent} from "./categories/components/categorylist.component";
+
+import {RecipesPluginComponent} from "./recipes-plugin.component";
+import {PluginsFactory} from "../plugins-factory";
+import {RecipesPlugin} from "./recipes-plugin";
+
+>>>>>>> 6c7a5ce01986bc9e6a31015e8959179b62232e3d:frontend/src/app/plugins/recipes/recipes-plugin.module.ts
 
 @NgModule({
     imports: [
@@ -12,7 +14,7 @@ import {CategoryListComponent} from "./categories/components/categorylist.compon
     ],
     declarations: [
         PluginComponent,
-        CategoryListComponent,
+        RecipesPluginComponent,
     ],
     providers: [
         DishService,
@@ -21,8 +23,7 @@ import {CategoryListComponent} from "./categories/components/categorylist.compon
     ],
     exports: [
         PluginComponent,
-        CategoryListComponent
+        RecipesPluginComponent
     ]
 })
-export class RecipesPlugin {
-}
+export class RecipesPluginModule {}
