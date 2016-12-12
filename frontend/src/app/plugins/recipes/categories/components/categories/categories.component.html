@@ -1,12 +1,9 @@
-<main>
-    <h1>
-        List of categories
-    </h1>
-    <div class="events-wrapper">
-        <div class="events container">
-            <div *ngFor="let category of categories" class="category row">
-                <h2 (click)="onSelect(category)">{{ category.name }}</h2>
-            </div>
-        </div>
+<h2>Categories</h2>
+<div class="categories-wrapper">
+    <div class="categories container">
+        <ul *ngFor="let category of categories" class="category row">
+            <li (click)="onSelect(category)">{{ category.name }}</li>
+        </ul>
     </div>
-</main>
+</div>
+

@@ -1,8 +1,22 @@
-<categories
-        (onCategorySelected)="onCategorySelected($event)">
-</categories>
+<article class="container">
+    <aside class="container col-lg-4 col-md-4 col-sm-4">
+        <section class="categories">
+            <div class="section-content">
+                <categories (onCategorySelected)="onCategorySelected($event)"></categories>
+            </div>
+        </section>
 
-<recipes
-        *ngIf="selectedCategory"
-        [category]="selectedCategory">
-</recipes>
+        <section class="recipes">
+            <div *ngIf="selectedCategory" class="section-content">
+                <recipes [category]="selectedCategory" (onRecipeSelected)="onRecipeSelected($event)"></recipes>
+            </div>
+        </section>
+    </aside>
+
+
+    <section class="recipe-details col-lg-8 col-md-8 col-sm-8">
+        <div *ngIf="selectedRecipe" class="section-content">
+            <recipe [recipe]="selectedRecipe"></recipe>
+        </div>
+    </section>
+</article>

@@ -6,6 +6,7 @@ import {CategoryService} from "./categories/services/category.service";
 import {RecipeService} from "./recipes/services/recipe.service";
 import {CategoriesComponent} from "./categories/components/categories/categories.component";
 import {RecipesComponent} from "./recipes/components/recipes/recipes.component";
+import {RecipeComponent} from "./recipes/components/recipe/recipe.component";
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import {RecipesComponent} from "./recipes/components/recipes/recipes.component";
     declarations: [
         RecipesPluginComponent,
         CategoriesComponent,
+        RecipeComponent,
         RecipesComponent,
     ],
     providers: [

@@ -1,17 +1,13 @@
-<h1>
-    List of recipe by categories
-</h1>
-<main>
-    <div class="recipes-wrapper">
-        <div class="recipes container">
-            <div *ngFor="let recipe of recipes" class="recipe row">
-                <h2 class="name">
-                    {{ recipe.name }}
-                </h2>
-                <div class="description">
-                    {{ recipe.description }}
-                </div>
+<h2>Recipes in "{{ category.name }}" category</h2>
+<div class="recipes-wrapper">
+    <div class="recipes container">
+        <div *ngFor="let recipe of recipes" (click)="onSelect(recipe)" class="recipe row">
+            <div class="name">
+                {{ recipe.name }}
+            </div>
+            <div class="description">
+                {{ recipe.description }}
             </div>
         </div>
     </div>
-</main>
+</div>

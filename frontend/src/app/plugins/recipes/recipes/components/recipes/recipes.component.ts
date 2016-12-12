@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy, Input, SimpleChanges, OnChanges} from '@angular/core';
+import {Component, OnInit, Output, Input, SimpleChanges, OnChanges, EventEmitter} from '@angular/core';
 import {Recipe} from '../../models/recipe'
 import {RecipeService} from "../../services/recipe.service";
 import {Category} from "../../../categories/models/category";
@@ -15,17 +15,18 @@ import {Category} from "../../../categories/models/category";
 
 export class RecipesComponent implements OnInit, OnChanges {
     recipes: Recipe[];
-    selectedRecipe: Recipe;
 
     @Input()
     category: Category;
+
+    @Output()
+    onRecipeSelected = new EventEmitter<Category>();
 
     constructor(
         private recipeService: RecipeService
     ) {}
 
     ngOnInit(): void {
-        console.log('recipes ngOnInit');
         this.getRecipes();
     }
 
@@ -36,11 +37,10 @@ export class RecipesComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        console.log(changes, 'changes');
         this.getRecipes();
     }
 
     onSelect(recipe: Recipe): void {
-        this.selectedRecipe = recipe;
+           this.onRecipeSelected.next(recipe);
     }
   }
