@@ -1,1 +1,8 @@
-<categorylist></categorylist>
+<categories
+        (onCategorySelected)="onCategorySelected($event)">
+</categories>
+
+<recipes
+        *ngIf="selectedCategory"
+        [category]="selectedCategory">
+</recipes>

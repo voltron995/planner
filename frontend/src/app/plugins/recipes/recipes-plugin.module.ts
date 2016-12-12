@@ -2,9 +2,10 @@ import {NgModule} from '@angular/core';
 import {DishService} from "./dishes/services/dish.service";
 import {BrowserModule} from "@angular/platform-browser";
 import {RecipesPluginComponent} from "./recipes-plugin.component";
-import {CategoryListComponent} from "./categories/components/categorylist.component";
 import {CategoryService} from "./categories/services/category.service";
 import {RecipeService} from "./recipes/services/recipe.service";
+import {CategoriesComponent} from "./categories/components/categories/categories.component";
+import {RecipesComponent} from "./recipes/components/recipes/recipes.component";
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import {RecipeService} from "./recipes/services/recipe.service";
     ],
     declarations: [
         RecipesPluginComponent,
-        CategoryListComponent,
+        CategoriesComponent,
+        RecipesComponent,
     ],
     providers: [
         DishService,
@@ -21,8 +23,7 @@ import {RecipeService} from "./recipes/services/recipe.service";
         CategoryService
     ],
     exports: [
-        RecipesPluginComponent,
-        CategoryListComponent
+        RecipesPluginComponent
     ]
 })
 export class RecipesPluginModule {}

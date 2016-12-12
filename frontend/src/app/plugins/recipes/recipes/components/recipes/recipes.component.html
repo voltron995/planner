@@ -1,21 +1,17 @@
-<!-- <main>
-
+<h1>
+    List of recipe by categories
+</h1>
+<main>
     <div class="recipes-wrapper">
         <div class="recipes container">
             <div *ngFor="let recipe of recipes" class="recipe row">
                 <h2 class="name">
-                    <a [routerLink]="['/recipes', recipe.id]">
-                        {{ recipe.name }}
-                    </a>
-
+                    {{ recipe.name }}
                 </h2>
-
-                <div class="description">{{ recipe.description }}</div>
-
+                <div class="description">
+                    {{ recipe.description }}
                 </div>
             </div>
         </div>
     </div>
-
-
-</main> -->
+</main>
