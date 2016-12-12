@@ -1,0 +1,16 @@
+<div *ngIf="selectedRecipe" >
+    <h1>{{ selectedRecipe.name }}</h1>
+    <div class="description">
+        {{selectedRecipe.description }}
+    </div>
+    <div class="price">
+            <span>Price: {{selectedRecipe.price}}</span>
+        </div>
+        <h1>ingredients</h1>
+        <div >
+        <span>{{selectedRecipe.ingredients}}</span></div>
+
+<button>add to item</button>
+
+<button>Close</button>
+</div>

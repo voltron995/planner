@@ -1,10 +1,10 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 
-import {Category} from '../models/category';
-import {CategoryService} from "../services/category.service";
-import {RecipeService} from "../../recipes/services/recipe.service";
-import{Recipe} from "../../recipes/models/recipe";
+import {Category} from '../../models/category';
+import {CategoryService} from "../../services/category.service";
+import {RecipeService} from "../../../recipes/services/recipe.service";
+import{Recipe} from "../../../recipes/models/recipe";
 
 @Component({
     selector: 'categorylist',
@@ -15,11 +15,11 @@ import{Recipe} from "../../recipes/models/recipe";
 
 })
 
-export class CategoryListComponent {
+export class CategoryListComponent implements OnInit{
 
     categories: Category[];
     selectedCategory:Category;
-
+    selectedRecipe:Recipe;
     recipes: Recipe[];
     constructor(private categoryService: CategoryService,
                 private recipeService:RecipeService) {
@@ -28,16 +28,6 @@ export class CategoryListComponent {
     ngOnInit(): void {
         this.getCategories();
 
-  }
-    OnClicked(){
-
-     this.getRecipes();
-    }
-
-    getRecipes(): void {
-        this.recipeService
-        .listCat(this.selectedCategory.id)
-        .then(recipes => this.recipes = recipes);
   }
 
     getCategories(): void {
@@ -52,4 +42,7 @@ export class CategoryListComponent {
         .listCat(this.selectedCategory.id)
         .then(recipes => this.recipes = recipes);
     }
+    onSelected(recipe:Recipe){
+      this.selectedRecipe = recipe
+      }
   }

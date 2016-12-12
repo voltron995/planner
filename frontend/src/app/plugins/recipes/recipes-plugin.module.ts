@@ -1,29 +1,44 @@
 import {NgModule} from '@angular/core';
 import {DishService} from "./dishes/services/dish.service";
-import {BrowserModule} from "@angular/platform-browser";
+import {CategoryService} from "./categories/services/category.service";
+import {RecipeService} from "./recipes/services/recipe.service";
+import {IngredientService} from "./ingredients/services/ingredients.service";
 
+
+import {RecipeListComponent} from "./recipes/components/recipelist/recipelist.component";
+import {RecipeDetailComponent} from "./recipes/components/recipe-detail/recipe-detail.component";
+import {CategoryListComponent} from "./categories/components/categorylist/categorylist.component";
+import {IngredientsListComponent} from "./ingredients/components/ingredients-list.component";
+import {BrowserModule} from "@angular/platform-browser";
 import {RecipesPluginComponent} from "./recipes-plugin.component";
 import {PluginsFactory} from "../plugins-factory";
 import {RecipesPlugin} from "./recipes-plugin";
-
->>>>>>> 6c7a5ce01986bc9e6a31015e8959179b62232e3d:frontend/src/app/plugins/recipes/recipes-plugin.module.ts
 
 @NgModule({
     imports: [
         BrowserModule
     ],
     declarations: [
-        PluginComponent,
         RecipesPluginComponent,
+        CategoryListComponent,
+        RecipeListComponent,
+        RecipeDetailComponent,
+        IngredientsListComponent
     ],
     providers: [
         DishService,
+        CategoryService,
         RecipeService,
-        CategoryService
+        IngredientService
     ],
     exports: [
-        PluginComponent,
-        RecipesPluginComponent
+        RecipesPluginComponent,
+        CategoryListComponent,
+        RecipeListComponent,
+        RecipeDetailComponent,
+        IngredientsListComponent
+
+
     ]
 })
 export class RecipesPluginModule {}

@@ -11,15 +11,14 @@
         </div>
     </div>
 
-     <h1>
+   <h1>
         List of recipe by categories
-    </h1>
+  </h1>
+        <div *ngFor="let recipe of recipes">
+       <div (click) = "onSelected(recipe)"  >
+                <h2>    {{ recipe.name }} </h2>
 
-              <div *ngFor="let recipe of recipes">
-                <h2 class="name">
-                    {{ recipe.name }}
-
-                </h2>
-             </div>
-
+        </div>
+      </div>
+  <recipe-detail [selectedRecipe] = "selectedRecipe"></recipe-detail>
 </main>
