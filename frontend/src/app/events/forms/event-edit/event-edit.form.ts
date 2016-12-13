@@ -39,6 +39,8 @@ export class EventEditForm implements OnInit {
           description: [this.event.description],
           start_time: [this.event.startTime],
           end_time: [this.event.endTime],
+          color_primary: [this.event.colorPrimary],
+          color_secondary: [this.event.colorSecondary],
         });
     }
 

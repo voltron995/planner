@@ -36,6 +36,8 @@ export class EventCreateForm implements OnInit {
           description: [''],
           start_time: [''],
           end_time: [''],
+          color_primary: ['#bab2b7'],
+          color_secondary: ['#d9d6d8'],
         });
     }
 

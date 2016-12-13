@@ -159,11 +159,22 @@ export class CalendarComponent {
 
   ngAfterContentInit() {
       for (var event of this.eventsList) {
+        console.log(event)
+          if (event.colorPrimary && event.colorSecondary) {
+            var color_p: string = event.colorPrimary;
+            var color_s: string = event.colorSecondary;
+          } else {
+            var color_p: string = "#bab2b7";
+            var color_s: string = "#d9d6d8";
+          }
           var eventObj = {
               start: new Date(event.startTime),
               end: new Date(event.endTime),
               title: event.name,
-              color: colors.gray,
+              color: {
+                    primary: color_p,
+                    secondary: color_s,
+                },
               actions: this.actions,
               cssClass: event.id
           }

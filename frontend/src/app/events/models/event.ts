@@ -5,6 +5,8 @@ export class Event {
     public description: string;
     public startTime: string;
     public endTime: string;
+    public colorPrimary: string;
+    public colorSecondary: string;
     public isDone: boolean;
     public items: Array<any>;
 
@@ -17,6 +19,8 @@ export class Event {
         this.description = attributes.description;
         this.startTime = attributes.startTime;
         this.endTime = attributes.endTime;
+        this.colorPrimary = attributes.colorPrimary;
+        this.colorSecondary = attributes.colorSecondary;
         this.isDone = attributes.isDone;
         this.items = attributes.items;
     }
@@ -27,6 +31,8 @@ export class Event {
             description: data.description,
             startTime: data.start_time,
             endTime: data.end_time,
+            colorPrimary: data.color_primary,
+            colorSecondary: data.color_secondary,
             isDone: data.is_done,
             items: data.items,
         });
