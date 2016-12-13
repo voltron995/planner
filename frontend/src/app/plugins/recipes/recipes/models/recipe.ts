@@ -1,3 +1,4 @@
+import {Ingredient} from "../../ingredients/models/ingredients";
 export class Recipe {
 
     public id: string;
@@ -5,6 +6,7 @@ export class Recipe {
     public description: string;
     public price: string;
     public image: string;
+    public ingredients: Ingredient[];
 
     constructor(id: string, attributes: any) {
         this.id = id;
@@ -12,6 +14,7 @@ export class Recipe {
         this.description = attributes.description;
         this.price = attributes.price;
         this.image = attributes.image;
+        this.ingredients = attributes.ingredients
     }
 
     public static newFromResponse(data: any) {
@@ -20,6 +23,7 @@ export class Recipe {
             description: data.description,
             price: data.price,
             image: data.image_link,
+            ingredients:data.ingredients
         });
     }
 
