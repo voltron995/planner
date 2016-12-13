@@ -33,8 +33,6 @@ import {MasonryModule} from "angular2-masonry/src/module";
     ],
     exports: [
         RecipesPluginComponent,
-        RecipeDetailComponent,
-        IngredientsListComponent
 
     ]
 })

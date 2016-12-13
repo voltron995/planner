@@ -1,27 +1,7 @@
 <main>
-    <a [routerLink]="['/events', 'new']">
-        Create New Event
-    </a>
-    <div class="events-wrapper">
+    <div class="events-wrapper" *ngIf=events>
         <div class="events container">
-            <div *ngFor="let event of events" class="event row">
-                <h2 class="name">
-                    <a [routerLink]="['/events', event.id]">
-                        {{ event.name }}
-                    </a>
-                </h2>
-                <div class="description">{{ event.description }}</div>
-                <div class="date">
-                    <div class="start-time">
-                        <span class="label">Start Time:</span>
-                        <span class="value">{{ event.startTime | date: 'dd/MM/yyyy' }}</span>
-                    </div>
-                    <div class="end-time">
-                        <span class="label">End Time:</span>
-                        <span class="value">{{ event.endTime | date: 'dd/MM/yyyy' }}</span>
-                    </div>
-                </div>
-            </div>
+            <calendar [eventsList]=events></calendar>
         </div>
     </div>
 </main>

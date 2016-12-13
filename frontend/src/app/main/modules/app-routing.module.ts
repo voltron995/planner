@@ -8,6 +8,7 @@ import {EventEditComponent} from "../../events/components/event-edit/event-edit.
 import {EventCreateComponent} from "../../events/components/event-create/event-create.component";
 import {PluginsComponent} from "../../plugins/components/plugins/plugins.component";
 import {PluginComponent} from "../../plugins/components/plugin/plugin.component";
+import {EventDeleteComponent} from "../../events/components/event-delete/event-delete.component";
 
 const routes: Routes = [
   {
@@ -25,6 +26,10 @@ const routes: Routes = [
   {
     path: 'events/:id/edit',
     component: EventEditComponent
+  },
+  {
+    path: 'events/:id/delete',
+    component: EventDeleteComponent
   },
   {
     path: 'events/:id/plugins',

@@ -25,11 +25,11 @@
         <!-- Start Time -->
         <div class="form-group">
             <label for="start-time">Start Time</label>
-            <input
-                    class="form-control"
-                    formControlName="start_time"
-                    id="start-time"
-                    type="date">
+            <input class="form-control"
+                   formControlName="start_time"
+                   id="start-time"
+                   [(ngModel)]="start_time" ng2-datetime-picker
+                   date-format="DD-MM-YYYY hh:mm"/>
         </div>
 
         <!-- End Time -->
@@ -39,7 +39,8 @@
                     class="form-control"
                     formControlName="end_time"
                     id="end-time"
-                    type="date">
+                    [(ngModel)]="end_time" ng2-datetime-picker
+                    date-format="DD-MM-YYYY hh:mm"/>
         </div>
 
         <!-- Submit -->
