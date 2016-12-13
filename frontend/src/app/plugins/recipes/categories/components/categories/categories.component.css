@@ -1,0 +1,16 @@
+.category {
+    cursor: pointer;
+    background: lightblue;
+    padding: 10px;
+    text-align: center;
+}
+
+.category:hover  .name {
+    color: #a94442;
+}
+
+.grid-item {
+    border-radius: 10px;
+    margin-bottom: 5px;
+    width: 150px;
+}

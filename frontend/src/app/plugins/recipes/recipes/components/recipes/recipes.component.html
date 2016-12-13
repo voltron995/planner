@@ -1,13 +1,18 @@
-<h2>Recipes in "{{ category.name }}" category</h2>
+<h2>Choose recipe</h2>
+
 <div class="recipes-wrapper">
-    <div class="recipes container">
-        <div *ngFor="let recipe of recipes" (click)="onSelect(recipe)" class="recipe row">
+    <masonry [options]="{columnWidth: '.grid-sizer', gutter: '.gutter-sizer', itemSelector: '.grid-item', percentPosition: true}"
+             class="recipes">
+        <div class="grid-sizer"></div>
+        <div class="gutter-sizer"></div>
+        <masonry-brick
+                *ngFor="let recipe of recipes"
+                (click)="onSelect(recipe)"
+                class="recipe grid-item">
+            <img [src]="recipe.image" alt="Recipe Image" class="image">
             <div class="name">
                 {{ recipe.name }}
             </div>
-            <div class="description">
-                {{ recipe.description }}
-            </div>
-        </div>
-    </div>
+        </masonry-brick>
+    </masonry>
 </div>

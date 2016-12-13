@@ -27,6 +27,7 @@ import {EventCreateForm} from "./events/forms/event-create/event-create.form";
 import {RecipesPluginModule} from "./plugins/recipes/recipes-plugin.module";
 import {PluginsComponent} from "./plugins/components/plugins/plugins.component";
 import {PluginComponent} from "./plugins/components/plugin/plugin.component";
+import {MasonryModule} from "angular2-masonry/src/module";
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import {PluginComponent} from "./plugins/components/plugin/plugin.component";
         ModalModule.forRoot(),
         BootstrapModalModule,
         ReactiveFormsModule,
-        RecipesPluginModule
+        RecipesPluginModule,
+        MasonryModule
     ],
     declarations: [
         AppComponent,

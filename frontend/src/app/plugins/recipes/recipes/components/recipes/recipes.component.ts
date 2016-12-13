@@ -1,7 +1,12 @@
-import {Component, OnInit, Output, Input, SimpleChanges, OnChanges, EventEmitter} from '@angular/core';
+import {
+    Component, OnInit, Output, Input, SimpleChanges, OnChanges, EventEmitter, AfterViewInit,
+    ElementRef, ViewChild
+} from '@angular/core';
 import {Recipe} from '../../models/recipe'
 import {RecipeService} from "../../services/recipe.service";
 import {Category} from "../../../categories/models/category";
+
+
 
 
 @Component({

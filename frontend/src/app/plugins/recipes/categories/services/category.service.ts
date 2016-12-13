@@ -21,7 +21,13 @@ export class CategoryService {
     list(): Promise<Category[]> {
         return this.requestSrv
             .get(this.categoryUrl)
-            .then(response => this.responseSrv.parseData(response).map((item: any) => Category.newFromResponse(item)))
+            // .then(response => this.responseSrv.parseData(response).map((item: any) => Category.newFromResponse(item)))
+            // todo: this is only for development purposes and should be removed!
+            .then(response => {
+                // Display more categories than we really have.
+                let x = this.responseSrv.parseData(response).map((item: any) => Category.newFromResponse(item));
+                return x.concat(x, x, x);
+            })
             .catch(response => this.responseSrv.parseErrors(response));
     }
     get(id: string): Promise<Category> {

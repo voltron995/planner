@@ -7,11 +7,13 @@ import {RecipeService} from "./recipes/services/recipe.service";
 import {CategoriesComponent} from "./categories/components/categories/categories.component";
 import {RecipesComponent} from "./recipes/components/recipes/recipes.component";
 import {RecipeComponent} from "./recipes/components/recipe/recipe.component";
+import {MasonryModule} from "angular2-masonry/src/module";
 
 
 @NgModule({
     imports: [
-        BrowserModule
+        BrowserModule,
+        MasonryModule
     ],
     declarations: [
         RecipesPluginComponent,

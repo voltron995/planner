@@ -1,0 +1,38 @@
+.recipes {
+
+}
+
+.grid-sizer,
+.grid-item {
+    width: 32%;
+}
+
+.grid-item {
+    margin-bottom: 5px;
+}
+
+.gutter-sizer {
+    width: 2%;
+}
+
+.recipes .recipe {
+    cursor: pointer;
+}
+
+.recipes .recipe img {
+    height: auto;
+    width: 100%;
+}
+
+.recipes .recipe .name {
+    background: rgba(0, 0, 0, .7);
+    bottom: 0;
+    color: rgba(255, 255, 255, .9);
+    padding: 10px;
+    position: absolute;
+    width: 100%;
+}
+
+.recipes .recipe:hover .name {
+    color: rgba(241, 255, 123, 0.9);
+}

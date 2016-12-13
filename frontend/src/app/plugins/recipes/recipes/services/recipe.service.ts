@@ -32,7 +32,13 @@ export class RecipeService {
         params.set('categories',id);
         return this.requestSrv
             .get(this.recipeUrl, params)
-            .then(response => this.responseSrv.parseData(response).map((item: any) => Recipe.newFromResponse(item)))
+            // .then(response => this.responseSrv.parseData(response).map((item: any) => Recipe.newFromResponse(item)))
+            // todo: this is only for development purposes and should be removed!
+            .then(response => {
+                // Display more recipes than we really have.
+                let x = this.responseSrv.parseData(response).map((item: any) => Recipe.newFromResponse(item));
+                return x.concat(x, x, x, x, x, x);
+            })
             .catch(response => this.responseSrv.parseErrors(response));
     }
     list(): Promise<Recipe[]> {
