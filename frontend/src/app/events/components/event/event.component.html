@@ -6,11 +6,11 @@
     <div class="date">
         <div class="start-time">
             <span>Start Time:</span>
-            <span class="value">{{ event.startTime | date: 'dd/MM/yyyy' }}</span>
+            <span class="value">{{ event.startTime | date: 'short' }}</span>
         </div>
         <div class="end-time">
             <span>End Time:</span>
-            <span class="value">{{ event.endTime | date: 'dd/MM/yyyy' }}</span>
+            <span class="value">{{ event.endTime | date: 'short' }}</span>
         </div>
     </div>
 
@@ -23,6 +23,10 @@
 
     <a [routerLink]="['/events', event.id, 'edit']">
         Edit
+    </a>
+
+    <a [routerLink]="['/events', event.id, 'delete']">
+        Delete
     </a>
 
     <a [routerLink]="['/events', event.id, 'plugins']">

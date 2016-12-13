@@ -2,6 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {EventService} from '../../services/event.service';
 import {Event} from '../../models/event';
+import {Router} from '@angular/router'
+
 
 @Component({
     selector: 'event-edit-form',
@@ -21,7 +23,8 @@ export class EventEditForm implements OnInit {
 
     constructor(
         private fb: FormBuilder,
-        private eventService: EventService
+        private eventService: EventService,
+        private router: Router
     ) {
 
     }
@@ -45,6 +48,7 @@ export class EventEditForm implements OnInit {
             .put(this.event.id, values)
             .then(profile => console.log(profile, 'success'))
             .catch(errors => console.log(errors, 'errors'));
+        this.router.navigate(['/events', this.event.id])
     }
 
 }

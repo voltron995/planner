@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {EventService} from '../../services/event.service';
+import {Router} from '@angular/router'
 
 @Component({
     selector: 'event-create-form',
@@ -19,7 +20,8 @@ export class EventCreateForm implements OnInit {
 
     constructor(
         private fb: FormBuilder,
-        private eventService: EventService
+        private eventService: EventService,
+        private router: Router
     ) {
 
     }
@@ -39,10 +41,12 @@ export class EventCreateForm implements OnInit {
 
     onSubmit() {
         let values = this.form.value;
+        console.log(values)
         this.eventService
             .post(values)
             .then(profile => console.log(profile, 'success'))
             .catch(errors => console.log(errors, 'errors'));
+        this.router.navigate(['/events'])
     }
 
 }

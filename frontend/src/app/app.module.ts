@@ -28,6 +28,11 @@ import {RecipesPluginModule} from "./plugins/recipes/recipes-plugin.module";
 import {PluginsComponent} from "./plugins/components/plugins/plugins.component";
 import {PluginComponent} from "./plugins/components/plugin/plugin.component";
 import {MasonryModule} from "angular2-masonry/src/module";
+import { CalendarModule } from 'angular-calendar';
+import {CalendarComponent} from "./events/components/calendar/calendar.component";
+import {Ng2DatetimePickerModule} from "ng2-datetime-picker";
+import {EventDeleteComponent} from "./events/components/event-delete/event-delete.component";
+
 
 
 @NgModule({
@@ -40,13 +45,16 @@ import {MasonryModule} from "angular2-masonry/src/module";
         BootstrapModalModule,
         ReactiveFormsModule,
         RecipesPluginModule,
-        MasonryModule
+        MasonryModule,
+        CalendarModule.forRoot(),
+        Ng2DatetimePickerModule
     ],
     declarations: [
         AppComponent,
         EventComponent,
         EventCreateComponent,
         EventEditComponent,
+        EventDeleteComponent,
         EventsComponent,
         EventCreateForm,
         EventEditForm,
@@ -56,6 +64,7 @@ import {MasonryModule} from "angular2-masonry/src/module";
         ProfileComponent,
         ProfileEditForm,
         UserEditForm,
+        CalendarComponent,
     ],
     providers: [
         EventService,

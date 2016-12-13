@@ -20,7 +20,7 @@ import {MasonryModule} from "angular2-masonry/src/module";
     declarations: [
         RecipesPluginComponent,
         RecipeDetailComponent,
-        IngredientsListComponent
+        IngredientsListComponent,
         CategoriesComponent,
         RecipeComponent,
         RecipesComponent,
@@ -33,10 +33,6 @@ import {MasonryModule} from "angular2-masonry/src/module";
     ],
     exports: [
         RecipesPluginComponent,
-        CategoryListComponent,
-        RecipeDetailComponent,
-        IngredientsListComponent
-
     ]
 })
 export class RecipesPluginModule {}
