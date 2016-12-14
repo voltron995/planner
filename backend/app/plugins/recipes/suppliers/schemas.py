@@ -1,7 +1,9 @@
-from marshmallow import Schema, fields
+from marshmallow import fields
+
+from app.api.schemas import ModelSchema
 
 
-class SupplierSchema(Schema):
+class SupplierSchema(ModelSchema):
     id = fields.Int()
     name = fields.String()
     contact = fields.String()

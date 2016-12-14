@@ -1,11 +1,12 @@
-from marshmallow import Schema, fields
+from marshmallow import fields
 from marshmallow import validates
 
+from app.api.schemas import ModelSchema
 from app.events.models import Event
 from app.plugins.recipes.ingredients.schemas import IngredientListSchema
 
 
-class DishSchema(Schema):
+class DishSchema(ModelSchema):
     id = fields.Int()
     name = fields.String(required=True)
     description = fields.String()

@@ -1,15 +1,15 @@
-from marshmallow import Schema, fields, post_load, validate
-from marshmallow.exceptions import ValidationError
+from marshmallow import Schema, fields
 
+from app.api.schemas import ModelSchema
 from ..products.schemas import ProductSchema
 
 
-class CategorySchema(Schema):
+class CategorySchema(ModelSchema):
     id = fields.Int()
     name = fields.String()
 
 
-class IngredientSchema(Schema):
+class IngredientSchema(ModelSchema):
     id = fields.Int()
     name = fields.String()
     description = fields.String()
@@ -21,6 +21,4 @@ class IngredientSchema(Schema):
 
 class IngredientListSchema(Schema):
     quantity = fields.Int(required=True)
-    ingredient = fields.Nested(IngredientSchema,
-        required=True
-    )
+    ingredient = fields.Nested(IngredientSchema, required=True)

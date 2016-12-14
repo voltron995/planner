@@ -1,18 +1,19 @@
 from flask import url_for
-from marshmallow import Schema, fields
+from marshmallow import fields
 from marshmallow import post_dump
 
+from app.api.schemas import ModelSchema
 from app.uploads import groups
 from app.uploads.manager import UploadsManager
 from ..ingredients.schemas import IngredientListSchema
 
 
-class CategorySchema(Schema):
+class CategorySchema(ModelSchema):
     id = fields.Int()
     name = fields.String()
 
 
-class RecipeSchema(Schema):
+class RecipeSchema(ModelSchema):
     id = fields.Int()
     name = fields.String(required=True)
     description = fields.String()
