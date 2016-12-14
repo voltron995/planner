@@ -26,19 +26,50 @@ config_dict = {
             "level": "INFO",
             "filename": basedir + '/log/planner.log'
         },
-        "console": {
-            "class": "logging.StreamHandler",
-            "formatter": "brief",
-            "level": "WARN",
-            "stream": "ext://sys.stderr"
+        "api_errors": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "formatter": "full",
+            "level": "ERROR",
+            "filename": basedir + '/log/api.log'
+        },
+        "app_errors": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "formatter": "full",
+            "level": "ERROR",
+            "filename": basedir + '/log/app.log'
+        },
+        "mail_handler": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "formatter": "full",
+            "level": "INFO",
+            "filename": basedir + '/log/mail.log'
         }
     },
-    "root": {
-        "level": "DEBUG",
-        "handlers": [
-            "filelog",
-            "console"
-        ]
+    "loggers": {
+        "api_logger": {
+            "level": "ERROR",
+            "handlers": [
+                "api_errors"
+            ]
+        },
+        "app_logger": {
+            "level": "ERROR",
+            "handlers": [
+                "app_errors"
+            ]
+        },
+        "mail_logger": {
+            "level": "INFO",
+            "handlers": [
+                "mail_handler"
+            ]
+        },
+        "root": {
+            "level": "DEBUG",
+            "handlers": [
+                "filelog"
+            ]
+        },
     }
 }
 
@@ -62,3 +93,5 @@ UPLOADED_FILES_URL = '/uploads'
 MAX_CONTENT_LENGTH = 8 * 1024 * 1024
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+TRAP_HTTP_EXCEPTIONS = True

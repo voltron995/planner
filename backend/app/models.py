@@ -1,9 +1,9 @@
 import uuid as uuid
 
 from sqlalchemy.dialects.postgresql import UUID
+from werkzeug.exceptions import abort
 
 from app import db
-from app.errors import NotFound
 
 
 class BaseModel(db.Model):
@@ -25,7 +25,7 @@ class BaseModel(db.Model):
     def get_or_404(cls, id: str):
         model = cls.get(id)
         if model is None:
-            raise NotFound()
+            abort(404)
         return model
 
     @classmethod

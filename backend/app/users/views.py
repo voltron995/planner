@@ -3,6 +3,7 @@ from flask.views import MethodView
 from flask_login import current_user, login_user, logout_user, login_required
 
 from app import db, login_manager
+from app.error_handlers.error_handlers import mail_logger
 from app.mail import send_email
 from .forms import LoginForm, RegisterForm, ResendForm
 from .models import User, Profile
@@ -61,6 +62,7 @@ class UsersRegister(MethodView):
             db.session.commit()
             token = Token.encrypt_confirmation_token(user.id)
             send_email(user.email, 'Account Confirmation', 'confirmation', username=user.login, token=token)
+            mail_logger.info('Confirmation token {} has been sent to {}'.format(token, user.email))
             flash('The confirmation letter has been sent to you via email.')
             return redirect(url_for('users.login'))
         form.flash_errors()
@@ -97,6 +99,7 @@ class UsersResend(MethodView):
             user = User.query.filter_by(email=form.email.data).first()
             token = Token.encrypt_confirmation_token(user.id)
             send_email(user.email, 'Account Confirmation', 'confirmation', username=user.login, token=token)
+            mail_logger.info('Confirmation token {} has been sent to {} one more time.'.format(token, user.email))
             flash('The new confirmation letter has been sent to you via email.')
             return redirect(url_for('users.login'))
         form.flash_errors()
