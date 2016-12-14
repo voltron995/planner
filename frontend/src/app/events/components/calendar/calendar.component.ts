@@ -158,16 +158,17 @@ export class CalendarComponent {
   }
 
   ngAfterContentInit() {
-      for (var event of this.eventsList) {
-          var eventObj = {
-              start: new Date(event.startTime),
-              end: new Date(event.endTime),
-              title: event.name,
-              color: colors.gray,
-              actions: this.actions,
-              cssClass: event.id
-          }
-          this.events.push(eventObj)
-      }
+    console.log('vasya');
+    for (var event of this.eventsList) {
+        var eventObj = {
+            start: new Date(event.startTime),
+            end: new Date(event.endTime),
+            title: event.name,
+            color: colors.gray,
+            actions: this.actions,
+            cssClass: event.id
+        }
+        this.events.push(eventObj)
+    }
   }
 }

@@ -1,7 +1,20 @@
 <main>
-    <div class="events-wrapper" *ngIf=events>
+
+    <a [routerLink]="['/events', 'new']">
+        Create New Event
+    </a>
+    <br>
+    <a [routerLink]="['/targets', 'new']">
+        Create New Target
+    </a>
+    <br>
+    <a [routerLink]="['/targets']">
+        Target list
+    </a>
+
+    <div class="events-wrapper">
         <div class="events container">
-            <calendar [eventsList]=events></calendar>
+            <calendar *ngIf="events" [eventsList]=events></calendar>
         </div>
     </div>
 </main>
