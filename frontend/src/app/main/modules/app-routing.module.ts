@@ -9,6 +9,11 @@ import {EventCreateComponent} from "../../events/components/event-create/event-c
 import {PluginsComponent} from "../../plugins/components/plugins/plugins.component";
 import {PluginComponent} from "../../plugins/components/plugin/plugin.component";
 import {EventDeleteComponent} from "../../events/components/event-delete/event-delete.component";
+import {TargetsComponent} from '../../targets/components/target-list/target-list.component';
+import {TargetComponent} from "../../targets/components/target-single/target-single.component";
+import {TargetEditComponent} from "../../targets/components/target-edit/target-edit.component";
+import {TargetCreateComponent} from "../../targets/components/target-create/target-create.component";
+import {TargetDeleteComponent} from "../../targets/components/target-delete/target-delete.component";
 
 const routes: Routes = [
   {
@@ -42,7 +47,27 @@ const routes: Routes = [
   {
     path: 'profile',
     component: ProfileComponent
-  }
+  },
+  {
+    path: 'targets',
+    component: TargetsComponent
+  },
+  {
+    path: 'targets/new',
+    component: TargetCreateComponent
+  },
+  {
+    path: 'targets/:id',
+    component: TargetComponent
+  },
+  {
+    path: 'targets/:id/edit',
+    component: TargetEditComponent
+  },
+  {
+    path: 'targets/:id/delete',
+    component: TargetDeleteComponent
+  },
 ];
 
 @NgModule({

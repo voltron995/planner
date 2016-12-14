@@ -30,15 +30,16 @@
     "isotope-layout": "^3.0.1",
     "ng2-datetime-picker": "^0.11.3",
     "ng2-file-upload": "~1.1.4-2",
-    "rxjs": "5.0.0-beta.12",
-    "zone.js": "^0.6.25"
+    "rxjs": "5.0.0-rc.4",
+    "zone.js": "^0.7.2"
   },
   "devDependencies": {
-    "@types/core-js": "^0.9.34",
-    "@types/node": "^6.0.45",
+    "@types/core-js": "^0.9.35",
     "@types/jasmine": "^2.5.35",
+    "@types/node": "^6.0.45",
     "angular2-template-loader": "^0.4.0",
     "awesome-typescript-loader": "^2.2.4",
+    "copy-webpack-plugin": "~4.0.1",
     "css-loader": "^0.23.1",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",
@@ -58,7 +59,6 @@
     "typescript": "2.1.1",
     "webpack": "^1.13.0",
     "webpack-dev-server": "^1.14.1",
-    "webpack-merge": "^0.14.0",
-    "copy-webpack-plugin": "~4.0.1"
+    "webpack-merge": "^0.14.0"
   }
 }

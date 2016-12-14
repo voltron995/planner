@@ -1,0 +1,45 @@
+<div class="container">
+
+    <form [formGroup]="form" (submit)="onSubmit()">
+
+        <!-- Name -->
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input
+                    class="form-control"
+                    formControlName="name"
+                    id="name"
+                    type="text">
+        </div>
+
+        <!-- Description -->
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea
+                    class="form-control"
+                    formControlName="description"
+                    id="description">
+            </textarea>
+        </div>
+
+        <!-- Is Done -->
+        <div class="form-group">
+            <label for="is_done">Is done</label>
+            <input
+                    class="form-control"
+                    formControlName="is_done"
+                    id="is_done"
+                    type="checkbox">
+        </div>
+
+
+        <!-- Submit -->
+        <button
+                class="btn btn-default"
+                type="submit">
+            Submit
+        </button>
+
+    </form>
+
+</div>

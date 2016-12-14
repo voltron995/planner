@@ -32,6 +32,15 @@ import { CalendarModule } from 'angular-calendar';
 import {CalendarComponent} from "./events/components/calendar/calendar.component";
 import {Ng2DatetimePickerModule} from "ng2-datetime-picker";
 import {EventDeleteComponent} from "./events/components/event-delete/event-delete.component";
+import {TargetsComponent} from './targets/components/target-list/target-list.component';
+import {TargetComponent} from "./targets/components/target-single/target-single.component";
+import {TargetEditComponent} from "./targets/components/target-edit/target-edit.component";
+import {TargetDeleteComponent} from "./targets/components/target-delete/target-delete.component";
+import {TargetCreateComponent} from "./targets/components/target-create/target-create.component";
+import {TargetService} from './targets/services/target.service';
+import {TargetEditForm} from "./targets/forms/target-edit/target-edit.form";
+import {TargetCreateForm} from "./targets/forms/target-create/target-create.form";
+
 
 
 
@@ -47,7 +56,7 @@ import {EventDeleteComponent} from "./events/components/event-delete/event-delet
         RecipesPluginModule,
         MasonryModule,
         CalendarModule.forRoot(),
-        Ng2DatetimePickerModule
+        Ng2DatetimePickerModule,
     ],
     declarations: [
         AppComponent,
@@ -58,6 +67,13 @@ import {EventDeleteComponent} from "./events/components/event-delete/event-delet
         EventsComponent,
         EventCreateForm,
         EventEditForm,
+        TargetComponent,
+        TargetCreateComponent,
+        TargetEditComponent,
+        TargetsComponent,
+        TargetCreateForm,
+        TargetDeleteComponent,
+        TargetEditForm,
         FileSelectDirective,
         PluginsComponent,
         PluginComponent,
@@ -70,6 +86,7 @@ import {EventDeleteComponent} from "./events/components/event-delete/event-delet
         EventService,
         ProfileService,
         UserService,
+        TargetService,
         RequestService,
         ResponseService
     ],
