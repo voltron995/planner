@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Recipe} from '../../models/recipe'
-import {RecipeService} from "../../services/recipe.service";
 import {DishService} from "../../../dishes/services/dish.service";
 @Component({
     selector: 'recipe',
@@ -16,19 +15,26 @@ export class RecipeComponent {
     @Input()
     recipe: Recipe;
 
-    constructor( private dishService: DishService) {}
+    @Input()
+    eventId: string;
 
-    postDish(recipe:Recipe) {
+    constructor(
+        private dishService: DishService
+    ) {}
+
+    postDish() {
 
         let data = {
-          name: this.recipe.name,
-          description:this.recipe.description,
-          // img_path:this.recipe.img_path,
-          ingredients:this.recipe.ingredients
-        }
+            name: this.recipe.name,
+            description: this.recipe.description,
+            // img_path:this.recipe.img_path,
+            ingredients: this.recipe.ingredients,
+            event_id: this.eventId
+        };
+
         this.dishService
             .post(data)
-            .then(recipe => console.log("sucsess"));
+            .then(recipe => console.log('success'));
     }
 
 }

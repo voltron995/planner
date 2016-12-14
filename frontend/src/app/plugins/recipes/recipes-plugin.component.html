@@ -16,7 +16,7 @@
 
     <section class="recipe-details col-lg-6 col-md-6 col-sm-6">
         <div *ngIf="selectedRecipe" class="section-content">
-            <recipe [recipe]="selectedRecipe"></recipe>
+            <recipe [recipe]="selectedRecipe" [eventId]="params.eventId"></recipe>
         </div>
     </section>
 </article>

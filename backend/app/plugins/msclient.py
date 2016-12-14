@@ -29,7 +29,7 @@ class MSResponseBuilder:
             if response.ok:
                 output.data = json
             else:
-                for error in ErrorSchema().dump(json.get('errors', []), many=True):
+                for error in ErrorSchema().dump(json.get('errors', []), many=True).data:
                     output.errors.append(Error(**error))
 
         return output
