@@ -12,10 +12,15 @@ export class EventService {
 
     private eventsUrl = 'api/v1.0/events';
 
+    private counter: number = 0;
+
     constructor(
         private requestSrv: RequestService,
         private responseSrv: ResponseService
-    ) {}
+    ) {
+        this.counter++;
+        console.log(this.counter, 'events service created');
+    }
 
     list(): Promise<Event[]> {
         return this.requestSrv

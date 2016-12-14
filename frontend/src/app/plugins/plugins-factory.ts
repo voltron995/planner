@@ -1,21 +1,20 @@
 import {RecipesPlugin} from "./recipes/recipes-plugin";
 import {BasePlugin} from "./base-plugin";
+import {BooksPlugin, TravelsPlugin, MoviesPlugin, MusicPlugin, SportPlugin} from "./mock-plugins";
 
 export class PluginsFactory {
 
     static _plugins: BasePlugin[] = [
-        new RecipesPlugin()
+        new RecipesPlugin(),
+        new BooksPlugin(),
+        new TravelsPlugin(),
+        new MoviesPlugin(),
+        new MusicPlugin(),
+        new SportPlugin(),
     ];
 
-    public static getPlugin(slug: string) {
-        return this._plugins.filter((plugin: BasePlugin) => plugin.slug == slug).pop();
-    }
-
-    public static listComponents() {
-        return this._plugins.map((plugin: BasePlugin) => plugin.component);
-    }
-
     public static listPlugins() {
-        return this._plugins;
+        // todo: remove concat
+        return this._plugins.concat(this._plugins, this._plugins, this._plugins, this._plugins);
     }
 }

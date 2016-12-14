@@ -1,0 +1,21 @@
+.grid-item {
+    background: lightblue;
+    border-radius: 10px;
+    display: inline-block;
+    font-size: 24px;
+    height: 120px;
+    line-height: 120px;
+    margin-bottom: 10px;
+    text-align: center;
+    width: 150px;
+}
+
+.grid-item:hover {
+    background: lightpink;
+}
+
+.grid-item a {
+    display: block;
+    height: 100%;
+    text-decoration: none;
+}

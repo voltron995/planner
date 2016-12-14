@@ -24,9 +24,7 @@ import {EventEditComponent} from "./events/components/event-edit/event-edit.comp
 import {EventEditForm} from "./events/forms/event-edit/event-edit.form";
 import {EventCreateComponent} from "./events/components/event-create/event-create.component";
 import {EventCreateForm} from "./events/forms/event-create/event-create.form";
-import {RecipesPluginModule} from "./plugins/recipes/recipes-plugin.module";
-import {PluginsComponent} from "./plugins/components/plugins/plugins.component";
-import {PluginComponent} from "./plugins/components/plugin/plugin.component";
+import {PluginsComponent} from "./plugins/plugins.component";
 import {MasonryModule} from "angular2-masonry/src/module";
 import { CalendarModule } from 'angular-calendar';
 import {CalendarComponent} from "./events/components/calendar/calendar.component";
@@ -53,7 +51,6 @@ import {TargetCreateForm} from "./targets/forms/target-create/target-create.form
         ModalModule.forRoot(),
         BootstrapModalModule,
         ReactiveFormsModule,
-        RecipesPluginModule,
         MasonryModule,
         CalendarModule.forRoot(),
         Ng2DatetimePickerModule,
@@ -76,7 +73,6 @@ import {TargetCreateForm} from "./targets/forms/target-create/target-create.form
         TargetEditForm,
         FileSelectDirective,
         PluginsComponent,
-        PluginComponent,
         ProfileComponent,
         ProfileEditForm,
         UserEditForm,

@@ -6,68 +6,93 @@ import {ProfileComponent} from '../../profiles/components/profile/profile.compon
 import {EventComponent} from "../../events/components/event/event.component";
 import {EventEditComponent} from "../../events/components/event-edit/event-edit.component";
 import {EventCreateComponent} from "../../events/components/event-create/event-create.component";
-import {PluginsComponent} from "../../plugins/components/plugins/plugins.component";
-import {PluginComponent} from "../../plugins/components/plugin/plugin.component";
+import {PluginsComponent} from "../../plugins/plugins.component";
 import {EventDeleteComponent} from "../../events/components/event-delete/event-delete.component";
 import {TargetsComponent} from '../../targets/components/target-list/target-list.component';
 import {TargetComponent} from "../../targets/components/target-single/target-single.component";
 import {TargetEditComponent} from "../../targets/components/target-edit/target-edit.component";
 import {TargetCreateComponent} from "../../targets/components/target-create/target-create.component";
 import {TargetDeleteComponent} from "../../targets/components/target-delete/target-delete.component";
+import {RecipesPluginModule} from "../../plugins/recipes/recipes-plugin.module";
 
 const routes: Routes = [
-  {
-    path: 'events',
-    component: EventsComponent
-  },
-  {
-    path: 'events/new',
-    component: EventCreateComponent
-  },
-  {
-    path: 'events/:id',
-    component: EventComponent
-  },
-  {
-    path: 'events/:id/edit',
-    component: EventEditComponent
-  },
-  {
-    path: 'events/:id/delete',
-    component: EventDeleteComponent
-  },
-  {
-    path: 'events/:id/plugins',
-    component: PluginsComponent
-  },
-  {
-    path: 'events/:id/plugins/:plugin',
-    component: PluginComponent
-  },
-  {
-    path: 'profile',
-    component: ProfileComponent
-  },
-  {
-    path: 'targets',
-    component: TargetsComponent
-  },
-  {
-    path: 'targets/new',
-    component: TargetCreateComponent
-  },
-  {
-    path: 'targets/:id',
-    component: TargetComponent
-  },
-  {
-    path: 'targets/:id/edit',
-    component: TargetEditComponent
-  },
-  {
-    path: 'targets/:id/delete',
-    component: TargetDeleteComponent
-  },
+    {
+        path: 'events',
+        children: [
+            {
+                path: '',
+                component: EventsComponent,
+            },
+            {
+                path: 'new',
+                component: EventCreateComponent
+            },
+            {
+                path: ':id',
+                children: [
+                    {
+                        path: '',
+                        component: EventComponent,
+                    },
+                    {
+                        path: 'edit',
+                        component: EventEditComponent
+                    },
+                    {
+                        path: 'delete',
+                        component: EventDeleteComponent
+                    },
+                    {
+                        path: 'plugins',
+                        children: [
+                            {
+                                path: '',
+                                component: PluginsComponent,
+                            },
+                            {
+                                path: 'recipes',
+                                loadChildren: () => RecipesPluginModule,
+                            }
+                        ]
+                    },
+                ]
+            },
+        ]
+    },
+    {
+        path: 'profile',
+        component: ProfileComponent
+    },
+    {
+        path: 'targets',
+        children: [
+            {
+                path: '',
+                component: TargetsComponent
+            },
+            {
+                path: 'new',
+                component: TargetCreateComponent
+            },
+            {
+                path: ':id',
+                children: [
+                    {
+                        path: '',
+                        component: TargetComponent
+                    },
+                    {
+                        path: 'edit',
+                        component: TargetEditComponent
+                    },
+                    {
+                        path: 'delete',
+                        component: TargetDeleteComponent
+                    },
+                ]
+            },
+        ]
+    },
 ];
 
 @NgModule({

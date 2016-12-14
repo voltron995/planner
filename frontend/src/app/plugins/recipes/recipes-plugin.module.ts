@@ -3,7 +3,6 @@ import {DishService} from "./dishes/services/dish.service";
 import {IngredientService} from "./ingredients/services/ingredients.service";
 import {RecipeDetailComponent} from "./recipes/components/recipe-detail/recipe-detail.component";
 import {IngredientsListComponent} from "./ingredients/components/ingredients-list.component";
-import {BrowserModule} from "@angular/platform-browser";
 import {RecipesPluginComponent} from "./recipes-plugin.component";
 import {CategoryService} from "./categories/services/category.service";
 import {RecipeService} from "./recipes/services/recipe.service";
@@ -11,11 +10,33 @@ import {CategoriesComponent} from "./categories/components/categories/categories
 import {RecipesComponent} from "./recipes/components/recipes/recipes.component";
 import {RecipeComponent} from "./recipes/components/recipe/recipe.component";
 import {MasonryModule} from "angular2-masonry/src/module";
+import {RouterModule} from "@angular/router";
+import {DishCreateComponent} from "./dishes/components/dish-create/dish-create.component";
+import {DishCreateForm} from "./dishes/forms/dish-create/dish-create.form";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {CommonModule} from "@angular/common";
 
 @NgModule({
     imports: [
-        BrowserModule,
-        MasonryModule
+        CommonModule,
+        FormsModule,
+        MasonryModule,
+        ReactiveFormsModule,
+        RouterModule.forChild([
+            {
+                path: '',
+                component: RecipesPluginComponent,
+            },
+            {
+                path: 'dishes',
+                children: [
+                    {
+                        path: 'new',
+                        component: DishCreateComponent,
+                    }
+                ]
+            }
+        ]),
     ],
     declarations: [
         RecipesPluginComponent,
@@ -24,15 +45,15 @@ import {MasonryModule} from "angular2-masonry/src/module";
         CategoriesComponent,
         RecipeComponent,
         RecipesComponent,
+        DishCreateComponent,
+        DishCreateForm,
     ],
     providers: [
         DishService,
         CategoryService,
         RecipeService,
-        IngredientService
-    ],
-    exports: [
-        RecipesPluginComponent,
+        IngredientService,
     ]
 })
-export class RecipesPluginModule {}
+export class RecipesPluginModule {
+}

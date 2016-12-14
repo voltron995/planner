@@ -9,9 +9,6 @@ import {EventService} from '../../services/event.service';
     templateUrl: 'events.component.html',
     styleUrls: [
         'events.component.css'
-    ],
-    providers: [
-        EventService
     ]
 })
 

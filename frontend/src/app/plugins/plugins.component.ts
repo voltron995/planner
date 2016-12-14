@@ -1,15 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {RecipesPluginComponent} from "../../recipes/recipes-plugin.component";
-import {PluginsFactory} from "../../plugins-factory";
+import {PluginsFactory} from "./plugins-factory";
 
 
 @Component({
     selector: 'plugins',
     templateUrl: 'plugins.component.html',
-    entryComponents: [
-        RecipesPluginComponent
-    ]
+    styleUrls: [
+        'plugins.component.css'
+    ],
 })
 
 export class PluginsComponent implements OnInit {

@@ -18,7 +18,7 @@ import {Category} from "../../../categories/models/category";
 
 })
 
-export class RecipesComponent implements OnInit, OnChanges {
+export class RecipesComponent implements OnChanges {
     recipes: Recipe[];
 
     @Input()
@@ -30,10 +30,6 @@ export class RecipesComponent implements OnInit, OnChanges {
     constructor(
         private recipeService: RecipeService
     ) {}
-
-    ngOnInit(): void {
-        this.getRecipes();
-    }
 
     getRecipes(): void {
         this.recipeService

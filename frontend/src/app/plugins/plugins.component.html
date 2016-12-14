@@ -1,0 +1,9 @@
+<div class="plugin-list">
+    <masonry [options]="{itemSelector: '.grid-item', gutter: 5}">
+        <masonry-brick *ngFor="let plugin of plugins" class="plugin grid-item">
+            <a [routerLink]="['/events', params.eventId, 'plugins', plugin.slug]">
+                {{ plugin.name }}
+            </a>
+        </masonry-brick>
+    </masonry>
+</div>
