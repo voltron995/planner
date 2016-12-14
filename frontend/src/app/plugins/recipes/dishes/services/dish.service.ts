@@ -11,7 +11,7 @@ import {URLSearchParams} from "@angular/http";
 @Injectable()
 export class DishService {
 
-    private dishUrl = 'api/v1.0/plugins/recipes/dishes/';
+    private dishUrl = 'api/v1.0/plugins/recipes/dishes';
 
     constructor(
         private requestSrv: RequestService,

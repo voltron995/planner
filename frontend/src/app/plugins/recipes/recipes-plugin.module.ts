@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {DishService} from "./dishes/services/dish.service";
 import {IngredientService} from "./ingredients/services/ingredients.service";
-import {RecipeDetailComponent} from "./recipes/components/recipe-detail/recipe-detail.component";
 import {IngredientsListComponent} from "./ingredients/components/ingredients-list.component";
 import {BrowserModule} from "@angular/platform-browser";
 import {RecipesPluginComponent} from "./recipes-plugin.component";
@@ -19,7 +18,6 @@ import {MasonryModule} from "angular2-masonry/src/module";
     ],
     declarations: [
         RecipesPluginComponent,
-        RecipeDetailComponent,
         IngredientsListComponent,
         CategoriesComponent,
         RecipeComponent,

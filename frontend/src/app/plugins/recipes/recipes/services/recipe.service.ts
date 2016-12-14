@@ -16,7 +16,7 @@ export class RecipeService {
         private responseSrv: ResponseService
     ) {}
     private recipeUrl = 'api/v1.0/plugins/recipes/recipes';
-
+    private dishUrl = 'api/v1.0/plugins/recipes/dishes';
     // getRecipe(id: string):Promise<Recipe[]> {
     //   let params = new URLSearchParams();
     //   params.set('categories',id)
@@ -54,6 +54,22 @@ export class RecipeService {
             .get(url)
             .then(response => Recipe.newFromResponse(this.responseSrv.parseData(response)))
             .catch(response => this.responseSrv.parseErrors(response));
+     }
+     post(data: any): Promise<Recipe> {
+         const url = `${this.recipeUrl}`;
+
+         return this.requestSrv
+             .post(url, data)
+             .then(response => Recipe.newFromResponse(this.responseSrv.parseData(response)))
+             .catch(response => this.responseSrv.parseErrors(response));
+     }
+     postDish(data: any): Promise<Recipe> {
+         const url = `${this.dishUrl}`;
+
+         return this.requestSrv
+             .post(url, data)
+             .then(response => Recipe.newFromResponse(this.responseSrv.parseData(response)))
+             .catch(response => this.responseSrv.parseErrors(response));
      }
 
 
