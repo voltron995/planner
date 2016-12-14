@@ -1,0 +1,6 @@
+<div class="container">
+    <div *ngIf="target">
+        <h1>Edit {{ target.name }}</h1>
+        <target-edit-form [target]="target"></target-edit-form>
+    </div>
+</div>

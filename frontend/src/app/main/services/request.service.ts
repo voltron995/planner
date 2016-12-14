@@ -17,6 +17,11 @@ export class RequestService {
             .toPromise()
     }
 
+    delete(url: string): Promise<any> {
+        return this.http.delete(url, {headers: this.headers})
+            .toPromise();
+    }
+
     put(url: string, data: any): Promise<any> {
         return this.http
             .put(url, data, {headers: this.headers})
@@ -28,5 +33,6 @@ export class RequestService {
             .post(url, data, {headers: this.headers})
             .toPromise();
     }
+
 
 }

@@ -1,0 +1,16 @@
+<div *ngIf="target">
+    <h1>{{ target.name }}</h1>
+    <div class="description">
+        {{ target.description }}
+    </div>
+
+    <a [routerLink]="['/targets', target.id, 'edit']">
+        Edit
+    </a>
+    <br>
+    <a [routerLink]="['/targets', target.id, 'delete']">
+        Delete
+    </a>
+
+
+</div>

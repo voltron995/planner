@@ -8,9 +8,10 @@ from app.errors import BadRequest, InvalidAttribute
 
 class TargetSchema(ModelSchema):
     name = fields.Str(required=True, validate=[validate.Length(max=255)])
-    is_done = fields.Boolean(required=True)
+    is_done = fields.Boolean()
     user_id = fields.Str(required=True, dump_only=True)
     target_id = fields.Str()
+    description = fields.Str()
 
     @validates('target_id')
     def validate_target_id(self, target_id):

@@ -1,0 +1,19 @@
+<main>
+
+    <a [routerLink]="['/targets', 'new']">
+        Create New Target
+    </a>
+
+    <div class="targets-wrapper">
+        <div class="targets container">
+            <div *ngFor="let target of targets" class="target row">
+                <h2 class="name">
+                    <a [routerLink]="['/targets', target.id]">
+                        {{ target.name }}
+                    </a>
+                </h2>
+                <div class="description">{{ target.description }}</div>
+            </div>
+        </div>
+    </div>
+</main>
