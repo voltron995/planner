@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {DishService} from "./dishes/services/dish.service";
 import {IngredientService} from "./ingredients/services/ingredients.service";
-import {RecipeDetailComponent} from "./recipes/components/recipe-detail/recipe-detail.component";
 import {IngredientsListComponent} from "./ingredients/components/ingredients-list.component";
 import {RecipesPluginComponent} from "./recipes-plugin.component";
 import {CategoryService} from "./categories/services/category.service";
@@ -40,7 +39,6 @@ import {CommonModule} from "@angular/common";
     ],
     declarations: [
         RecipesPluginComponent,
-        RecipeDetailComponent,
         IngredientsListComponent,
         CategoriesComponent,
         RecipeComponent,
@@ -52,7 +50,7 @@ import {CommonModule} from "@angular/common";
         DishService,
         CategoryService,
         RecipeService,
-        IngredientService,
+        IngredientService
     ]
 })
 export class RecipesPluginModule {

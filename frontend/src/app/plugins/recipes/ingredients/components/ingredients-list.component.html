@@ -1,11 +1,11 @@
 <main>
-    <h1>
+    <h3>
         List of ingredients
-    </h1>
-    <div class="events-wrapper">
-        <div class="events container">
-            <div *ngFor="let ingredient of ingredients" class="ingredient row">
-              <h2>{{ ingredient.name }}</h2>
+    </h3>
+    <div class="ingredients-wrapper">
+        <div class="ingredients container">
+            <div *ngFor = "let ingr of recipe.ingredients"  class="ingredient row">
+            <ul><li>  {{ingr.ingredient.name }}  {{ingr.quantity}}  {{ingr.ingredient.dimension}}</li></ul>
 
               </div>
         </div>

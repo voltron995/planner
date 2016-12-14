@@ -11,7 +11,7 @@ import {URLSearchParams} from "@angular/http";
 @Injectable()
 export class DishService {
 
-    private dishUrl = 'api/v1.0/plugins/recipes/dishes/';
+    private dishUrl = 'api/v1.0/plugins/recipes/dishes';
 
     constructor(
         private requestSrv: RequestService,
@@ -19,8 +19,10 @@ export class DishService {
     ) {}
 
     list(): Promise<Dish[]> {
+        const url = `${this.dishUrl}/`;
+
         return this.requestSrv
-            .get(this.dishUrl)
+            .get(url)
             .then(response => this.responseSrv.parseData(response).map((item: any) => Dish.newFromResponse(item)))
             .catch(response => this.responseSrv.parseErrors(response));
     }
@@ -35,8 +37,10 @@ export class DishService {
     }
 
     post(data: any): Promise<Dish> {
+        const url = `${this.dishUrl}/`;
+
         return this.requestSrv
-            .post(this.dishUrl, data)
+            .post(url, data)
             .then(response => Dish.newFromResponse(this.responseSrv.parseData(response)))
             .catch(response => this.responseSrv.parseErrors(response));
     }

@@ -1,11 +1,16 @@
 <div class="recipe-wrapper">
     <div class="recipe">
         <img [src]="recipe.image" alt="Recipe Image">
-        <h2 class="name">
+        <h1 class="name">
             {{ recipe.name }}
-        </h2>
-        <div class="description">
+        </h1>
+        <div class="description"> Description:
             {{ recipe.description }}
         </div>
+        <ingredients-list [recipe] = "recipe"></ingredients-list>
+
+    <div><h3> Price: {{ recipe.price }}</h3></div>
+    <button (click) = "postDish(recipe)">Add recipe to item</button>
+    <button>Edit and Add recipe to item</button>
     </div>
 </div>

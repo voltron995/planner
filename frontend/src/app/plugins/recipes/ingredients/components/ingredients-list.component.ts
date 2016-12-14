@@ -1,5 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit,Input} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
+import {Recipe} from '../../recipes/models/recipe';
 
 import {Category} from '../../categories/models/category';
 import {IngredientService} from "../services/ingredients.service";
@@ -17,29 +18,10 @@ import{Ingredient} from "../models/ingredients";
 
 export class IngredientsListComponent implements OnInit{
 
-    ingredients: Ingredient[];
-    constructor(private ingredientService: IngredientService,
-                private recipeService:RecipeService) {
-    }
+    @Input()
+    recipe:Recipe;
 
-    ngOnInit(): void {
-        this.getIngredients();
+    ngOnInit(): void {}
 
-  }
 
-    getIngredients(): void {
-        this.ingredientService
-        .list()
-        .then(ingredients => this.ingredients = ingredients);
-    }
-
-    // onSelect(category: Category): void {
-    //     this.selectedCategory = category
-    //     this.recipeService
-    //     .listCat(this.selectedCategory.id)
-    //     .then(recipes => this.recipes = recipes);
-    // }
-    // onSelected(recipe:Recipe){
-    //   this.selectedRecipe = recipe
-    //   }
   }

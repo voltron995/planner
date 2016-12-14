@@ -13,17 +13,17 @@ export class Recipe {
         this.name = attributes.name;
         this.description = attributes.description;
         this.price = attributes.price;
-        this.image = attributes.image;
-        this.ingredients = attributes.ingredients
-    }
+        this.ingredients = attributes.ingredients;
+        this.image = attributes.image
+      }
 
     public static newFromResponse(data: any) {
         return new this(data.id, {
             name: data.name,
             description: data.description,
             price: data.price,
-            image: data.image_link,
-            ingredients:data.ingredients
+            ingredients:data.ingredients,
+            image:data.image_link
         });
     }
 
