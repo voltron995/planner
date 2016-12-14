@@ -16,6 +16,7 @@ export class Event {
     ) {
         this.id = id;
         this.name = attributes.name;
+        this.target_id = attributes.target_id;
         this.description = attributes.description;
         this.startTime = attributes.startTime;
         this.endTime = attributes.endTime;
@@ -28,6 +29,7 @@ export class Event {
     public static newFromResponseData(data: any) {
         return new this(data.id, {
             name: data.name,
+            target_id: data.target_id,
             description: data.description,
             startTime: data.start_time,
             endTime: data.end_time,

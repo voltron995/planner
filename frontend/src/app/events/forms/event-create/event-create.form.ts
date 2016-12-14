@@ -33,6 +33,7 @@ export class EventCreateForm implements OnInit {
     initForm() {
         this.form = this.fb.group({
           name: [''],
+          target_id: [''],
           description: [''],
           start_time: [''],
           end_time: [''],
