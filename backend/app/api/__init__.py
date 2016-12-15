@@ -1,6 +1,5 @@
 from app import app
 from app.api.permitters import Permitter, PermitterFactory, permission_callback
-from app.error_handlers.error_handlers import api_error_handler
 
 
 class Api:
@@ -10,7 +9,6 @@ class Api:
     def __init__(self, name: str, url_prefix: str = None):
         self.name = self._prepare_name(name)
         self.url_prefix = url_prefix
-        self._register_error_handler()
 
     def add_url_rule(
             self,
@@ -43,6 +41,3 @@ class Api:
         callbacks = app.before_request_funcs.setdefault(self.name, [])
         if permission_callback not in callbacks:
             callbacks.append(permission_callback)
-
-    def _register_error_handler(self):
-        app._register_error_handler(self.name, Exception, api_error_handler)

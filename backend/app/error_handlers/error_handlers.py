@@ -46,7 +46,7 @@ def api_error_handler(exception):
 @app.errorhandler(Exception)
 def default_error_handler(error):
     if re.match(r'/api', request.path):
-        return api_error_handler(APIExceptions.get(error.code, APIException)())
+        return api_error_handler(error)
     app_logger.exception()
     return render_template('errors/default.html')
 
