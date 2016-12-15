@@ -33,9 +33,9 @@ class Error:
     detail = 'Server encountered an internal error.'
     source = None
 
-    def __init__(self, title: str = None, detail: str = None, status: int = None, source: str = None) -> None:
-        if status is not None:
-            self.code = status
+    def __init__(self, title: str = None, detail: str = None, code: int = None, source: str = None) -> None:
+        if code is not None:
+            self.code = code
         if detail is not None:
             self.detail = detail
         if source is not None:

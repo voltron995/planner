@@ -26,5 +26,5 @@ class ModelSchema(Schema):
 class ErrorSchema(Schema):
     title = fields.Str(dump_only=True)
     detail = fields.Str(dump_only=True)
-    status = fields.Int(dump_only=True)
+    code = fields.Int(dump_only=True)
     source = fields.Str(dump_only=True)
