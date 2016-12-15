@@ -16,6 +16,9 @@ import {Router} from '@angular/router'
 
 export class EventCreateForm implements OnInit {
 
+    @Input()
+    targets: any[];
+    
     form: FormGroup;
 
     constructor(
@@ -44,7 +47,6 @@ export class EventCreateForm implements OnInit {
 
     onSubmit() {
         let values = this.form.value;
-        console.log(values)
         this.eventService
             .post(values)
             .then(profile => console.log(profile, 'success'))

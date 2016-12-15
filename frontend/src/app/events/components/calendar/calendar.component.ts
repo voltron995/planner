@@ -159,7 +159,6 @@ export class CalendarComponent {
 
   ngAfterContentInit() {
       for (var event of this.eventsList) {
-        console.log(event)
           if (event.colorPrimary && event.colorSecondary) {
             var color_p: string = event.colorPrimary;
             var color_s: string = event.colorSecondary;

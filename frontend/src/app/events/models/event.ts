@@ -2,6 +2,7 @@ export class Event {
 
     public id: string;
     public name: string;
+    public target_id: string;
     public description: string;
     public startTime: string;
     public endTime: string;
