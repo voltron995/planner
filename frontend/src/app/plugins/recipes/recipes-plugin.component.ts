@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Category} from "./categories/models/category";
 import {Recipe} from "./recipes/models/recipe";
 import {ActivatedRoute} from "@angular/router";
@@ -8,7 +8,7 @@ import {Subscription} from "rxjs";
     templateUrl: 'recipes-plugin.component.html',
 })
 
-export class RecipesPluginComponent {
+export class RecipesPluginComponent implements OnInit {
 
     selectedCategory: Category;
     selectedRecipe: Recipe;
@@ -22,7 +22,9 @@ export class RecipesPluginComponent {
     constructor(
         private route: ActivatedRoute
     ) {}
-
+    ngOnInit(){
+      this.initParams();
+    }
     onCategorySelected(category: Category) {
         this.selectedCategory = category;
     }
