@@ -36,7 +36,7 @@ export class EventCreateForm implements OnInit {
     initForm() {
         this.form = this.fb.group({
           name: [''],
-          target_id: [''],
+          target_id: [null],
           description: [''],
           start_time: [''],
           end_time: [''],
@@ -47,6 +47,9 @@ export class EventCreateForm implements OnInit {
 
     onSubmit() {
         let values = this.form.value;
+        if (!values.target_id) {
+            delete values.target_id;
+        }
         this.eventService
             .post(values)
             .then(profile => console.log(profile, 'success'))

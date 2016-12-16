@@ -2,7 +2,8 @@ import {Component, OnInit, OnDestroy} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {Event} from '../../models/event'
 import {EventService} from "../../services/event.service";
-
+import {Target} from '../../../targets/models/targets';
+import {TargetService} from '../../../targets/services/target.service';
 
 @Component({
     selector: 'event-edit',
@@ -14,9 +15,12 @@ import {EventService} from "../../services/event.service";
 })
 
 export class EventEditComponent implements OnInit, OnDestroy {
+    targets: Target[];
+
     constructor(
         private route: ActivatedRoute,
-        private eventSrv: EventService
+        private eventSrv: EventService,
+        private targetService: TargetService
     ) {}
 
     id: string;
@@ -26,7 +30,7 @@ export class EventEditComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.initParams();
         this.initEvent();
-
+        this.getTargets();
     }
 
     private initParams() {
@@ -42,6 +46,13 @@ export class EventEditComponent implements OnInit, OnDestroy {
                 this.event = event;
             });
     }
+
+    getTargets(): void {
+        this.targetService
+            .list()
+            .then(targets => this.targets = targets);
+    }
+
 
     ngOnDestroy() {
         this.sub.unsubscribe();

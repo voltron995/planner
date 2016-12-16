@@ -16,8 +16,10 @@
             <label for="name">Target</label>
             <select id='target'
                     class="form-control"
-                    formControlName="target_id">
-                    <option *ngFor="let target of targets" value="{{target.id}}" >{{target.name}} {{target.id}}</option>
+                    formControlName="target_id"
+                    >
+                    <option  value="">Choose target</option>
+                    <option *ngFor="let target of targets" value="{{target.id}}">{{target.name}}</option>
             </select>
         </div>
         <!-- Description -->

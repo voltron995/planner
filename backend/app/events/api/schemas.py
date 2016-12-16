@@ -18,7 +18,7 @@ class EventSchema(ModelSchema):
     color_secondary = fields.Str()
     is_done = fields.Boolean()
     user_id = fields.Str(required=True, dump_only=True)
-    target_id = fields.Str()
+    target_id = fields.Str(required=False)
     items = fields.Nested(ItemSchema, many=True, dump_only=True)
 
     @validates_schema
