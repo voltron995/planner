@@ -16,6 +16,14 @@
             </div>
         </div>
 
+        <!-- Target -->
+        <div *ngIf="target" class="target">
+            <div class="row">
+                <span class="col-xs-3">Target:</span>
+                <span class="value"><a [routerLink]="['/targets', target.id]">{{ target.name }}</a></span>
+            </div>
+        </div>
+
         <!-- Description -->
         <div class="description">{{ event.description }}</div>
 
