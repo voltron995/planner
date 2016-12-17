@@ -15,16 +15,16 @@ export class Recipe {
         this.price = attributes.price;
         this.ingredients = attributes.ingredients;
         this.image = attributes.image
-      }
+    }
 
     public static newFromResponse(data: any) {
         return new this(data.id, {
             name: data.name,
             description: data.description,
             price: data.price,
-            ingredients:data.ingredients,
-            image:data.image_link
+            ingredients: data.ingredients,
+            image: data.image_link
         });
     }
 
-  }
+}

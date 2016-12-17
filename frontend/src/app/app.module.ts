@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
-import {FileSelectDirective} from 'ng2-file-upload'
+import {FileUploadModule} from 'ng2-file-upload'
 import {ModalModule} from 'angular2-modal';
 import {BootstrapModalModule} from 'angular2-modal/plugins/bootstrap';
 import {ReactiveFormsModule} from '@angular/forms';
@@ -38,6 +38,8 @@ import {TargetCreateComponent} from "./targets/components/target-create/target-c
 import {TargetService} from './targets/services/target.service';
 import {TargetEditForm} from "./targets/forms/target-edit/target-edit.form";
 import {TargetCreateForm} from "./targets/forms/target-create/target-create.form";
+import {ItemsComponent} from "./items/components/items/items.component";
+import {ItemService} from "./items/services/item.service";
 
 
 
@@ -54,6 +56,7 @@ import {TargetCreateForm} from "./targets/forms/target-create/target-create.form
         MasonryModule,
         CalendarModule.forRoot(),
         Ng2DatetimePickerModule,
+        FileUploadModule,
     ],
     declarations: [
         AppComponent,
@@ -64,6 +67,7 @@ import {TargetCreateForm} from "./targets/forms/target-create/target-create.form
         EventsComponent,
         EventCreateForm,
         EventEditForm,
+        ItemsComponent,
         TargetComponent,
         TargetCreateComponent,
         TargetEditComponent,
@@ -71,7 +75,6 @@ import {TargetCreateForm} from "./targets/forms/target-create/target-create.form
         TargetCreateForm,
         TargetDeleteComponent,
         TargetEditForm,
-        FileSelectDirective,
         PluginsComponent,
         ProfileComponent,
         ProfileEditForm,
@@ -80,6 +83,7 @@ import {TargetCreateForm} from "./targets/forms/target-create/target-create.form
     ],
     providers: [
         EventService,
+        ItemService,
         ProfileService,
         UserService,
         TargetService,

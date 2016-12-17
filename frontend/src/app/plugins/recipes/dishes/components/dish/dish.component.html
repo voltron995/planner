@@ -1,0 +1,20 @@
+<div *ngIf="dish" class="dish-wrapper">
+    <div class="recipe">
+        <img [src]="dish.imageLink" alt="Recipe Image">
+        <h2 class="name">
+            {{ dish.name }}
+        </h2>
+        <div class="description"> Description:
+            {{ dish.description }}
+        </div>
+
+        <ingredients-list [entity]="dish"></ingredients-list>
+
+        <div>
+            <h3> Price: {{ dish.price }}</h3>
+        </div>
+    </div>
+
+    <a [routerLink]="['edit']">Edit</a>
+
+</div>

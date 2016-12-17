@@ -1,8 +1,14 @@
 <div *ngIf="event">
+
+    <!-- Name -->
     <h1>{{ event.name }}</h1>
+
+    <!-- Description -->
     <div class="description">
         {{ event.description }}
     </div>
+
+    <!-- Date -->
     <div class="date">
         <div class="start-time">
             <span>Start Time:</span>
@@ -14,23 +20,14 @@
         </div>
     </div>
 
-    <div class="items">
-        <ul *ngFor="let item of event.items" class="item row">
-            <li class="item-id">Item Id: {{ item.id }}</li>
-            <li class="item-plugin">Plugin: {{ item.plugin }}</li>
-        </ul>
+    <!-- Items -->
+    <items [event]="event"></items>
+
+    <!-- Actions -->
+    <div class="actions">
+        <a [routerLink]="['/events', event.id, 'edit']">Edit</a>
+        <a [routerLink]="['/events', event.id, 'delete']">Delete</a>
+        <a [routerLink]="['/events', event.id, 'plugins']">Add Item</a>
     </div>
-
-    <a [routerLink]="['/events', event.id, 'edit']">
-        Edit
-    </a>
-
-    <a [routerLink]="['/events', event.id, 'delete']">
-        Delete
-    </a>
-
-    <a [routerLink]="['/events', event.id, 'plugins']">
-        Add Item
-    </a>
 
 </div>

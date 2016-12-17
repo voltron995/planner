@@ -6,20 +6,24 @@ import {FileUploader} from "ng2-file-upload";
 import {Router} from "@angular/router";
 
 @Component({
-    selector: 'dish-create-form',
-    templateUrl: 'dish-create.form.html',
+    selector: 'dish-edit-form',
+    templateUrl: 'dish-edit.form.html',
     styleUrls: [
-        'dish-create.form.css'
+        'dish-edit.form.css'
     ],
     providers: [
         FormBuilder
     ]
 })
 
-export class DishCreateForm implements OnInit {
+export class DishEditForm implements OnInit {
 
     @Input()
     eventId: string;
+
+    @Input()
+    dish: Dish;
+
     uploader: FileUploader;
     imagePreview: string;
 
@@ -38,9 +42,9 @@ export class DishCreateForm implements OnInit {
 
     initForm() {
         this.form = this.fb.group({
-            name: [],
-            description: [],
-            img_path: [],
+            name: [this.dish.name],
+            description: [this.dish.description],
+            img_path: [this.dish.image],
             ingredients: [[]],
             event_id: this.eventId,
         });
@@ -61,14 +65,14 @@ export class DishCreateForm implements OnInit {
         };
 
         _this.uploader = uploader;
-        _this.imagePreview = '/dist/assets/dish-default.jpg';
+        _this.imagePreview = this.dish.imageLink;
     }
 
     onSubmit() {
         let values = this.form.value;
         this.dishSrv
-            .post(values)
-            .then((dish: Dish) => this.router.navigate(['events', this.eventId, 'plugins', 'recipes']))
+            .put(this.dish.id, values)
+            .then((dish: Dish) => this.router.navigate(['events', this.eventId]))
             .catch(errors => console.log(errors, 'errors'));
     }
 

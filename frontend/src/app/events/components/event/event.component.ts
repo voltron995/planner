@@ -39,7 +39,7 @@ export class EventComponent implements OnInit, OnDestroy {
         this.eventSrv
             .get(this.id)
             .then(event => {
-                this.event = event;
+                (this.event = event) && console.log(this.event);
             });
     }
 

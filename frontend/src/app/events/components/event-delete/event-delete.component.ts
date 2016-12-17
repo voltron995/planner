@@ -28,7 +28,6 @@ export class EventDeleteComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.initParams();
         this.initEvent();
-
     }
 
     private initParams() {

@@ -1,15 +1,12 @@
-<main>
-    <h3>
-        List of ingredients
-    </h3>
-    <div class="ingredients-wrapper">
-        <div class="ingredients container">
-            <div *ngFor = "let ingr of recipe.ingredients"  class="ingredient row">
-            <ul><li>  {{ingr.ingredient.name }}  {{ingr.quantity}}  {{ingr.ingredient.dimension}}</li></ul>
-
-              </div>
+<h3>
+    List of ingredients
+</h3>
+<div class="ingredients-wrapper">
+    <div class="ingredients container">
+        <div *ngFor="let ingr of entity.ingredients" class="ingredient row">
+            <ul>
+                <li>  {{ ingr.ingredient.name }} {{ ingr.quantity }} {{ ingr.ingredient.dimension }}</li>
+            </ul>
         </div>
     </div>
-
-
-</main>
+</div>

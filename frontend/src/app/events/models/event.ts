@@ -1,3 +1,4 @@
+import {Item} from "../../items/models/item";
 export class Event {
 
     public id: string;
@@ -6,7 +7,7 @@ export class Event {
     public startTime: string;
     public endTime: string;
     public isDone: boolean;
-    public items: Array<any>;
+    public items: Item[];
 
     constructor(
         id: string,
@@ -28,7 +29,7 @@ export class Event {
             startTime: data.start_time,
             endTime: data.end_time,
             isDone: data.is_done,
-            items: data.items,
+            items: data.items.map((item: any) => Item.newFromResponse(item)),
         });
     }
 

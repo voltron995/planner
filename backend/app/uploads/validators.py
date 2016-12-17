@@ -104,3 +104,11 @@ class ProfileImageValidator(ImageValidator):
     MAX_SIZE = 100 * 1024
     MAX_HEIGHT = 250
     MAX_WIDTH = 250
+
+@register
+class DishImageValidator(ImageValidator):
+    UPLOAD_GROUP = groups.DISH_IMAGES
+    MIME_TYPES = 'image/jpg', 'image/jpeg', 'image/png'
+    MAX_SIZE = 500 * 1024
+    MAX_HEIGHT = 240
+    MAX_WIDTH = 320
