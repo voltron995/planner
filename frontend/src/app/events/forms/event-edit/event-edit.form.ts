@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {EventService} from '../../services/event.service';
 import {Event} from '../../models/event';
 import {Router} from '@angular/router'
+import {MessageService} from "../../../main/services/message.service";
 
 
 @Component({
@@ -27,7 +28,8 @@ export class EventEditForm implements OnInit {
     constructor(
         private fb: FormBuilder,
         private eventService: EventService,
-        private router: Router
+        private router: Router,
+        private msgSrv: MessageService
     ) {
 
     }
@@ -55,9 +57,11 @@ export class EventEditForm implements OnInit {
         }
         this.eventService
             .put(this.event.id, values)
-            .then(profile => console.log(profile, 'success'))
+            .then(event => {
+                this.msgSrv.success(`Event ${this.event.name} successfully updated.`);
+                this.router.navigate(['/events', this.event.id])
+            })
             .catch(errors => console.log(errors, 'errors'));
-        this.router.navigate(['/events', this.event.id])
     }
 
 }

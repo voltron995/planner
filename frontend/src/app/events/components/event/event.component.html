@@ -30,7 +30,7 @@
         <!-- Actions -->
         <div class="actions btn-group-lg">
             <a [routerLink]="['edit']" class="btn btn-lg btn-warning">Edit</a>
-            <a [routerLink]="['delete']" class="btn btn-lg btn-danger">Delete</a>
+            <a (click)="deleteEvent()" class="btn btn-lg btn-danger">Delete</a>
             <a [routerLink]="['plugins']" class="btn btn-lg btn-success pull-right">Add Item</a>
         </div>
 

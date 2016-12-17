@@ -69,12 +69,10 @@ export class ItemsComponent implements OnInit {
         // First remove from server.
         this.itemSrv
             .delete(item.appId)
-            .then(response => {
-                console.log(response);
+            .then(() => {
                 // Then remove from local list.
                 let index = this.items.indexOf(item);
                 if (index !== -1) {
-                    console.log(item, 'removing from local list');
                     this.items.splice(index, 1);
                 }
             })
