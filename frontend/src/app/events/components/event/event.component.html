@@ -1,33 +1,36 @@
 <div *ngIf="event">
 
-    <!-- Name -->
-    <h1>{{ event.name }}</h1>
+    <section class="event col-md-6 col-sm-12">
+        <!-- Name -->
+        <h1>{{ event.name }}</h1>
 
-    <!-- Description -->
-    <div class="description">
-        {{ event.description }}
-    </div>
+        <!-- Date -->
+        <div class="date">
+            <div class="start-time row">
+                <span class="col-xs-3">Start Time:</span>
+                <span class="value">{{ event.startTime | date: 'short' }}</span>
+            </div>
+            <div class="end-time row">
+                <span class="col-xs-3">End Time:</span>
+                <span class="value">{{ event.endTime | date: 'short' }}</span>
+            </div>
+        </div>
 
-    <!-- Date -->
-    <div class="date">
-        <div class="start-time">
-            <span>Start Time:</span>
-            <span class="value">{{ event.startTime | date: 'short' }}</span>
+        <!-- Description -->
+        <div class="description">{{ event.description }}</div>
+
+        <!-- Actions -->
+        <div class="actions btn-group-lg">
+            <a [routerLink]="['edit']" class="btn btn-lg btn-warning">Edit</a>
+            <a [routerLink]="['delete']" class="btn btn-lg btn-danger">Delete</a>
+            <a [routerLink]="['plugins']" class="btn btn-lg btn-success pull-right">Add Item</a>
         </div>
-        <div class="end-time">
-            <span>End Time:</span>
-            <span class="value">{{ event.endTime | date: 'short' }}</span>
-        </div>
-    </div>
+
+    </section>
 
     <!-- Items -->
-    <items [event]="event"></items>
-
-    <!-- Actions -->
-    <div class="actions">
-        <a [routerLink]="['/events', event.id, 'edit']">Edit</a>
-        <a [routerLink]="['/events', event.id, 'delete']">Delete</a>
-        <a [routerLink]="['/events', event.id, 'plugins']">Add Item</a>
-    </div>
+    <section class="items col-lg-4 col-lg-offset-2 col-md-6 col-sm-12">
+        <items [event]="event"></items>
+    </section>
 
 </div>

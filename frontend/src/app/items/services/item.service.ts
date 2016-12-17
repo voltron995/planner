@@ -31,7 +31,7 @@ export class ItemService {
                     pluginId: response.id,
                     plugin: plugin.slug,
                     name: response.name,
-                    image: response.image
+                    image: response.image_link
                 });
             })
             .catch(response => this.responseSrv.parseErrors(response));
