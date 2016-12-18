@@ -21,7 +21,7 @@ export class User {
         return new this(data.id, {
             email: data.email,
             login: data.login,
-            profile: Profile.newFromResponseData(data.profile)
+            profile: Profile.newFromResponse(data.profile)
         });
     }
 

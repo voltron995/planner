@@ -1,9 +1,7 @@
 import {Injectable} from '@angular/core'
-import 'rxjs/add/operator/toPromise';
 
 import {Target} from '../models/targets'
 import {RequestService} from "../../main/services/request.service";
-import {ResponseService} from "../../main/services/response.service";
 
 @Injectable()
 export class TargetService {
@@ -12,52 +10,61 @@ export class TargetService {
 
     constructor(
         private  requestSrv: RequestService,
-        private  responseSrv: ResponseService
     ) {}
 
     list(): Promise<Target[]> {
-        return this.requestSrv
-            .get(this.targetUrl)
-            .then((response: any) => this.responseSrv.parseData(response).map((target: any) => Target.newFromResponseData(target)))
-            .catch(response => this.responseSrv.parseErrors(response));
+        const url = `${this.targetUrl}/`;
+
+        return new Promise((resolve, reject) => {
+            this.requestSrv
+                .get(url)
+                .then(response => resolve(response.map((item: any) => Target.newFromResponse(item))))
+                .catch(errors => reject(errors));
+        });
     }
 
     get(id: string): Promise<Target> {
         const url = `${this.targetUrl}/${id}`;
 
-        return this.requestSrv
-            .get(url)
-            .then(response => Target.newFromResponseData(this.responseSrv.parseData(response)))
-            .catch(response => this.responseSrv.parseErrors(response));
+        return new Promise((resolve, reject) => {
+            this.requestSrv
+                .get(url)
+                .then(response => resolve(Target.newFromResponse(response)))
+                .catch(errors => reject(errors));
+        });
     }
 
     put(id: string, data: any): Promise<Target> {
         const url = `${this.targetUrl}/${id}`;
 
-        return this.requestSrv
-            .put(url, data)
-            .then(response => Target.newFromResponseData(this.responseSrv.parseData(response)))
-            .catch(response => this.responseSrv.parseErrors(response));
+        return new Promise((resolve, reject) => {
+            this.requestSrv
+                .get(url, data)
+                .then(response => resolve(Target.newFromResponse(response)))
+                .catch(errors => reject(errors));
+        });
     }
 
     post(data: any): Promise<Target> {
         const url = `${this.targetUrl}/`;
 
-        return this.requestSrv
-            .post(url, data)
-            .then(response => Target.newFromResponseData(this.responseSrv.parseData(response)))
-            .catch(response => this.responseSrv.parseErrors(response));
-
+        return new Promise((resolve, reject) => {
+            this.requestSrv
+                .post(url, data)
+                .then(response => resolve(Target.newFromResponse(response)))
+                .catch(errors => reject(errors));
+        });
     }
 
     delete(id: string): Promise<Target> {
         const url = `${this.targetUrl}/${id}`;
 
-        return this.requestSrv
-            .delete(url)
-            .then(response => Target.newFromResponseData(this.responseSrv.parseData(response)))
-            .catch(response => this.responseSrv.parseErrors(response));
-
+        return new Promise((resolve, reject) => {
+            this.requestSrv
+                .delete(url)
+                .then(response => resolve(response))
+                .catch(errors => reject(errors));
+        });
     }
 }
 

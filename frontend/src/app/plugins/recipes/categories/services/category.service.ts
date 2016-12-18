@@ -1,11 +1,7 @@
 import {Injectable} from '@angular/core';
 
-import 'rxjs/add/operator/toPromise';
-
 import {RequestService} from "../../../../main/services/request.service";
-import {ResponseService} from "../../../../main/services/response.service";
 import {Category} from "../models/category";
-import {URLSearchParams} from "@angular/http";
 
 
 @Injectable()
@@ -15,47 +11,33 @@ export class CategoryService {
 
     constructor(
         private requestSrv: RequestService,
-        private responseSrv: ResponseService
     ) {}
 
     list(): Promise<Category[]> {
-        return this.requestSrv
-            .get(this.categoryUrl)
-            // .then(response => this.responseSrv.parseData(response).map((item: any) => Category.newFromResponse(item)))
-            // todo: this is only for development purposes and should be removed!
-            .then(response => {
-                // Display more categories than we really have.
-                let x = this.responseSrv.parseData(response).map((item: any) => Category.newFromResponse(item));
-                return x.concat(x, x, x);
-            })
-            .catch(response => this.responseSrv.parseErrors(response));
+        const url = `${this.categoryUrl}/`;
+
+        return new Promise((resolve, reject) => {
+            this.requestSrv
+                .get(url)
+                // .then(response => resolve(response.map((item: any) => Category.newFromResponse(item))))
+                // todo: this is only for development purposes and should be removed!
+                .then(response => {
+                    // Display more categories than we really have.
+                    let x = response.map((item: any) => Category.newFromResponse(item));
+                    return resolve(x.concat(x, x, x, x, x, x));
+                })
+                .catch(errors => reject(errors));
+        });
     }
+
     get(id: string): Promise<Category> {
         const url = `${this.categoryUrl}/${id}`;
 
-        return this.requestSrv
-            .get(url)
-            .then(response => Category.newFromResponse(this.responseSrv.parseData(response)))
-            .catch(response => this.responseSrv.parseErrors(response));
-     }
-
-
-    // put(id: string, data: any): Promise<Category> {
-    //     const url = `${this.dishUrl}/${id}`;
-    //
-    //     return this.requestSrv
-    //         .put(url, data)
-    //         .then(response => Dish.newFromResponse(this.responseSrv.parseData(response)))
-    //         .catch(response => this.responseSrv.parseErrors(response));
-    // }
-    //
-    // post(data: any): Promise<Dish> {
-    //     return this.requestSrv
-    //         .post(this.dishUrl, data)
-    //         .then(response => Dish.newFromResponse(this.responseSrv.parseData(response)))
-    //         .catch(response => this.responseSrv.parseErrors(response));
-    // }
-
-
-
+        return new Promise((resolve, reject) => {
+            this.requestSrv
+                .get(url)
+                .then(response => resolve(Category.newFromResponse(response)))
+                .catch(errors => reject(errors));
+        });
+    }
 }

@@ -1,7 +1,5 @@
 import {Injectable} from '@angular/core';
 
-import 'rxjs/add/operator/toPromise';
-
 import {Event} from '../models/event'
 import {RequestService} from "../../main/services/request.service";
 
