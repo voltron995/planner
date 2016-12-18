@@ -47,7 +47,10 @@ export class EventsComponent implements OnInit {
     getTargets(): void {
         this.targetSrv
             .list()
-            .then(targets => this.targets = targets);
+            .then(targets => this.targets = targets)
+            .catch((errors: ResponseError[]) => {
+                errors.forEach(error => this.msgSrv.error(error.detail))
+            });
     }
 
     isCalendarReady() {

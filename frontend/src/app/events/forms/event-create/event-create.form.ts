@@ -4,6 +4,7 @@ import {EventService} from '../../services/event.service';
 import {Router} from '@angular/router'
 import {MessageService} from "../../../main/services/message.service";
 import {Target} from "../../../targets/models/targets";
+import {ResponseError} from "../../../main/models/errors";
 
 @Component({
     selector: 'event-create-form',
@@ -25,7 +26,7 @@ export class EventCreateForm implements OnInit {
 
     constructor(
         private fb: FormBuilder,
-        private eventService: EventService,
+        private eventSrv: EventService,
         private router: Router,
         private msgSrv: MessageService
     ) {}
@@ -51,13 +52,15 @@ export class EventCreateForm implements OnInit {
         if (!values.target_id) {
             delete values.target_id;
         }
-        this.eventService
+        this.eventSrv
             .post(values)
             .then(event => {
                 this.msgSrv.success(`Event ${event.name} successfully created.`);
                 this.router.navigate(['/events'])
             })
-            .catch(errors => console.log(errors, 'errors'));
+            .catch((errors: ResponseError[]) => {
+                errors.forEach(error => this.msgSrv.error(error.detail))
+            });
     }
 
 }

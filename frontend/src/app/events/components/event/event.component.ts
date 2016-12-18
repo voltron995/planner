@@ -6,6 +6,7 @@ import {Subscription} from "rxjs";
 import {Target} from "../../../targets/models/targets";
 import {TargetService} from "../../../targets/services/target.service";
 import {MessageService} from "../../../main/services/message.service";
+import {ResponseError} from "../../../main/models/errors";
 
 
 @Component({
@@ -18,6 +19,7 @@ import {MessageService} from "../../../main/services/message.service";
 })
 
 export class EventComponent implements OnInit, OnDestroy {
+
     constructor(
         private route: ActivatedRoute,
         private eventSrv: EventService,
@@ -45,10 +47,13 @@ export class EventComponent implements OnInit, OnDestroy {
         this.eventSrv
             .delete(this.event.id)
             .then(event => {
-                this.router.navigate(['/events']);
                 this.msgSrv.success(`Event ${this.event.name} successfully deleted.`);
+                this.router.navigate(['/events']);
             })
-            .catch(errors => console.log(errors, 'errors'));
+            .catch((errors: ResponseError[]) => {
+                errors.forEach(error => this.msgSrv.error(error.detail))
+            });
+
     }
 
     private initParams() {
@@ -65,13 +70,20 @@ export class EventComponent implements OnInit, OnDestroy {
             .then(event => {
                 this.event = event;
                 this.initTarget();
+            })
+            .catch((errors: ResponseError[]) => {
+                errors.forEach(error => this.msgSrv.error(error.detail))
             });
+
     }
 
     private initTarget() {
         this.targetSrv
             .get(this.event.target_id)
-            .then(target => this.target = target);
+            .then(target => this.target = target)
+            .catch((errors: ResponseError[]) => {
+                errors.forEach(error => this.msgSrv.error(error.detail))
+            });
     }
 
     ngOnDestroy() {
