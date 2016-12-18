@@ -5,6 +5,9 @@ import {Event} from '../../models/event';
 import {EventService} from '../../services/event.service';
 import {Target} from '../../../targets/models/targets';
 import {TargetService} from '../../../targets/services/target.service';
+import {ResponseError} from "../../../main/models/errors";
+import {MessageService} from "../../../main/services/message.service";
+import {isUndefined} from "util";
 
 
 @Component({
@@ -16,12 +19,16 @@ import {TargetService} from '../../../targets/services/target.service';
 })
 
 export class EventsComponent implements OnInit {
-    events: Event[];
-    targets: Target[];
-    selectedEvent: Event;
 
-    constructor(private eventService: EventService, private targetService: TargetService) {
-    }
+    events: Event[];
+
+    targets: Target[];
+
+    constructor(
+        private eventSrv: EventService,
+        private targetSrv: TargetService,
+        private msgSrv: MessageService,
+    ) {}
 
     ngOnInit(): void {
         this.getEvents();
@@ -29,18 +36,22 @@ export class EventsComponent implements OnInit {
     }
 
     getEvents(): void {
-        this.eventService
+        this.eventSrv
             .list()
-            .then(events => this.events = events);
+            .then(events => this.events = events)
+            .catch((errors: ResponseError[]) => {
+                errors.forEach(error => this.msgSrv.error(error.detail))
+            });
     }
 
     getTargets(): void {
-        this.targetService
+        this.targetSrv
             .list()
             .then(targets => this.targets = targets);
     }
 
-    onSelect(event: Event): void {
-        this.selectedEvent = event;
+    isCalendarReady() {
+        return !isUndefined(this.events)
     }
+
 }

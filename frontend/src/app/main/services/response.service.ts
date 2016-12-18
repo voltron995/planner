@@ -1,6 +1,6 @@
-import {Body} from '@angular/http/src/body';
 import {Injectable} from '@angular/core';
 import {Response} from "@angular/http";
+import {ResponseError} from "../models/errors";
 
 @Injectable()
 export class ResponseService {
@@ -9,11 +9,21 @@ export class ResponseService {
         return response.json();
     }
 
-    parseErrors(response: Response): Array<any> {
-        if (response instanceof Response) {
-            return response.json().errors;
-        } else {
-            return [response]
+    parseErrors(response: Response): ResponseError[] {
+        try {
+            return response
+                .json()
+                .errors
+                .map((error: any) => ResponseError.newFromResponse(error));
+        }
+        catch (e) {
+            return [
+                new ResponseError({
+                    code: 500,
+                    detail: 'Server returned unexpected response.',
+                    title: 'Something wrong.',
+                })
+            ];
         }
     }
 

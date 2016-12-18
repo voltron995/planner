@@ -17,7 +17,7 @@ export class User {
         this.profile = attributes.profile;
     }
 
-    public static newFromResponseData(data: any) {
+    public static newFromResponse(data: any) {
         return new this(data.id, {
             email: data.email,
             login: data.login,
