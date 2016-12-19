@@ -17,4 +17,8 @@ export class PluginsFactory {
         // todo: remove concat
         return this._plugins.concat(this._plugins, this._plugins, this._plugins, this._plugins);
     }
+
+    public static getPlugin(slug: string) {
+        return this._plugins.filter((plugin: BasePlugin) => plugin.slug == slug).pop();
+    }
 }

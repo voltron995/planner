@@ -1,9 +1,10 @@
 from abc import ABC
 
 from PIL import Image
+from app.error_handlers.errors import Error, ElementNotFound
 from werkzeug.datastructures import FileStorage
 
-from app.errors import BadRequest, NotFound, Error
+from app.error_handlers.exceptions import APINotFound, APIBadRequest
 from app.uploads import groups
 
 # A dictionary with file validators. The key of the dictionary
@@ -28,7 +29,7 @@ def get_validator(group: str):
     try:
         return _validators[group]
     except KeyError:
-        raise NotFound()
+        raise APINotFound(ElementNotFound(detail='The validator cannot be found.'))
 
 
 def register(cls):
@@ -57,18 +58,18 @@ class UploadValidator(ABC):
 
     def _validate_name(self):
         if len(self.file.filename.split('.')) < 2:
-            raise BadRequest()
+            raise APIBadRequest()
 
     def _validate_max_size(self):
         # todo: better way to get file length.
         file_size = len(self.file.read())
         self.file.seek(0)
         if file_size > self.MAX_SIZE:
-            raise BadRequest()
+            raise APIBadRequest()
 
     def _validate_mime_type(self):
         if self.file.mimetype not in self.MIME_TYPES:
-            raise BadRequest(Error('Mime type.'))
+            raise APIBadRequest(Error('Mime type.'))
 
 
 class ImageValidator(UploadValidator):
@@ -89,11 +90,11 @@ class ImageValidator(UploadValidator):
 
     def _validate_max_height(self):
         if self.image.height > self.MAX_HEIGHT:
-            raise BadRequest(Error('Max height.'))
+            raise APIBadRequest(Error('Max height.'))
 
     def _validate_max_width(self):
         if self.image.width > self.MAX_WIDTH:
-            raise BadRequest(Error('Max width.'))
+            raise APIBadRequest(Error('Max width.'))
 
 
 @register
@@ -103,3 +104,11 @@ class ProfileImageValidator(ImageValidator):
     MAX_SIZE = 100 * 1024
     MAX_HEIGHT = 250
     MAX_WIDTH = 250
+
+@register
+class DishImageValidator(ImageValidator):
+    UPLOAD_GROUP = groups.DISH_IMAGES
+    MIME_TYPES = 'image/jpg', 'image/jpeg', 'image/png'
+    MAX_SIZE = 500 * 1024
+    MAX_HEIGHT = 240
+    MAX_WIDTH = 320

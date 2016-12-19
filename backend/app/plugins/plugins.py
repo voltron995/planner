@@ -1,6 +1,7 @@
 import re
 
-from app.errors import NotFound
+from app.error_handlers.errors import ElementNotFound
+from app.error_handlers.exceptions import APINotFound
 from app.plugins.msclient import MSClient
 
 # A dictionary with plugins. The key of the dictionary
@@ -25,7 +26,7 @@ def get_plugin(name: str):
     try:
         return _plugins[name]
     except KeyError:
-        raise NotFound()
+        raise APINotFound(ElementNotFound(detail='The plugin cannot be found'))
 
 
 def register(cls):

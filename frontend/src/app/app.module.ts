@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
-import {FileSelectDirective} from 'ng2-file-upload'
+import {FileUploadModule} from 'ng2-file-upload'
 import {ModalModule} from 'angular2-modal';
 import {BootstrapModalModule} from 'angular2-modal/plugins/bootstrap';
 import {ReactiveFormsModule} from '@angular/forms';
@@ -26,10 +26,9 @@ import {EventCreateComponent} from "./events/components/event-create/event-creat
 import {EventCreateForm} from "./events/forms/event-create/event-create.form";
 import {PluginsComponent} from "./plugins/plugins.component";
 import {MasonryModule} from "angular2-masonry/src/module";
-import { CalendarModule } from 'angular-calendar';
+import {CalendarModule} from 'angular-calendar';
 import {CalendarComponent} from "./events/components/calendar/calendar.component";
 import {Ng2DatetimePickerModule} from "ng2-datetime-picker";
-import {EventDeleteComponent} from "./events/components/event-delete/event-delete.component";
 import {TargetsComponent} from './targets/components/target-list/target-list.component';
 import {TargetComponent} from "./targets/components/target-single/target-single.component";
 import {TargetEditComponent} from "./targets/components/target-edit/target-edit.component";
@@ -38,9 +37,11 @@ import {TargetCreateComponent} from "./targets/components/target-create/target-c
 import {TargetService} from './targets/services/target.service';
 import {TargetEditForm} from "./targets/forms/target-edit/target-edit.form";
 import {TargetCreateForm} from "./targets/forms/target-create/target-create.form";
-
-
-
+import {ItemsComponent} from "./items/components/items/items.component";
+import {ItemService} from "./items/services/item.service";
+import {NavbarComponent} from "./main/components/navbar/navbar.component";
+import {ToastyModule} from "ng2-toasty";
+import {MessageService} from "./main/services/message.service";
 
 @NgModule({
     imports: [
@@ -54,16 +55,19 @@ import {TargetCreateForm} from "./targets/forms/target-create/target-create.form
         MasonryModule,
         CalendarModule.forRoot(),
         Ng2DatetimePickerModule,
+        FileUploadModule,
+        ToastyModule.forRoot(),
     ],
     declarations: [
         AppComponent,
         EventComponent,
         EventCreateComponent,
         EventEditComponent,
-        EventDeleteComponent,
         EventsComponent,
         EventCreateForm,
         EventEditForm,
+        NavbarComponent,
+        ItemsComponent,
         TargetComponent,
         TargetCreateComponent,
         TargetEditComponent,
@@ -71,7 +75,6 @@ import {TargetCreateForm} from "./targets/forms/target-create/target-create.form
         TargetCreateForm,
         TargetDeleteComponent,
         TargetEditForm,
-        FileSelectDirective,
         PluginsComponent,
         ProfileComponent,
         ProfileEditForm,
@@ -80,11 +83,13 @@ import {TargetCreateForm} from "./targets/forms/target-create/target-create.form
     ],
     providers: [
         EventService,
+        ItemService,
         ProfileService,
         UserService,
         TargetService,
         RequestService,
-        ResponseService
+        ResponseService,
+        MessageService,
     ],
     bootstrap: [
         AppComponent

@@ -1,11 +1,6 @@
-import {Component, OnInit,Input} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {Component, Input} from '@angular/core';
 import {Recipe} from '../../recipes/models/recipe';
-
-import {Category} from '../../categories/models/category';
-import {IngredientService} from "../services/ingredients.service";
-import {RecipeService} from "../../recipes/services/recipe.service";
-import{Ingredient} from "../models/ingredients";
+import {Dish} from "../../dishes/models/dish";
 
 @Component({
     selector: 'ingredients-list',
@@ -13,15 +8,11 @@ import{Ingredient} from "../models/ingredients";
     styleUrls: [
         'ingredients-list.component.css'
     ],
-
 })
 
-export class IngredientsListComponent implements OnInit{
+export class IngredientsListComponent {
 
     @Input()
-    recipe:Recipe;
+    entity: Recipe|Dish;
 
-    ngOnInit(): void {}
-
-
-  }
+}

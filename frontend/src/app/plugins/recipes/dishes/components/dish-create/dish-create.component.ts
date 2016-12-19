@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {Subscription} from "rxjs";
+import {ActivatedRoute} from "@angular/router";
 
 
 @Component({
@@ -11,5 +13,27 @@ import {Component, OnInit} from '@angular/core';
 
 export class DishCreateComponent implements OnInit {
 
-    ngOnInit(): void {}
+    private params: {
+        eventId: string,
+    };
+
+    private sub: Subscription;
+
+    constructor(
+        private route: ActivatedRoute
+    ) {}
+
+    ngOnInit() {
+        this.initParams();
+    }
+
+    private initParams() {
+        this.sub = this.route.params.subscribe(params => {
+            this.params = {
+                eventId: params['id'],
+            };
+        });
+    }
+
+
 }

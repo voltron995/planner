@@ -7,7 +7,6 @@ import {EventComponent} from "../../events/components/event/event.component";
 import {EventEditComponent} from "../../events/components/event-edit/event-edit.component";
 import {EventCreateComponent} from "../../events/components/event-create/event-create.component";
 import {PluginsComponent} from "../../plugins/plugins.component";
-import {EventDeleteComponent} from "../../events/components/event-delete/event-delete.component";
 import {TargetsComponent} from '../../targets/components/target-list/target-list.component';
 import {TargetComponent} from "../../targets/components/target-single/target-single.component";
 import {TargetEditComponent} from "../../targets/components/target-edit/target-edit.component";
@@ -37,10 +36,6 @@ const routes: Routes = [
                     {
                         path: 'edit',
                         component: EventEditComponent
-                    },
-                    {
-                        path: 'delete',
-                        component: EventDeleteComponent
                     },
                     {
                         path: 'plugins',

@@ -14,10 +14,16 @@ import {DishCreateComponent} from "./dishes/components/dish-create/dish-create.c
 import {DishCreateForm} from "./dishes/forms/dish-create/dish-create.form";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
+import {FileSelectDirective, FileUploadModule} from "ng2-file-upload";
+import {DishEditComponent} from "./dishes/components/dish-edit/dish-edit.component";
+import {DishEditForm} from "./dishes/forms/dish-edit/dish-edit.form";
+import {BrowserModule} from "@angular/platform-browser";
+import {DishComponent} from "./dishes/components/dish/dish.component";
 
 @NgModule({
     imports: [
         CommonModule,
+        FileUploadModule,
         FormsModule,
         MasonryModule,
         ReactiveFormsModule,
@@ -32,6 +38,19 @@ import {CommonModule} from "@angular/common";
                     {
                         path: 'new',
                         component: DishCreateComponent,
+                    },
+                    {
+                        path: ':dish_id',
+                        children: [
+                            {
+                                path: '',
+                                component: DishComponent,
+                            },
+                            {
+                                path: 'edit',
+                                component: DishEditComponent,
+                            }
+                        ]
                     }
                 ]
             }
@@ -43,8 +62,11 @@ import {CommonModule} from "@angular/common";
         CategoriesComponent,
         RecipeComponent,
         RecipesComponent,
+        DishComponent,
         DishCreateComponent,
         DishCreateForm,
+        DishEditComponent,
+        DishEditForm,
     ],
     providers: [
         DishService,

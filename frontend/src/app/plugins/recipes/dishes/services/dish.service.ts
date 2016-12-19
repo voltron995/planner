@@ -18,6 +18,15 @@ export class DishService {
         private responseSrv: ResponseService
     ) {}
 
+    get(id: string): Promise<Dish> {
+        const url = `${this.dishUrl}/${id}`;
+
+        return this.requestSrv
+            .get(url)
+            .then(response => Dish.newFromResponse(this.responseSrv.parseData(response)))
+            .catch(response => this.responseSrv.parseErrors(response));
+     }
+
     list(): Promise<Dish[]> {
         const url = `${this.dishUrl}/`;
 

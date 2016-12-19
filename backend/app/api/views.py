@@ -1,3 +1,4 @@
+from app.error_handlers.errors import Error
 from flask import request
 from flask.ext.login import current_user
 from flask.views import MethodView
@@ -5,7 +6,7 @@ from flask.views import MethodView
 from app import db
 from app.api import response
 from app.api.schemas import ModelSchema
-from app.errors import BadRequest, InvalidAttribute, Error
+from app.error_handlers.exceptions import APIBadRequest
 from app.models import BaseModel
 
 
@@ -17,7 +18,7 @@ class BaseView(MethodView):
         try:
             json = request.get_json()
         except Exception as e:
-            raise BadRequest(Error(title='JSON decode exception.', detail=str(e)))
+            raise APIBadRequest(Error(title='JSON decode exception.', detail=str(e)))
         self.schema().validate(json, partial=partial)
 
 

@@ -1,0 +1,23 @@
+<div class="items-container">
+    <div *ngFor="let item of items" class="item row">
+
+        <!-- Image -->
+        <div class="image col-xs-3">
+            <img [src]="item.image" class="img-thumbnail" alt="Item Image">
+        </div>
+
+        <!-- Name -->
+        <div class="name col-xs-5">
+            {{ item.name }}
+        </div>
+
+        <!-- Actions -->
+        <div class="actions col-xs-4">
+            <div class="btn-group-xs pull-right">
+                <button (click)="view(item)" class="btn btn-xs" title="View"><i class="fa fa-fw fa-eye"></i></button>
+                <button (click)="edit(item)" class="btn btn-xs" title="Edit"><i class="fa fa-fw fa-pencil"></i></button>
+                <button (click)="remove(item)" class="btn btn-xs" title="Remove"><i class="fa fa-fw fa-times"></i></button>
+            </div>
+        </div>
+    </div>
+</div>

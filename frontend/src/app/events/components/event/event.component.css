@@ -1,0 +1,25 @@
+.event {
+    margin-bottom: 20px;
+}
+
+.event h1 {
+    word-wrap: break-word;
+}
+
+.event .description {
+    font-size: medium;
+    line-height: 1.5;
+    margin: 10px 0;
+    white-space: pre-line;
+}
+
+.event .date {
+    font-size: large;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.event .actions {
+    background: snow;
+    padding: 10px;
+}

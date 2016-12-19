@@ -16,4 +16,6 @@ class Event(BaseModel):
     target = relationship('Target', backref='event')
     start_time = db.Column(db.DateTime(timezone=True), nullable=False)
     end_time = db.Column(db.DateTime(timezone=True), nullable=False)
+    color_primary = db.Column(db.String(), default='#aaa')
+    color_secondary = db.Column(db.String(), default='#bbb')
     is_done = db.Column(db.Boolean, nullable=False, default=False)

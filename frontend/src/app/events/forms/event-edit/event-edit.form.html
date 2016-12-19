@@ -12,13 +12,31 @@
                     type="text">
         </div>
 
+        <!-- Target -->
+        <div class="form-group">
+            <label for="target">Target</label>
+            <select
+                    class="form-control"
+                    formControlName="target_id"
+                    id='target'>
+                    <option  value="">Choose target</option>
+                    <option
+                            *ngFor="let target of targets"
+                            [value]="target.id"
+                            [selected]="target.id == event.target_id">
+                        {{target.name}}
+                    </option>
+            </select>
+        </div>
+
         <!-- Description -->
         <div class="form-group">
             <label for="description">Description</label>
             <textarea
                     class="form-control"
                     formControlName="description"
-                    id="description">
+                    id="description"
+                    rows="10">
             </textarea>
         </div>
 
@@ -29,7 +47,7 @@
                    formControlName="start_time"
                    id="start-time"
                    ng2-datetime-picker
-                   date-format="DD-MM-YYYY hh:mm"/>
+                   date-format="DD-MM-YYYY hh:mm">
         </div>
 
         <!-- End Time -->
@@ -40,7 +58,27 @@
                     formControlName="end_time"
                     id="end-time"
                     ng2-datetime-picker
-                    date-format="DD-MM-YYYY hh:mm"/>
+                    date-format="DD-MM-YYYY hh:mm">
+        </div>
+
+        <!-- Color Primary -->
+        <div class="form-group">
+            <label for="color-primary">Primary color</label>
+            <input
+                    class="form-control"
+                    formControlName="color_primary"
+                    id="color-primary"
+                    type="color">
+        </div>
+
+        <!-- Color Secondary -->
+        <div class="form-group">
+            <label for="color-secondary">Secondary color</label>
+            <input
+                    class="form-control"
+                    formControlName="color_secondary"
+                    id="color-secondary"
+                    type="color">
         </div>
 
         <!-- Submit -->

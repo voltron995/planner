@@ -1,7 +1,8 @@
+from app.error_handlers.errors import AccessDenied
 from flask import request
 from flask_login import current_user
 
-from app.errors import Forbidden, AccessDenied
+from app.error_handlers.exceptions import APIForbidden
 
 
 def permission_callback():
@@ -33,11 +34,11 @@ class Permitter:
 
     def permit_authenticated_user(self):
         if not current_user.is_authenticated:
-            raise Forbidden(AccessDenied())
+            raise APIForbidden(AccessDenied())
 
     def permit_active_user(self):
         if not current_user.is_active:
-            raise Forbidden(AccessDenied())
+            raise APIForbidden(AccessDenied())
 
 
 class PermitterFactory:

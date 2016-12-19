@@ -1,0 +1,6 @@
+<div class="container">
+    <div *ngIf="dish">
+        <h1>Edit Dish "{{ dish.name }}"</h1>
+        <dish-edit-form [eventId]="params.eventId" [dish]="dish"></dish-edit-form>
+    </div>
+</div>

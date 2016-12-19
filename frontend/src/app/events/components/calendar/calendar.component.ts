@@ -19,7 +19,8 @@ import {
   CalendarEventAction,
   CalendarEventTimesChangedEvent
 } from 'angular-calendar';
-import {EventService} from "../../services/event.service"; // import should be from `angular-calendar` in your app
+import {EventService} from "../../services/event.service";
+import {MessageService} from "../../../main/services/message.service"; // import should be from `angular-calendar` in your app
 
 
 const colors: any = {
@@ -50,22 +51,21 @@ const colors: any = {
 };
 
 @Component({
-  selector: 'calendar',
-  styles: [`
-    h3 {
-      margin: 0;
-    }
-    .container {
-      padding-bottom: 50px;
-    }
-  `],
+    selector: 'calendar',
+    styleUrls: [
+        'calendar.component.css'
+    ],
     templateUrl: 'calendar.component.html',
 })
 
 
 export class CalendarComponent {
 
-  constructor(private router: Router, private eventSrv: EventService) {}
+  constructor(
+      private router: Router,
+      private eventSrv: EventService,
+      private msgSrv: MessageService
+  ) {}
 
   @Input()
   eventsList: any[];
@@ -74,24 +74,38 @@ export class CalendarComponent {
 
   viewDate: Date = new Date();
 
-  actions: CalendarEventAction[] = [{
-      label: '<i class="fa fa-fw fa-eye"></i>',
-      onClick: ({event}: {event: CalendarEvent}): void => {
-      this.router.navigate(['/events', event.cssClass])
-    }
-  }, {
-    label: '<i class="fa fa-fw fa-pencil"></i>',
-    onClick: ({event}: {event: CalendarEvent}): void => {
-        console.log(event)
-        this.router.navigate(['/events', event.cssClass, 'edit'])
-    }
-  }, {
-    label: '<i class="fa fa-fw fa-times"></i>',
-    onClick: ({event}: {event: CalendarEvent}): void => {
-      console.log("delete event ", event.cssClass)
-      this.router.navigate(['/events', event.cssClass, 'delete'])
-    }
-  }];
+    actions: CalendarEventAction[] = [
+        // View
+        {
+            label: '<i class="fa fa-fw fa-eye"></i>',
+            onClick: ({event}: {event: CalendarEvent}): void => {
+                this.router.navigate(['/events', event.cssClass])
+            }
+        },
+        // Edit
+        {
+            label: '<i class="fa fa-fw fa-pencil"></i>',
+            onClick: ({event}: {event: CalendarEvent}): void => {
+                this.router.navigate(['/events', event.cssClass, 'edit'])
+            }
+        },
+        // Delete
+        {
+            label: '<i class="fa fa-fw fa-times"></i>',
+            onClick: ({event}: {event: CalendarEvent}): void => {
+                this.eventSrv
+                    .delete(event.cssClass)
+                    .then(() => {
+                        let index = this.events.indexOf(event);
+                        if (index !== -1) {
+                            this.events.splice(index, 1);
+                            this.refresh.next();
+                        }
+                        this.msgSrv.success(`Event ${event.title} successfully deleted.`);
+                    });
+                }
+        }
+    ];
   // cal-event-title
 
   refresh: Subject<any> = new Subject();
@@ -124,12 +138,6 @@ export class CalendarComponent {
 
   }
 
-  createEvent(): void {
-
-    this.router.navigate(['/events/new'])
-
-  }
-
   today(): void {
     this.viewDate = new Date();
   }
@@ -158,17 +166,26 @@ export class CalendarComponent {
   }
 
   ngAfterContentInit() {
-    console.log('vasya');
-    for (var event of this.eventsList) {
-        var eventObj = {
-            start: new Date(event.startTime),
-            end: new Date(event.endTime),
-            title: event.name,
-            color: colors.gray,
-            actions: this.actions,
-            cssClass: event.id
-        }
-        this.events.push(eventObj)
-    }
+      for (var event of this.eventsList) {
+          if (event.colorPrimary && event.colorSecondary) {
+            var color_p: string = event.colorPrimary;
+            var color_s: string = event.colorSecondary;
+          } else {
+            var color_p: string = "#bab2b7";
+            var color_s: string = "#d9d6d8";
+          }
+          var eventObj = {
+              start: new Date(event.startTime),
+              end: new Date(event.endTime),
+              title: event.name,
+              color: {
+                    primary: color_p,
+                    secondary: color_s,
+                },
+              actions: this.actions,
+              cssClass: event.id
+          };
+          this.events.push(eventObj)
+      }
   }
 }

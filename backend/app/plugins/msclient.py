@@ -2,7 +2,7 @@ from requests import Response
 from requests import request
 
 from app.api.schemas import ErrorSchema
-from app.errors import Error
+from app.error_handlers.errors import Error
 
 
 class MSResponse:
@@ -29,9 +29,8 @@ class MSResponseBuilder:
             if response.ok:
                 output.data = json
             else:
-                for error in ErrorSchema().dump(json.get('errors', []), many=True).data:
-                    output.errors.append(Error(**error))
-
+                for error_dump in ErrorSchema().dump(json.get('errors', []), many=True).data:
+                    output.errors.append(Error(**error_dump))
         return output
 
     @classmethod

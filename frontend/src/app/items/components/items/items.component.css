@@ -1,0 +1,34 @@
+.item {
+    background: lavender;
+    border-radius: 10px;
+    margin-bottom: 6px;
+    min-height: 50px;
+    padding: 6px 0;
+    box-shadow: rgba(0, 0, 0, .2) 1px 1px 1px 0;
+}
+
+.item .name {
+    color: dimgray;
+    font-weight: 600;
+}
+
+.item .name,
+.item .actions {
+    margin-top: 10px;
+}
+
+.item .actions .btn {
+    background: oldlace;
+    box-shadow: rgba(0, 0, 0, .1) 0 1px 1px 0;
+    color: darkgray;
+}
+
+.item .actions .btn:hover {
+    box-shadow: rgba(0, 0, 0, .3) 0 1px 1px 0;
+    color: dimgray;
+}
+
+.item .actions .btn:focus {
+    outline: none;
+    background: inherit;
+}
