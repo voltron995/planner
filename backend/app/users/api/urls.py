@@ -11,3 +11,9 @@ api_profiles.add_url_rule(
     view_func=views.ProfileCurrent.as_view('current'),
     permitter=permitters.ProfileCurrent,
 )
+
+api_users.add_url_rule(
+    '/logout',
+    view_func=views.UsersLogout.as_view('logout'),
+    permitter=permitters.UsersLogout,
+)
