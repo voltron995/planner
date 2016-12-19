@@ -21,10 +21,6 @@ class ProfileSchema(ModelSchema):
             if not UploadsManager.is_tmp_file(image_id):
                 raise BadRequest(InvalidAttribute('Uploaded image not found'))
 
-    @validates_schema
-    def validate_password_confirmation(self, data):
-        if data.get('password') != data.get('confirm'):
-            raise BadRequest(InvalidAttribute('Password confirmation mismatch.'))
 
 
 class UserSchema(ModelSchema):
@@ -32,5 +28,15 @@ class UserSchema(ModelSchema):
     email = fields.Str(dump_only=True)
     last_access = fields.DateTime(dump_only=True)
     profile = fields.Nested(ProfileSchema, dump_only=True)
+    old_password = fields.Str(required=True, validate=[validate.Length(min=6, max=64)], load_only=True)
     password = fields.Str(required=True, validate=[validate.Length(min=6, max=64)], load_only=True)
     confirm = fields.Str(required=True, validate=[validate.Length(min=6, max=64)], load_only=True)
+
+
+    @validates_schema
+    def validate_password_confirmation(self, data):
+        if not current_user.verify_password(data.get('old_password')):
+            raise BadRequest(InvalidAttribute('Password confirmation failed.'))
+
+        if data.get('password') != data.get('confirm'):
+            raise BadRequest(InvalidAttribute('Password confirmation mismatch.'))

@@ -2,6 +2,16 @@
 
     <form [formGroup]="form" (submit)="onSubmit()">
 
+      <!-- Old password -->
+     <div class="form-group">
+         <label for="old_password">Old password</label>
+         <input
+                 class="form-control"
+                 formControlName="old_password"
+                 id="old_password"
+                 type="password">
+     </div>
+
          <!-- Password -->
         <div class="form-group">
             <label for="password">Password</label>

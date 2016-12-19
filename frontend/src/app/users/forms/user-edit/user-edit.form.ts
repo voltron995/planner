@@ -32,6 +32,7 @@ export class UserEditForm implements OnInit {
 
     initForm() {
         this.form = this.fb.group({
+          old_password:[''],
           password: [''],
           confirm: [''],
         });

@@ -35,6 +35,7 @@ export class RecipeComponent {
         this.dishService
             .post(data)
             .then(recipe => console.log('success'));
+        alert("Recipe added successfully")
     }
 
 }
