@@ -2,6 +2,7 @@ import {Component, OnInit, OnDestroy} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {Target} from '../../models/targets'
 import {TargetService} from "../../services/target.service";
+import {Subscription} from "rxjs";
 
 
 @Component({
@@ -19,25 +20,30 @@ export class TargetEditComponent implements OnInit, OnDestroy {
         private targetSrv: TargetService
     ) {}
 
-    id: string;
+    params: {
+        id: string
+    };
+
     target: Target;
-    private sub:any;
+
+    private sub: Subscription;
 
     ngOnInit() {
         this.initParams();
         this.initTarget();
-
     }
 
     private initParams() {
         this.sub = this.route.params.subscribe(params => {
-            this.id = params['id'];
+            this.params = {
+                id: params['id']
+            }
         });
     }
 
     private initTarget() {
         this.targetSrv
-            .get(this.id)
+            .get(this.params.id)
             .then(target => {
                 this.target = target;
             });

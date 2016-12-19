@@ -14,7 +14,7 @@ export class CategoryService {
     ) {}
 
     list(): Promise<Category[]> {
-        const url = `${this.categoryUrl}/`;
+        const url = `${this.categoryUrl}`;
 
         return new Promise((resolve, reject) => {
             this.requestSrv
