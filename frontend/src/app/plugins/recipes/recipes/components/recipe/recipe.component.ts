@@ -1,9 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {Recipe} from '../../models/recipe'
 import {DishService} from "../../../dishes/services/dish.service";
 import {Dish} from "../../../dishes/models/dish";
 import {MessageService} from "../../../../../main/services/message.service";
 import {ResponseError} from "../../../../../main/models/errors";
+
+
 @Component({
     selector: 'recipe',
     templateUrl: 'recipe.component.html',
@@ -27,7 +29,6 @@ export class RecipeComponent {
     ) {}
 
     postDish() {
-
         let data = {
             name: this.recipe.name,
             description: this.recipe.description,
