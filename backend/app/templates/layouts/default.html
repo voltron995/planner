@@ -1,12 +1,29 @@
 {% extends "main.html" %}
 {% block content %}
-<div class="container">
-    {% for message in get_flashed_messages() %}
-    <div class="alert alert-warning">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        {{ message }}
+    <div class="container">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="nav navbar-nav navbar-left">
+                    <a class="navbar-brand" href="{{ url_for('events.list') }}">
+                        <img class="img-responsive" src="{{ url_for('static', filename='assets/logo.png') }}"
+                             alt="Planner">
+                    </a>
+                    <p class="navbar-text" id="project-name">planner</p>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+
+                    <li>
+                        <a href="{{ url_for('users.login') }}">Log In</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        {% for message in get_flashed_messages() %}
+            <div class="alert alert-warning">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% block page_content %}{% endblock %}
     </div>
-    {% endfor %}
-    {% block page_content %}{% endblock %}
-</div>
 {% endblock %}
