@@ -7,6 +7,8 @@ import '../../../../../node_modules/angular-calendar/dist/css/angular-calendar.c
 import '../../../../../node_modules/ng2-toasty/style-bootstrap.css'
 import {UserService} from "../../../users/services/user.service";
 import {User} from "../../../users/models/user";
+import {ResponseError} from "../../models/errors";
+import {MessageService} from "../../services/message.service";
 
 @Component({
     selector: 'planner-app',
@@ -20,7 +22,8 @@ export class AppComponent implements OnInit {
     user: User;
 
     constructor(
-        private userSrv: UserService
+        private userSrv: UserService,
+        private msgSrv: MessageService,
     ) {}
 
     ngOnInit(): void {
@@ -30,7 +33,10 @@ export class AppComponent implements OnInit {
     private initUser() {
         this.userSrv
             .getCurrent()
-            .then(user => this.user = user);
+            .then(user => this.user = user)
+            .catch((errors: ResponseError[]) => {
+                errors.forEach(error => this.msgSrv.error(error.detail))
+            });
     }
 
 }

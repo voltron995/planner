@@ -11,7 +11,6 @@ import {TargetsComponent} from '../../targets/components/target-list/target-list
 import {TargetComponent} from "../../targets/components/target-single/target-single.component";
 import {TargetEditComponent} from "../../targets/components/target-edit/target-edit.component";
 import {TargetCreateComponent} from "../../targets/components/target-create/target-create.component";
-import {TargetDeleteComponent} from "../../targets/components/target-delete/target-delete.component";
 import {RecipesPluginModule} from "../../plugins/recipes/recipes-plugin.module";
 
 const routes: Routes = [
@@ -79,10 +78,6 @@ const routes: Routes = [
                     {
                         path: 'edit',
                         component: TargetEditComponent
-                    },
-                    {
-                        path: 'delete',
-                        component: TargetDeleteComponent
                     },
                 ]
             },

@@ -1,3 +1,3 @@
 <div class="events-wrapper">
-    <calendar *ngIf="events" [eventsList]=events></calendar>
+    <calendar *ngIf="isCalendarReady()" [eventsList]=events></calendar>
 </div>

@@ -32,7 +32,6 @@ import {Ng2DatetimePickerModule} from "ng2-datetime-picker";
 import {TargetsComponent} from './targets/components/target-list/target-list.component';
 import {TargetComponent} from "./targets/components/target-single/target-single.component";
 import {TargetEditComponent} from "./targets/components/target-edit/target-edit.component";
-import {TargetDeleteComponent} from "./targets/components/target-delete/target-delete.component";
 import {TargetCreateComponent} from "./targets/components/target-create/target-create.component";
 import {TargetService} from './targets/services/target.service';
 import {TargetEditForm} from "./targets/forms/target-edit/target-edit.form";
@@ -73,7 +72,6 @@ import {MessageService} from "./main/services/message.service";
         TargetEditComponent,
         TargetsComponent,
         TargetCreateForm,
-        TargetDeleteComponent,
         TargetEditForm,
         PluginsComponent,
         ProfileComponent,

@@ -28,7 +28,7 @@ export class Event {
         this.items = attributes.items;
     }
 
-    public static newFromResponseData(data: any) {
+    public static newFromResponse(data: any) {
         return new this(data.id, {
             name: data.name,
             target_id: data.target_id,

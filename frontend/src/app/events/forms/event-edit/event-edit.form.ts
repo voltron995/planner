@@ -4,6 +4,8 @@ import {EventService} from '../../services/event.service';
 import {Event} from '../../models/event';
 import {Router} from '@angular/router'
 import {MessageService} from "../../../main/services/message.service";
+import {Target} from "../../../targets/models/targets";
+import {ResponseError} from "../../../main/models/errors";
 
 
 @Component({
@@ -19,20 +21,20 @@ import {MessageService} from "../../../main/services/message.service";
 
 export class EventEditForm implements OnInit {
 
-    @Input() event: Event;
-    form: FormGroup;
+    @Input()
+    event: Event;
 
     @Input()
-    targets: any[];
+    targets: Target[];
+
+    form: FormGroup;
 
     constructor(
         private fb: FormBuilder,
-        private eventService: EventService,
+        private eventSrv: EventService,
         private router: Router,
         private msgSrv: MessageService
-    ) {
-
-    }
+    ) {}
 
     ngOnInit(): void {
         this.initForm();
@@ -55,13 +57,15 @@ export class EventEditForm implements OnInit {
         if (!values.target_id) {
             delete values.target_id;
         }
-        this.eventService
+        this.eventSrv
             .put(this.event.id, values)
             .then(event => {
                 this.msgSrv.success(`Event ${this.event.name} successfully updated.`);
                 this.router.navigate(['/events', this.event.id])
             })
-            .catch(errors => console.log(errors, 'errors'));
+            .catch((errors: ResponseError[]) => {
+                errors.forEach(error => this.msgSrv.error(error.detail))
+            });
     }
 
 }

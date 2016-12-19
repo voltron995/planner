@@ -20,7 +20,8 @@ import {
   CalendarEventTimesChangedEvent
 } from 'angular-calendar';
 import {EventService} from "../../services/event.service";
-import {MessageService} from "../../../main/services/message.service"; // import should be from `angular-calendar` in your app
+import {MessageService} from "../../../main/services/message.service";
+import {ResponseError} from "../../../main/models/errors"; // import should be from `angular-calendar` in your app
 
 
 const colors: any = {
@@ -102,8 +103,12 @@ export class CalendarComponent {
                             this.refresh.next();
                         }
                         this.msgSrv.success(`Event ${event.title} successfully deleted.`);
+                    })
+                    .catch((errors: ResponseError[]) => {
+                        errors.forEach(error => this.msgSrv.error(error.detail))
                     });
-                }
+
+            }
         }
     ];
   // cal-event-title

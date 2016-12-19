@@ -3,6 +3,8 @@ import {DishService} from "../../../dishes/services/dish.service";
 import {Dish} from "../../models/dish";
 import {ActivatedRoute} from "@angular/router";
 import {Subscription} from "rxjs";
+import {ResponseError} from "../../../../../main/models/errors";
+import {MessageService} from "../../../../../main/services/message.service";
 
 @Component({
     selector: 'dish',
@@ -23,7 +25,8 @@ export class DishComponent implements OnInit, OnDestroy {
 
     constructor(
         private route: ActivatedRoute,
-        private dishSrv: DishService
+        private dishSrv: DishService,
+        private msgSrv: MessageService,
     ) {}
 
     ngOnInit() {
@@ -42,7 +45,10 @@ export class DishComponent implements OnInit, OnDestroy {
     private initDish() {
         this.dishSrv
             .get(this.params.dishId)
-            .then(dish => (this.dish = dish));
+            .then(dish => (this.dish = dish))
+            .catch((errors: ResponseError[]) => {
+                errors.forEach(error => this.msgSrv.error(error.detail))
+            });
     }
 
     ngOnDestroy() {
