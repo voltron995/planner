@@ -14,7 +14,7 @@ export class DishService {
     ) {}
 
     list(): Promise<Dish[]> {
-        const url = `${this.dishUrl}/`;
+        const url = `${this.dishUrl}`;
 
         return new Promise((resolve, reject) => {
             this.requestSrv

@@ -1,4 +1,5 @@
 import {Ingredient} from "../../ingredients/models/ingredients";
+
 export class Recipe {
 
     public id: string;
@@ -22,7 +23,7 @@ export class Recipe {
             name: data.name,
             description: data.description,
             price: data.price,
-            ingredients: data.ingredients,
+            ingredients: data.ingredients.map((item: any) => Ingredient.newFromResponse(item)),
             image: data.image_link
         });
     }

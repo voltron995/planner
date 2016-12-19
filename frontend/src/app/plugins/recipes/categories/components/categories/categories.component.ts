@@ -1,10 +1,9 @@
-import {Component, Input, Output, OnInit, OnDestroy, EventEmitter} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {Component, Output, EventEmitter} from '@angular/core';
 
 import {Category} from '../../models/category';
 import {CategoryService} from "../../services/category.service";
-import {RecipeService} from "../../../recipes/services/recipe.service";
-import{Recipe} from "../../../recipes/models/recipe";
+import {ResponseError} from "../../../../../main/models/errors";
+import {MessageService} from "../../../../../main/services/message.service";
 
 @Component({
     selector: 'categories',
@@ -23,22 +22,25 @@ export class CategoriesComponent {
     onCategorySelected = new EventEmitter<Category>();
 
     constructor(
-        private categoryService: CategoryService,
+        private categorySrv: CategoryService,
+        private msgSrv: MessageService,
     ) {}
 
     ngOnInit(): void {
-        this.getCategories();
-
+        this.initCategories();
     }
 
-    getCategories(): void {
-        this.categoryService
+    initCategories(): void {
+        this.categorySrv
             .list()
-            .then(categories => this.categories = categories);
+            .then(categories => this.categories = categories)
+            .catch((errors: ResponseError[]) => {
+                errors.forEach(error => this.msgSrv.error(error.detail))
+            });
     }
 
     onSelect(category: Category): void {
-        console.log(category, 'emit');
         this.onCategorySelected.next(category);
     }
+
 }
