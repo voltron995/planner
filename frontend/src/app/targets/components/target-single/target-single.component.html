@@ -1,8 +1,15 @@
 <div *ngIf="target">
     <h1>{{ target.name }}</h1>
 
+    <div *ngIf="target.is_done">
+        <span class="glyphicon glyphicon-check"></span> Done
+    </div>
+
     <div class="description">{{ target.description }}</div>
 
-    <a class="btn" [routerLink]="['/targets', target.id, 'edit']">Edit</a>
-    <a class="btn" (click)="deleteTarget()">Delete</a>
+
+    <div class="actions btn-group-lg">
+            <a [routerLink]="['/targets', target.id, 'edit']" class="btn btn-lg btn-warning">Edit</a>
+            <a (click)="deleteTarget()" class="btn btn-lg btn-danger">Delete</a>
+        </div>
 </div>

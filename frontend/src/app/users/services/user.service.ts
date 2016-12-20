@@ -42,11 +42,11 @@ export class UserService {
     logOut() {
         const url = `${this.usersUrl}/logout`;
 
-        this.requestSrv
+        return new Promise((resolve, reject) => {
+            this.requestSrv
                 .post(url, {})
-                .then(response => { window.location.replace('/users/login'); })
-                .catch((errors: ResponseError[]) => {
-                errors.forEach(error => this.msgSrv.error(error.detail));
+                .then(response => resolve(response))
+                .catch(errors => reject(errors));
         });
     }
 }

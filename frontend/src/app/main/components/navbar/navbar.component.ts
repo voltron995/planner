@@ -16,10 +16,20 @@ export class NavbarComponent {
 
     constructor(
         private requestSrv: RequestService,
-        private usrSrv: UserService
+        private usrSrv: UserService,
+        private msgSrv: MessageService
     ) {}
 
     @Input()
     user: User;
+
+    logOut() {
+        this.usrSrv
+                .logOut()
+                .then(response => { window.location.replace('/users/login'); })
+                .catch((errors: ResponseError[]) => {
+                errors.forEach(error => this.msgSrv.error(error.detail));
+        });
+    }
 
 }
