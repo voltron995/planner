@@ -39,3 +39,5 @@ class RecipeSchema(ModelSchema):
         else:
             item['image_link'] = url_for('static', filename='assets/recipe-default.jpg')
         return item
+
+

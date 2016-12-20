@@ -1,6 +1,5 @@
 import {Component, Input} from '@angular/core';
 import {User} from "../../../users/models/user";
-import {RequestService} from "../../services/request.service";
 import {ResponseError} from "../../models/errors";
 import {MessageService} from "../../services/message.service";
 import {UserService} from "../../../users/services/user.service";
@@ -15,7 +14,6 @@ import {UserService} from "../../../users/services/user.service";
 export class NavbarComponent {
 
     constructor(
-        private requestSrv: RequestService,
         private usrSrv: UserService,
         private msgSrv: MessageService
     ) {}
@@ -25,11 +23,11 @@ export class NavbarComponent {
 
     logOut() {
         this.usrSrv
-                .logOut()
-                .then(response => { window.location.replace('/users/login'); })
-                .catch((errors: ResponseError[]) => {
+            .logOut()
+            .then(() => window.location.replace('/users/login'))
+            .catch((errors: ResponseError[]) => {
                 errors.forEach(error => this.msgSrv.error(error.detail));
-        });
+            });
     }
 
 }

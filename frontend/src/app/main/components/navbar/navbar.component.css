@@ -4,3 +4,7 @@ navbar {
     right: 0;
     width: 100%;
 }
+
+.dropdown-menu > li > a {
+    cursor: pointer;
+}
