@@ -69,7 +69,7 @@ class UploadValidator(ABC):
 
     def _validate_mime_type(self):
         if self.file.mimetype not in self.MIME_TYPES:
-            raise APIBadRequest(Error('Mime type.'))
+            raise APIBadRequest(Error(detail='Mime type.'))
 
 
 class ImageValidator(UploadValidator):
@@ -90,11 +90,11 @@ class ImageValidator(UploadValidator):
 
     def _validate_max_height(self):
         if self.image.height > self.MAX_HEIGHT:
-            raise APIBadRequest(Error('Max height.'))
+            raise APIBadRequest(Error(detail='Max height.'))
 
     def _validate_max_width(self):
         if self.image.width > self.MAX_WIDTH:
-            raise APIBadRequest(Error('Max width.'))
+            raise APIBadRequest(Error(detail='Max width.'))
 
 
 @register

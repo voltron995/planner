@@ -83,6 +83,7 @@ export class ItemsComponent implements OnInit {
                 if (index !== -1) {
                     this.items.splice(index, 1);
                 }
+                this.msgSrv.success(`Item ${item.name} successfully removed.`);
             })
             .catch((errors: ResponseError[]) => {
                 errors.forEach(error => this.msgSrv.error(error.detail))

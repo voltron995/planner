@@ -15,6 +15,11 @@ import {RecipesPluginModule} from "../../plugins/recipes/recipes-plugin.module";
 
 const routes: Routes = [
     {
+      path: '',
+      redirectTo: '/events',
+      pathMatch: 'full'
+    },
+    {
         path: 'events',
         children: [
             {
@@ -82,6 +87,10 @@ const routes: Routes = [
                 ]
             },
         ]
+    },
+    {
+        path: '**',
+        redirectTo: '/events',
     },
 ];
 

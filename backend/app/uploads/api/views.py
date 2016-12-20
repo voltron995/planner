@@ -12,7 +12,7 @@ from app.uploads.validators import get_validator
 class UploadView(MethodView):
     def post(self, group: str):
         if 'file' not in request.files:
-            raise APIBadRequest(Error('File attribute is required.'))
+            raise APIBadRequest(Error(detail='File attribute is required.'))
 
         file = request.files['file']
         get_validator(group)(file).validate()
