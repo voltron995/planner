@@ -1,7 +1,7 @@
 <h2>Choose recipe</h2>
 
 <div class="recipes-wrapper">
-    <masonry [options]="{columnWidth: '.grid-sizer', gutter: '.gutter-sizer', itemSelector: '.grid-item', percentPosition: true}"
+    <masonry [useImagesLoaded]="true" [options]="{columnWidth: '.grid-sizer', gutter: '.gutter-sizer', itemSelector: '.grid-item', percentPosition: true}"
              class="recipes">
         <div class="grid-sizer"></div>
         <div class="gutter-sizer"></div>

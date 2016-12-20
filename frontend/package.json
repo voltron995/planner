@@ -27,6 +27,8 @@
     "angular2-modal": "~2.0.2",
     "core-js": "^2.4.1",
     "es6-promise": "^4.0.5",
+    "imagesloaded": "^4.1.1",
+    "imports-loader": "^0.7.0",
     "isotope-layout": "^3.0.1",
     "ng2-datetime-picker": "^0.11.3",
     "ng2-file-upload": "~1.1.4-2",
