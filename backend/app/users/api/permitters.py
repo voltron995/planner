@@ -7,3 +7,6 @@ class UserCurrent(Permitter):
 
 class ProfileCurrent(Permitter):
         pass
+
+class UsersLogout(Permitter):
+        pass

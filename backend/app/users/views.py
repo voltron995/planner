@@ -39,13 +39,6 @@ class UsersLogin(MethodView):
         return redirect(url_for('users.login'))
 
 
-class UsersLogout(MethodView):
-    @login_required
-    def post(self):
-        logout_user()
-        return redirect(url_for('.login'))
-
-
 class UsersRegister(MethodView):
     def get(self):
         if current_user.is_authenticated:

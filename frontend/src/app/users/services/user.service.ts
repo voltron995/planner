@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 
 import {User} from '../models/user'
 import {RequestService} from '../../main/services/request.service';
+import {ResponseError} from "../../main/models/errors";
+import {MessageService} from "../../main/services/message.service";
 
 
 @Injectable()
@@ -11,6 +13,7 @@ export class UserService {
 
     constructor(
         private requestSrv: RequestService,
+        private msgSrv: MessageService
     ) {}
 
     getCurrent(): Promise<User> {
@@ -33,6 +36,17 @@ export class UserService {
                 .put(url, data)
                 .then(response => resolve(User.newFromResponse(response)))
                 .catch(errors => reject(errors));
+        });
+    }
+
+    logOut() {
+        const url = `${this.usersUrl}/logout`;
+
+        this.requestSrv
+                .post(url, {})
+                .then(response => { window.location.replace('/users/login'); })
+                .catch((errors: ResponseError[]) => {
+                errors.forEach(error => this.msgSrv.error(error.detail));
         });
     }
 }
