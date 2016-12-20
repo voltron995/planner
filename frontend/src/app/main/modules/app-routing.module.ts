@@ -12,6 +12,7 @@ import {TargetComponent} from "../../targets/components/target-single/target-sin
 import {TargetEditComponent} from "../../targets/components/target-edit/target-edit.component";
 import {TargetCreateComponent} from "../../targets/components/target-create/target-create.component";
 import {RecipesPluginModule} from "../../plugins/recipes/recipes-plugin.module";
+import {NotFoundComponent} from "../../errors/components/not-found/not-found.component";
 
 const routes: Routes = [
     {
@@ -90,7 +91,7 @@ const routes: Routes = [
     },
     {
         path: '**',
-        redirectTo: '/events',
+        component: NotFoundComponent
     },
 ];
 

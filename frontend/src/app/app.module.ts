@@ -41,6 +41,7 @@ import {ItemService} from "./items/services/item.service";
 import {NavbarComponent} from "./main/components/navbar/navbar.component";
 import {ToastyModule} from "ng2-toasty";
 import {MessageService} from "./main/services/message.service";
+import {NotFoundComponent} from "./errors/components/not-found/not-found.component";
 
 @NgModule({
     imports: [
@@ -78,6 +79,7 @@ import {MessageService} from "./main/services/message.service";
         ProfileEditForm,
         UserEditForm,
         CalendarComponent,
+        NotFoundComponent
     ],
     providers: [
         EventService,
