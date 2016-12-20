@@ -23,7 +23,7 @@
                     <option
                             *ngFor="let target of targets"
                             [value]="target.id"
-                            [selected]="target.id == event.target_id">
+                            [selected]="target.id == event.targetId">
                         {{target.name}}
                     </option>
             </select>
@@ -79,6 +79,15 @@
                     formControlName="color_secondary"
                     id="color-secondary"
                     type="color">
+        </div>
+
+        <!-- Is Done -->
+        <div class="form-group">
+            <label for="is-done">Is done <input
+                    class="form-control"
+                    formControlName="is_done"
+                    type="checkbox"></label>
+
         </div>
 
         <!-- Submit -->

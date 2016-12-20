@@ -43,7 +43,8 @@ export class EventEditForm implements OnInit {
     initForm() {
         this.form = this.fb.group({
           name: [this.event.name],
-          target_id: [this.event.target_id],
+          target_id: [this.event.targetId],
+          is_done: [this.event.isDone],
           description: [this.event.description],
           start_time: [this.event.startTime],
           end_time: [this.event.endTime],

@@ -3,7 +3,7 @@ export class Event {
 
     public id: string;
     public name: string;
-    public target_id: string;
+    public targetId: string;
     public description: string;
     public startTime: string;
     public endTime: string;
@@ -18,7 +18,7 @@ export class Event {
     ) {
         this.id = id;
         this.name = attributes.name;
-        this.target_id = attributes.target_id;
+        this.targetId = attributes.targetId;
         this.description = attributes.description;
         this.startTime = attributes.startTime;
         this.endTime = attributes.endTime;
@@ -31,7 +31,7 @@ export class Event {
     public static newFromResponse(data: any) {
         return new this(data.id, {
             name: data.name,
-            target_id: data.target_id,
+            targetId: data.target_id,
             description: data.description,
             startTime: data.start_time,
             endTime: data.end_time,
