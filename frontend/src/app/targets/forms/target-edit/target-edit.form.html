@@ -12,6 +12,23 @@
                     type="text">
         </div>
 
+        <!-- Target -->
+        <div class="form-group">
+            <label for="target">Target</label>
+            <select
+                    class="form-control"
+                    formControlName="target_id"
+                    id='target'>
+                    <option  value="">Choose target</option>
+                    <option
+                            *ngFor="let one_target of targets"
+                            [value]="one_target.id"
+                            [selected]="one_target.id == target.target_id">
+                        {{one_target.name}}
+                    </option>
+            </select>
+        </div>
+
         <!-- Description -->
         <div class="form-group">
             <label for="description">Description</label>

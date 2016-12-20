@@ -4,7 +4,7 @@ export class Target {
     public name: string;
     public description: string;
     public is_done: boolean;
-    public targets: Array<any>;
+    public target_id: string;
 
     constructor(
         id: string,
@@ -14,7 +14,7 @@ export class Target {
         this.name = attributes.name;
         this.description = attributes.description;
         this.is_done = attributes.is_done;
-        this.targets = attributes.targets;
+        this.target_id = attributes.target_id;
     }
 
     public static newFromResponse(data: any) {
@@ -22,7 +22,7 @@ export class Target {
             name: data.name,
             description: data.description,
             is_done: data.is_done,
-            targets: data.targets,
+            target_id: data.target_id,
         });
     }
 

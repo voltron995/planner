@@ -22,13 +22,16 @@ export class TargetEditForm implements OnInit {
     @Input()
     target: Target;
 
+    @Input()
+    targets: Target[];
+
     form: FormGroup;
 
     constructor(
         private fb: FormBuilder,
         private targetService: TargetService,
         private msgSrv: MessageService,
-        private router: Router,
+        private router: Router
     ) {}
 
     ngOnInit(): void {
@@ -37,14 +40,19 @@ export class TargetEditForm implements OnInit {
 
     initForm() {
         this.form = this.fb.group({
-          name: [this.target.name],
-          description: [this.target.description],
-          is_done: [this.target.is_done],
+            name: [this.target.name],
+            target_id: [this.target.target_id],
+            description: [this.target.description],
+            is_done: [this.target.is_done],
         });
+
     }
 
     onSubmit() {
         let values = this.form.value;
+        if (!values.target_id) {
+            delete values.target_id;
+        }
         this.targetService
             .put(this.target.id, values)
             .then(target => {
