@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Category} from "./categories/models/category";
 import {Recipe} from "./recipes/models/recipe";
 import {ActivatedRoute} from "@angular/router";
@@ -8,7 +8,7 @@ import {Subscription} from "rxjs";
     templateUrl: 'recipes-plugin.component.html',
 })
 
-export class RecipesPluginComponent implements OnInit {
+export class RecipesPluginComponent implements OnInit, OnDestroy {
 
     selectedCategory: Category;
     selectedRecipe: Recipe;
@@ -22,9 +22,11 @@ export class RecipesPluginComponent implements OnInit {
     constructor(
         private route: ActivatedRoute
     ) {}
+
     ngOnInit(){
       this.initParams();
     }
+
     onCategorySelected(category: Category) {
         this.selectedCategory = category;
     }
@@ -39,6 +41,10 @@ export class RecipesPluginComponent implements OnInit {
                 eventId: params['id'],
             };
         });
+    }
+
+    ngOnDestroy() {
+        this.sub.unsubscribe();
     }
 
 }

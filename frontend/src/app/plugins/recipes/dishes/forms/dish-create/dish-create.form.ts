@@ -4,6 +4,8 @@ import {DishService} from "../../services/dish.service";
 import {Dish} from "../../models/dish";
 import {FileUploader} from "ng2-file-upload";
 import {Router} from "@angular/router";
+import {ResponseError} from "../../../../../main/models/errors";
+import {MessageService} from "../../../../../main/services/message.service";
 
 @Component({
     selector: 'dish-create-form',
@@ -28,7 +30,8 @@ export class DishCreateForm implements OnInit {
     constructor(
         private fb: FormBuilder,
         private dishSrv: DishService,
-        private router: Router
+        private router: Router,
+        private msgSrv: MessageService,
     ) {}
 
     ngOnInit(): void {
@@ -68,8 +71,13 @@ export class DishCreateForm implements OnInit {
         let values = this.form.value;
         this.dishSrv
             .post(values)
-            .then((dish: Dish) => this.router.navigate(['events', this.eventId, 'plugins', 'recipes']))
-            .catch(errors => console.log(errors, 'errors'));
+            .then((dish: Dish) => {
+                this.msgSrv.success(`Dish ${dish.name} successfully created.`);
+                this.router.navigate(['events', this.eventId, 'plugins', 'recipes'])
+            })
+            .catch((errors: ResponseError[]) => {
+                errors.forEach(error => this.msgSrv.error(error.detail))
+            });
     }
 
 }

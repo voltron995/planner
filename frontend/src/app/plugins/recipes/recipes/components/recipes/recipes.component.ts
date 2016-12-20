@@ -1,12 +1,7 @@
-import {
-    Component, OnInit, Output, Input, SimpleChanges, OnChanges, EventEmitter, AfterViewInit,
-    ElementRef, ViewChild
-} from '@angular/core';
+import {Component, Output, Input, SimpleChanges, OnChanges, EventEmitter} from '@angular/core';
 import {Recipe} from '../../models/recipe'
 import {RecipeService} from "../../services/recipe.service";
 import {Category} from "../../../categories/models/category";
-
-
 
 
 @Component({
@@ -15,7 +10,6 @@ import {Category} from "../../../categories/models/category";
     styleUrls: [
         'recipes.component.css'
     ],
-
 })
 
 export class RecipesComponent implements OnChanges {
@@ -28,11 +22,11 @@ export class RecipesComponent implements OnChanges {
     onRecipeSelected = new EventEmitter<Category>();
 
     constructor(
-        private recipeService: RecipeService
+        private recipeSrv: RecipeService
     ) {}
 
     getRecipes(): void {
-        this.recipeService
+        this.recipeSrv
             .listCat(this.category.id)
             .then(recipes => this.recipes = recipes);
     }

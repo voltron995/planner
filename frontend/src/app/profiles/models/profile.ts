@@ -19,7 +19,7 @@ export class Profile {
         this.imageLink = attributes.imageLink;
     }
 
-    public static newFromResponseData(data: any) {
+    public static newFromResponse(data: any) {
         return new this(data.id, {
             firstName: data.first_name,
             lastName: data.last_name,

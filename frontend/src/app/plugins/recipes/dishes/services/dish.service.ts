@@ -1,11 +1,7 @@
 import {Injectable} from '@angular/core';
 
-import 'rxjs/add/operator/toPromise';
-
 import {RequestService} from "../../../../main/services/request.service";
-import {ResponseService} from "../../../../main/services/response.service";
 import {Dish} from "../models/dish";
-import {URLSearchParams} from "@angular/http";
 
 
 @Injectable()
@@ -15,45 +11,49 @@ export class DishService {
 
     constructor(
         private requestSrv: RequestService,
-        private responseSrv: ResponseService
     ) {}
+
+    list(): Promise<Dish[]> {
+        const url = `${this.dishUrl}`;
+
+        return new Promise((resolve, reject) => {
+            this.requestSrv
+                .get(url)
+                .then(response => resolve(response.map((item: any) => Dish.newFromResponse(item))))
+                .catch(errors => reject(errors));
+        });
+    }
 
     get(id: string): Promise<Dish> {
         const url = `${this.dishUrl}/${id}`;
 
-        return this.requestSrv
-            .get(url)
-            .then(response => Dish.newFromResponse(this.responseSrv.parseData(response)))
-            .catch(response => this.responseSrv.parseErrors(response));
-     }
-
-    list(): Promise<Dish[]> {
-        const url = `${this.dishUrl}/`;
-
-        return this.requestSrv
-            .get(url)
-            .then(response => this.responseSrv.parseData(response).map((item: any) => Dish.newFromResponse(item)))
-            .catch(response => this.responseSrv.parseErrors(response));
+        return new Promise((resolve, reject) => {
+            this.requestSrv
+                .get(url)
+                .then(response => resolve(Dish.newFromResponse(response)))
+                .catch(errors => reject(errors));
+        });
     }
 
     put(id: string, data: any): Promise<Dish> {
         const url = `${this.dishUrl}/${id}`;
 
-        return this.requestSrv
-            .put(url, data)
-            .then(response => Dish.newFromResponse(this.responseSrv.parseData(response)))
-            .catch(response => this.responseSrv.parseErrors(response));
+        return new Promise((resolve, reject) => {
+            this.requestSrv
+                .put(url, data)
+                .then(response => resolve(Dish.newFromResponse(response)))
+                .catch(errors => reject(errors));
+        });
     }
 
     post(data: any): Promise<Dish> {
         const url = `${this.dishUrl}/`;
 
-        return this.requestSrv
-            .post(url, data)
-            .then(response => Dish.newFromResponse(this.responseSrv.parseData(response)))
-            .catch(response => this.responseSrv.parseErrors(response));
+        return new Promise((resolve, reject) => {
+            this.requestSrv
+                .post(url, data)
+                .then(response => resolve(Dish.newFromResponse(response)))
+                .catch(errors => reject(errors));
+        });
     }
-
-
-
 }

@@ -5,6 +5,8 @@ import {ItemService} from "../../services/item.service";
 import {PluginsFactory} from "../../../plugins/plugins-factory";
 import {PluginItem} from "../../../plugins/plugin-item";
 import {Router, ActivatedRoute} from "@angular/router";
+import {MessageService} from "../../../main/services/message.service";
+import {ResponseError} from "../../../main/models/errors";
 
 
 @Component({
@@ -16,14 +18,17 @@ import {Router, ActivatedRoute} from "@angular/router";
 })
 
 export class ItemsComponent implements OnInit {
+
     @Input()
     event: Event;
+
     items: PluginItem[];
 
     constructor(
         private itemSrv: ItemService,
         private route: ActivatedRoute,
-        private router: Router
+        private router: Router,
+        private msgSrv: MessageService,
     ) {}
 
     ngOnInit(): void {
@@ -35,7 +40,10 @@ export class ItemsComponent implements OnInit {
         this.event.items.map(item => {
             this.itemSrv
                 .get(item, PluginsFactory.getPlugin(item.plugin))
-                .then((item: any) => this.items.push(item));
+                .then((item: any) => this.items.push(item))
+                .catch((errors: ResponseError[]) => {
+                    errors.forEach(error => this.msgSrv.error(error.detail))
+                });
         });
     }
 
@@ -76,9 +84,9 @@ export class ItemsComponent implements OnInit {
                     this.items.splice(index, 1);
                 }
             })
-            .catch(errors => console.log(errors));
+            .catch((errors: ResponseError[]) => {
+                errors.forEach(error => this.msgSrv.error(error.detail))
+            });
     }
-
-
 
 }

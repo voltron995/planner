@@ -1,40 +1,52 @@
 import {Injectable} from '@angular/core';
-import {Headers} from '@angular/http';
-
-import 'rxjs/add/operator/toPromise';
 
 import {User} from '../models/user'
 import {RequestService} from '../../main/services/request.service';
-import {ResponseService} from '../../main/services/response.service';
+import {ResponseError} from "../../main/models/errors";
+import {MessageService} from "../../main/services/message.service";
+
 
 @Injectable()
 export class UserService {
-
-    private headers = new Headers({'Content-Type': 'application/json'});
 
     private usersUrl = 'api/v1.0/users';
 
     constructor(
         private requestSrv: RequestService,
-        private responseSrv: ResponseService
+        private msgSrv: MessageService
     ) {}
 
     getCurrent(): Promise<User> {
         const url = `${this.usersUrl}/current`;
 
-        return this.requestSrv
-            .get(url)
-            .then(response => User.newFromResponseData(this.responseSrv.parseData(response)))
-            .catch(response => this.responseSrv.parseErrors(response));
+        return new Promise((resolve, reject) => {
+            this.requestSrv
+                .get(url)
+                .then(response => resolve(User.newFromResponse(response)))
+                .catch(errors => reject(errors));
+        });
     }
 
 
     putCurrent(data: any): Promise<User> {
         const url = `${this.usersUrl}/current`;
 
-        return this.requestSrv
-            .put(url, data)
-            .then(response => User.newFromResponseData(this.responseSrv.parseData(response)))
-            .catch(response => this.responseSrv.parseErrors(response));
+        return new Promise((resolve, reject) => {
+            this.requestSrv
+                .put(url, data)
+                .then(response => resolve(User.newFromResponse(response)))
+                .catch(errors => reject(errors));
+        });
+    }
+
+    logOut() {
+        const url = `${this.usersUrl}/logout`;
+
+        this.requestSrv
+                .post(url, {})
+                .then(response => { window.location.replace('/users/login'); })
+                .catch((errors: ResponseError[]) => {
+                errors.forEach(error => this.msgSrv.error(error.detail));
+        });
     }
 }

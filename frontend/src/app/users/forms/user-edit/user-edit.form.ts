@@ -2,6 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {User} from '../../models/user';
 import {UserService} from '../../services/user.service';
+import {MessageService} from "../../../main/services/message.service";
+import {ResponseError} from "../../../main/models/errors";
 
 @Component({
     selector: 'user-edit-form',
@@ -16,15 +18,16 @@ import {UserService} from '../../services/user.service';
 
 export class UserEditForm implements OnInit {
 
-    @Input() user: User;
+    @Input()
+    user: User;
+
     form: FormGroup;
 
     constructor(
         private fb: FormBuilder,
-        private userService: UserService
-    ) {
-
-    }
+        private userSrv: UserService,
+        private msgSrv: MessageService,
+    ) {}
 
     ngOnInit(): void {
         this.initForm();
@@ -39,13 +42,14 @@ export class UserEditForm implements OnInit {
     }
 
     onSubmit() {
-        console.log('submit');
         let values = this.form.value;
         this.form.reset();
-        this.userService
+        this.userSrv
             .putCurrent(values)
-            .then(profile => console.log(profile, 'success'))
-            .catch(errors => console.log(errors, 'errors'));
+            .then(() => this.msgSrv.success('Settings successfully saved.'))
+            .catch((errors: ResponseError[]) => {
+                errors.forEach(error => this.msgSrv.error(error.detail))
+            });
     }
 
 }

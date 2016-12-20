@@ -17,7 +17,7 @@ export class Dish {
         this.price = attributes.price;
         this.image = attributes.image;
         this.imageLink = attributes.imageLink;
-        this.ingredients = [];
+        this.ingredients = attributes.ingredients;
     }
 
     public static newFromResponse(data: any) {
@@ -25,6 +25,7 @@ export class Dish {
             name: data.name,
             description: data.description,
             price: data.price,
+            ingredients: data.ingredients.map((item: any) => Ingredient.newFromResponse(item)),
             image: data.img_path,
             imageLink: data.image_link,
         });

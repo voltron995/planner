@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {User} from '../../../users/models/user';
 import {UserService} from '../../../users/services/user.service';
+import {ResponseError} from "../../../main/models/errors";
+import {MessageService} from "../../../main/services/message.service";
 
 @Component({
     selector: 'profile',
@@ -15,7 +17,8 @@ export class ProfileComponent implements OnInit {
     user: User;
 
     constructor(
-        private userService: UserService,
+        private userSrv: UserService,
+        private msgSrv: MessageService,
     ) {}
 
     ngOnInit(): void {
@@ -23,10 +26,11 @@ export class ProfileComponent implements OnInit {
     }
 
     initUser() {
-        this.userService
+        this.userSrv
             .getCurrent()
-            .then(user => {
-                this.user = user;
+            .then(user => this.user = user)
+            .catch((errors: ResponseError[]) => {
+                errors.forEach(error => this.msgSrv.error(error.detail))
             });
     }
 

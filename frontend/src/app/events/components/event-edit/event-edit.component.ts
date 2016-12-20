@@ -4,6 +4,9 @@ import {Event} from '../../models/event'
 import {EventService} from "../../services/event.service";
 import {Target} from '../../../targets/models/targets';
 import {TargetService} from '../../../targets/services/target.service';
+import {Subscription} from "rxjs";
+import {ResponseError} from "../../../main/models/errors";
+import {MessageService} from "../../../main/services/message.service";
 
 @Component({
     selector: 'event-edit',
@@ -20,39 +23,49 @@ export class EventEditComponent implements OnInit, OnDestroy {
     constructor(
         private route: ActivatedRoute,
         private eventSrv: EventService,
-        private targetService: TargetService
+        private targetSrv: TargetService,
+        private msgSrv: MessageService,
     ) {}
 
-    id: string;
+    params: {
+        id: string
+    };
+
     event: Event;
-    private sub:any;
+
+    private sub: Subscription;
 
     ngOnInit() {
         this.initParams();
         this.initEvent();
-        this.getTargets();
+        this.initTargets();
     }
 
     private initParams() {
         this.sub = this.route.params.subscribe(params => {
-            this.id = params['id'];
+            this.params = {
+                id: params['id']
+            }
         });
     }
 
     private initEvent() {
         this.eventSrv
-            .get(this.id)
-            .then(event => {
-                this.event = event;
+            .get(this.params.id)
+            .then(event => this.event = event)
+            .catch((errors: ResponseError[]) => {
+                errors.forEach(error => this.msgSrv.error(error.detail))
             });
     }
 
-    getTargets(): void {
-        this.targetService
+    initTargets(): void {
+        this.targetSrv
             .list()
-            .then(targets => this.targets = targets);
+            .then(targets => this.targets = targets)
+            .catch((errors: ResponseError[]) => {
+                errors.forEach(error => this.msgSrv.error(error.detail))
+            });
     }
-
 
     ngOnDestroy() {
         this.sub.unsubscribe();

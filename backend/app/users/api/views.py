@@ -1,4 +1,6 @@
 from flask import request
+from flask_login import login_required
+from flask_login import logout_user
 from flask_login import current_user
 
 from app import db
@@ -44,3 +46,9 @@ class ProfileCurrent(BaseView):
         db.session.commit()
 
         return response.success(data=profile, schema=self.schema)
+
+
+class UsersLogout(BaseView):
+    def post(self):
+        logout_user()
+        return response.success()

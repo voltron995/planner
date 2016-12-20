@@ -17,7 +17,7 @@ export class Target {
         this.targets = attributes.targets;
     }
 
-    public static newFromResponseData(data: any) {
+    public static newFromResponse(data: any) {
         return new this(data.id, {
             name: data.name,
             description: data.description,
