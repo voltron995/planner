@@ -25,6 +25,7 @@ import {ResponseError} from "../../../main/models/errors"; // import should be f
 import {Target} from '../../../targets/models/targets';
 import {TargetService} from '../../../targets/services/target.service';
 import {FormGroup, FormBuilder} from "@angular/forms";
+import {Event} from "../../models/event";
 
 
 
@@ -98,9 +99,14 @@ export class CalendarComponent {
                         let index = this.events.indexOf(event);
                         if (index !== -1) {
                             this.events.splice(index, 1);
+                            console.log(event.cssClass);
+                            this.eventsList = this.eventsList.filter((eventTarget: Event) => {
+                                    return eventTarget.id != event.cssClass;
+                                }
+                            );
                             this.refresh.next();
                         }
-                        this.msgSrv.success(`Event ${event.title} successfully deleted.`);
+                        this.msgSrv.success('Event ${event.title} successfully deleted.');
                     })
                     .catch((errors: ResponseError[]) => {
                         errors.forEach(error => this.msgSrv.error(error.detail))
