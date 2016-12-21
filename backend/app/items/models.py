@@ -9,6 +9,6 @@ class Item(BaseModel):
     __tablename__ = 'items'
 
     event_id = db.Column(UUID, db.ForeignKey('events.id'), nullable=False)
-    event = relationship('Event', cascade='all, delete-orphan', backref='items')
+    event = relationship("Event", back_populates="items")
     plugin = db.Column(db.String, nullable=False)
     plugin_item_id = db.Column(db.Integer, nullable=False)
