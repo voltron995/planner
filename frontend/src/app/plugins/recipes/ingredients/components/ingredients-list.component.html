@@ -1,12 +1,13 @@
-<h3>
-    List of ingredients
-</h3>
-<div class="ingredients-wrapper">
-    <div class="ingredients container">
-        <div *ngFor="let ingr of entity.ingredients" class="ingredient row">
-            <ul>
-                <li>  {{ ingr.ingredient.name }} {{ ingr.quantity }} {{ ingr.ingredient.dimension }}</li>
-            </ul>
+<div class="ingredients-wrapper clearfix">
+    <div *ngFor="let ingr of entity.ingredients" class="ingredient">
+        <div class="col-xs-8 name text-capitalize">
+            {{ ingr.ingredient.name }}
+        </div>
+        <div class="col-xs-2 quantity">
+            {{ ingr.quantity }}
+        </div>
+        <div class="col-xs-2 units">
+            {{ ingr.ingredient.dimension }}
         </div>
     </div>
 </div>

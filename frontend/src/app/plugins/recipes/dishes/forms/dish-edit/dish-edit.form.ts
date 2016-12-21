@@ -1,5 +1,5 @@
-import {Component, Input,Output, OnInit, AfterContentInit} from '@angular/core';
-import {FormBuilder, FormGroup,FormArray,FormControl} from '@angular/forms';
+import {Component, Input, Output, OnInit, AfterContentInit} from '@angular/core';
+import {FormBuilder, FormGroup, FormArray, FormControl} from '@angular/forms';
 import {SelectModule} from 'angular2-select';
 import {DishService} from "../../services/dish.service";
 import {Dish} from "../../models/dish";
@@ -9,6 +9,7 @@ import {MessageService} from "../../../../../main/services/message.service";
 import {ResponseError} from "../../../../../main/models/errors";
 import {Ingredient} from "../../../ingredients/models/ingredients";
 import {IngredientService} from "../../../ingredients/services/ingredients.service";
+import {DishIngredient} from "../../../ingredients/models/dish-ingredient";
 
 @Component({
     selector: 'dish-edit-form',
@@ -23,7 +24,6 @@ import {IngredientService} from "../../../ingredients/services/ingredients.servi
 
 export class DishEditForm {
 
-
     @Input()
     eventId: string;
 
@@ -33,77 +33,130 @@ export class DishEditForm {
     uploader: FileUploader;
     imagePreview: string;
 
+    ingredients: {
+        list: Ingredient[],
+        selected: DishIngredient[],
+        options: Array<{
+            label: string,
+            value: string,
+        }>,
+    };
+
     form: FormGroup;
 
-    myOptions : Array<any>=[];
-    ingredients: Ingredient[];
     constructor(
-
         private fb: FormBuilder,
-        private ingrSrv:IngredientService,
+        private ingredientService: IngredientService,
         private dishSrv: DishService,
         private router: Router,
         private msgSrv: MessageService,
+    ) {}
 
-    ) {
+    ngOnInit(): void {
+        this.initForm();
+        this.initIngredientList();
+        this.initUploader();
+    };
 
+    initIngredientList(): void {
+        this.ingredients = {
+            list: [],
+            options: [],
+            selected: [],
+        };
+
+        this.ingredientService
+            .list()
+            .then(ingredients => {
+                this.ingredients.list = ingredients;
+                this.initSelectedIngredients();
+                this.initIngredientOptions();
+                this.initIngredientsFormArray();
+            });
     }
 
-    ngOnInit() : void {
-      this.initIngrlist();
-      this.initForm();
-      this.initUploader();
+    initIngredientOptions() {
+        let options: Array<{
+            label: string,
+            value: string,
+        }> = [];
+
+        this.ingredients.list
+            .forEach((ingredient: Ingredient) => {
+                let selected = this.ingredients.selected
+                    .filter((selected: DishIngredient) => {
+                        return selected.ingredient.id == ingredient.id;
+                    }).pop();
+
+                if (!selected) {
+                    options.push({
+                        value: ingredient.id.toString(),
+                        label: ingredient.name.toString()
+                    });
+                }
+            });
+
+        this.ingredients.options = options;
     };
 
+    initSelectedIngredients() {
+        this.ingredients.selected = this.dish.ingredients;
+    }
 
-    initOptions(): void {
-      let opts=new Array();
-      for (let i of this.ingredients) {
-        console.log(i)
-          opts.push({
-              value: i.id.toString(),
-              label: i.name.toString()
-          });
-      }
-      this.myOptions = opts
-    };
-
-    private initForm() {
-  //     let ingredients:FormArray = new FormArray([]);
-  //     for(let i=0;i<this.dish.ingredients.length; i++){
-  //     ingredients.push(new FormGroup({
-  //     name:new FormControl(this.dish.ingredients[i].name),
-  //     quantity:new FormControl(this.dish.ingredients[i].name)
-  //   }
-  //
-  //   )
-  // )
-  // }
-
+    protected initForm() {
         this.form = this.fb.group({
             name: [this.dish.name],
             description: [this.dish.description],
-            img_path: [this.dish.image],
-            ingredients:this.fb.array([this.initIngredients()]),
+            image: [this.dish.image || ''],
+            ingredients: this.fb.array([]),
             event_id: this.eventId
-
         });
-      }
-      initIngredients(){
-          return this.fb.group({
-            name:[this.dish.ingredients],
-            quantity:[this.dish.ingredients]
-          })
+    }
+
+    protected initIngredientsFormArray(): void {
+        let control = <FormArray>this.form.controls['ingredients'];
+        this.ingredients.selected
+            .forEach((ingredient: DishIngredient) => {
+                control.push(this.fb.group({
+                    id: ingredient.ingredient.id,
+                    quantity: ingredient.quantity
+                }));
+            }, this);
+    }
+
+    onRemoveIngredient(index: number) {
+        let control = <FormArray>this.form.controls['ingredients'];
+        control.removeAt(index);
+        this.ingredients.selected.splice(index, 1);
+        this.initIngredientOptions();
+    }
+
+    onIngredientSelected(item: any): void {
+        let selected = this.ingredients.list
+            .filter((ingredient: Ingredient) => {
+                return ingredient.id == item.value;
+            }).pop();
+
+        let duplicated = this.ingredients.selected
+            .filter((ingredient: DishIngredient) => {
+                return ingredient.ingredient.id == selected.id;
+            }).pop();
+
+        if (duplicated) {
+            this.msgSrv.error('Ingredient already selected.');
+        } else {
+            this.ingredients.selected.push(new DishIngredient(0, selected));
+            let control = <FormArray>this.form.controls['ingredients'];
+            control.push(this.fb.group({
+                id: selected.id,
+                quantity: 0
+            }));
+            this.initIngredientOptions();
         }
-      addIngredient() {
-         const control = <FormArray>this.form.controls['ingredients'];
-         control.push(this.initIngredients());
-     }
-
-
+    }
 
     initUploader() {
-        let _this = this;
+        let __this = this;
         let uploader = new FileUploader({
             url: '/api/v1.0/uploads/dish-images',
             autoUpload: true,
@@ -112,8 +165,8 @@ export class DishEditForm {
 
         uploader.onCompleteItem = function (item: any, response: string, status: number) {
             var json = JSON.parse(response);
-            this.imagePreview = json.link;
-            this.form.patchValue({'img_path': json.id});
+            __this.imagePreview = json.link;
+            __this.form.patchValue({'image': json.id});
         };
 
         this.uploader = uploader;
@@ -123,38 +176,23 @@ export class DishEditForm {
 
     onSubmit() {
         let values = this.form.value;
-
-        // values.ingredients = [
-        //      {
-        //          "ingredient": {"id":4},
-        //           "quantity":300
-        //     }
-        // ];
+        values.ingredients = values.ingredients.map((value: any) => {
+            return {
+                'quantity': value.quantity,
+                'ingredient': {
+                    id: value.id,
+                }
+            }
+        });
 
         this.dishSrv
             .put(this.dish.id, values)
             .then((dish: Dish) => {
                 this.msgSrv.success(`Dish ${dish.name} successfully updated.`);
-                this.router.navigate(['events', this.eventId])
+                this.router.navigate(['events', this.eventId, 'plugins', 'recipes', 'dishes', dish.id])
             })
             .catch((errors: ResponseError[]) => {
                 errors.forEach(error => this.msgSrv.error(error.detail))
             });
-
-          }
-
-    initIngrlist(): void {
-        this.ingrSrv
-            .list()
-            .then(ingredients => {
-              this.ingredients = ingredients;
-              this.initOptions();
-              console.log(ingredients, 'ingr');
-            });
-      }
-  //   onSel(ingredient:Ingredient) {
-  //     console.log(ingredient)
-  //     this.selectedIngr = ingredient;
-  //     // ... do other stuff here ...
-  // }
     }
+}

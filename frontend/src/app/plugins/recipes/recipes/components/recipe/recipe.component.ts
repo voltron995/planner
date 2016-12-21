@@ -28,7 +28,7 @@ export class RecipeComponent {
         private msgSrv: MessageService,
     ) {}
 
-    postDish() {
+    createDish() {
         let data = {
             name: this.recipe.name,
             description: this.recipe.description,

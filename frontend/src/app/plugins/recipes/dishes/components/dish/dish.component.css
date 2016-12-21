@@ -1,6 +1,24 @@
-.recipe img {
-    width: 100%;
+.dish {
+    margin-bottom: 20px;
 }
-.recipe-wrapper {
-  padding: 30px;
+
+.dish h1 {
+    word-wrap: break-word;
+}
+
+.dish .description {
+    font-size: medium;
+    line-height: 1.5;
+    margin: 10px 0;
+    white-space: pre-line;
+}
+
+.dish .price {
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+
+.dish .actions {
+    background: snow;
+    padding: 10px;
 }

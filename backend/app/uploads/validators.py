@@ -54,7 +54,7 @@ class UploadValidator(ABC):
     def validate(self):
         self._validate_name()
         self._validate_mime_type()
-        # self._validate_max_size()
+        self._validate_max_size()
 
     def _validate_name(self):
         if len(self.file.filename.split('.')) < 2:

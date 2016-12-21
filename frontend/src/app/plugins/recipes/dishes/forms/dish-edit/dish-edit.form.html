@@ -6,14 +6,16 @@
         <div class="form-group">
             <img
                     [src]="imagePreview"
-                    alt="Dish image">
+                    alt="Dish image"
+                    class="img-thumbnail">
             <input
                     [uploader]="uploader"
                     id="image-upload"
                     ng2FileSelect
-                    type="file">
+                    type="file"
+                    class="btn">
             <input
-                    formControlName="img_path"
+                    formControlName="image"
                     type="hidden">
         </div>
 
@@ -33,55 +35,59 @@
             <textarea
                     class="form-control"
                     formControlName="description"
-                    id="description">
+                    id="description"
+                    rows="10">
             </textarea>
         </div>
 
         <!-- Ingredients -->
-      <!-- <div class="form-group">
-           <div class="row">
-             <div class = "col-xs-12">
-               <div class="form-group-row"> -->
-
-            <label for="ingredients">Ingredients</label>
-            <ng-select [options]="myOptions"></ng-select>
-           <div class = "col-md-5">
-             <ul class="list-group" formArrayName = "ingredients">
-              <div class="row" *ngFor="let ingredient of form.controls.ingredients.controls; let i=index">
-                <div [formGroupName]="i">
-
-                  <div *ngFor = "let ingr of this.dish.ingredients">
-                    <div class = "col-sm-5">
-                  <label>Ingr Name</label>
-                  <input
-                    class="form-control"
-                    formControlName="name"
-                    value="{{ingr.ingredient.name}}"
-                    type="text"></div>
-                  <div class = "col-sm-5">
-
-                  <input
-                    class="form-control"
-                   formControlName="quantity"
-                   value="{{ingr.quantity}}"
-                   type="text"></div>
-                 </div>
-                 <div class = "col-sm-2">
-                   <button type="button" (click)="addIngredient()" class="btn btn-primary">+</button>
-                 </div>
+        <div *ngIf="ingredients" class="form-group row">
+            <div class="form-group select-ingredients">
+                <label for="ingredients">Ingredients</label>
+                <ng-select
+                        *ngIf="ingredients.options"
+                        [options]="ingredients.options"
+                        (selected)="onIngredientSelected($event)"
+                        id="ingredients">
+                </ng-select>
             </div>
-          </div>
-          </ul>
-          </div>
 
+            <div formArrayName="ingredients" class="form-group col-md-6">
+                <div
+                        *ngFor="let control of form.controls.ingredients.controls; let i=index;"
+                        [formGroupName]="i"
+                        class="clearfix form-group ingredient">
+
+                    <div class="name col-xs-6">
+                        {{ ingredients.selected[i].ingredient.name }}
+                    </div>
+                    <div class="quantity col-xs-3">
+                        <input
+                                formControlName="quantity"
+                                class="form-control input-group-sm"
+                                min="0"
+                                max="9999"
+                                type="number">
+                    </div>
+                    <div class="units col-xs-1">
+                        {{ ingredients.selected[i].ingredient.dimension }}
+                    </div>
+                    <div class="remove col-xs-2">
+                        <a (click)="onRemoveIngredient(i)" class="btn btn-default btn-sm">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Submit -->
         <button
-                class="btn btn-default"
+                class="btn btn-success"
                 type="submit">
             Submit
         </button>
-
+        
     </form>
 
 </div>
