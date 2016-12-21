@@ -7,7 +7,7 @@ class IngredientsList(ListCreateView):
     plugin = Recipes
     schema = IngredientSchema
     actions = {
-        'GET': 'RecipeList_get',
+        'GET': 'IngredientList_get',
     }
 
 
@@ -15,5 +15,5 @@ class IngredientsSingle(ReadUpdateDeleteView):
     plugin = Recipes
     schema = IngredientSchema
     actions = {
-        'GET': 'RecipeEntity_get',
+        'GET': 'IngredientEntity_get',
     }

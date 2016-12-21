@@ -1,4 +1,6 @@
-import {Ingredient} from "../../ingredients/models/ingredients";
+import {DishIngredient} from "../../ingredients/models/dish-ingredient";
+
+
 export class Dish {
 
     public id: string;
@@ -7,7 +9,7 @@ export class Dish {
     public price: string;
     public image: string;
     public imageLink: string;
-    public ingredients: Ingredient[];
+    public ingredients: DishIngredient[];
 
 
     constructor(id: string, attributes: any) {
@@ -25,8 +27,8 @@ export class Dish {
             name: data.name,
             description: data.description,
             price: data.price,
-            ingredients: data.ingredients.map((item: any) => Ingredient.newFromResponse(item)),
-            image: data.img_path,
+            ingredients: data.ingredients.map((item: any) => DishIngredient.newFromResponse(item)),
+            image: data.image,
             imageLink: data.image_link,
         });
     }

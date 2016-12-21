@@ -1,4 +1,5 @@
 import {NgModule} from '@angular/core';
+import {SelectModule} from 'angular2-select';
 import {DishService} from "./dishes/services/dish.service";
 import {IngredientService} from "./ingredients/services/ingredients.service";
 import {IngredientsListComponent} from "./ingredients/components/ingredients-list.component";
@@ -23,6 +24,7 @@ import {DishComponent} from "./dishes/components/dish/dish.component";
 @NgModule({
     imports: [
         CommonModule,
+        SelectModule,
         FileUploadModule,
         FormsModule,
         MasonryModule,

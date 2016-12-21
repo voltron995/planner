@@ -28,11 +28,11 @@ export class RecipeComponent {
         private msgSrv: MessageService,
     ) {}
 
-    postDish() {
+    createDish() {
         let data = {
             name: this.recipe.name,
             description: this.recipe.description,
-            // img_path: this.recipe.image,
+            image: this.recipe.image,
             ingredients: this.recipe.ingredients,
             event_id: this.eventId
         };

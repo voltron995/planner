@@ -1,0 +1,14 @@
+.ingredients-wrapper {
+    background: lightgoldenrodyellow;
+}
+
+.ingredient .name,
+.ingredient .quantity,
+.ingredient .units {
+    border-bottom: 1px solid dimgray;
+}
+
+.ingredient .name,
+.ingredient .quantity {
+    border-right: 1px solid dimgray;
+}

@@ -1,20 +1,34 @@
-<div *ngIf="dish" class="dish-wrapper">
-    <div class="recipe">
-        <img [src]="dish.imageLink" alt="Recipe Image">
-        <h2 class="name">
-            {{ dish.name }}
-        </h2>
-        <div class="description"> Description:
-            {{ dish.description }}
+<div *ngIf="dish">
+
+    <section class="dish col-sm-8">
+        <!-- Image -->
+        <img
+                [src]="dish.imageLink"
+                alt="Recipe Image"
+                class="img-thumbnail img-responsive">
+
+        <!-- Name -->
+        <h1 class="name">{{ dish.name }}</h1>
+
+        <!-- Description -->
+        <div class="description">{{ dish.description }}</div>
+
+        <!-- Ingredients -->
+        <section class="ingredients">
+            <ingredients-list [entity]="dish"></ingredients-list>
+        </section>
+
+        <!-- Price -->
+        <div class="row price">
+            <span class="col-xs-3">Price:</span>
+            <span class="value">{{ dish.price }}</span>
         </div>
 
-        <ingredients-list [entity]="dish"></ingredients-list>
-
-        <div>
-            <h3> Price: {{ dish.price }}</h3>
+        <!-- Actions -->
+        <div class="actions btn-group-lg">
+            <a [routerLink]="['edit']" class="btn btn-lg btn-warning">Edit</a>
+            <a (click)="deleteDish()" class="btn btn-lg btn-danger">Delete</a>
+            <a [routerLink]="['/events', params.eventId]" class="btn btn-lg btn-success pull-right">Back to Event</a>
         </div>
-    </div>
-
-    <a [routerLink]="['edit']">Edit</a>
-
+    </section>
 </div>
