@@ -53,10 +53,9 @@ module.exports = {
         new CopyWebpackPlugin([{
             from: 'public/images',
             to: '../dist/assets'
-        }])
-
-        // new HtmlWebpackPlugin({
-        //   template: 'src/index.html'
-        // })
+        }]),
+        new webpack.ProvidePlugin({
+            imagesLoaded: 'imagesloaded'
+        })
     ]
 };

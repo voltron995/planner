@@ -9,7 +9,7 @@ from .forms import LoginForm, RegisterForm, ResendForm
 from .models import User, Profile
 from .tokens import Token
 
-HOME_PAGE = 'events.list'
+HOME_PAGE = 'home'
 
 
 @login_manager.user_loader
@@ -82,8 +82,8 @@ class UsersConfirm(MethodView):
 
 class UsersResend(MethodView):
     def get(self):
-        if current_user.is_authenticated:
-            return redirect(url_for(HOME_PAGE))
+        # if current_user.is_authenticated:
+            # return redirect(url_for(HOME_PAGE))
         return render_template('users/resend.html', form=ResendForm())
 
     def post(self):

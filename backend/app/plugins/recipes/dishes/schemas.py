@@ -14,7 +14,7 @@ class DishSchema(ModelSchema):
     id = fields.Int()
     name = fields.String(required=True)
     description = fields.String()
-    img_path = fields.String()
+    image = fields.String()
     ingredients = fields.Nested(
         IngredientListSchema,
         many=True,
@@ -36,8 +36,8 @@ class DishSchema(ModelSchema):
 
     # todo: do it better
     def _add_image_link(self, item):
-        if item['img_path']:
-            item['image_link'] = UploadsManager.get_link(item['img_path'], groups.DISH_IMAGES)
+        if item['image']:
+            item['image_link'] = UploadsManager.get_link(item['image'], groups.DISH_IMAGES)
         else:
             item['image_link'] = url_for('static', filename='assets/dish-default.jpg')
         return item

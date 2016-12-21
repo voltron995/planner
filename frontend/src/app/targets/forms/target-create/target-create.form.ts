@@ -4,6 +4,7 @@ import {TargetService} from '../../services/target.service';
 import {Router} from '@angular/router';
 import {ResponseError} from "../../../main/models/errors";
 import {MessageService} from "../../../main/services/message.service";
+import {Target} from "../../models/targets";
 
 @Component({
     selector: 'target-create-form',
@@ -17,6 +18,9 @@ import {MessageService} from "../../../main/services/message.service";
 })
 
 export class TargetCreateForm implements OnInit {
+
+    @Input()
+    targets: Target[];
 
     form: FormGroup;
 
@@ -34,12 +38,16 @@ export class TargetCreateForm implements OnInit {
     initForm() {
         this.form = this.fb.group({
             name: [''],
+            target_id: [null],
             description: [''],
         });
     }
 
     onSubmit() {
         let values = this.form.value;
+        if (!values.target_id) {
+            delete values.target_id;
+        }
         this.targetService
             .post(values)
             .then(target => {

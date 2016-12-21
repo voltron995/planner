@@ -5,6 +5,8 @@ import {ProfileService} from '../../services/profile.service';
 import {User} from '../../../users/models/user';
 import {MessageService} from "../../../main/services/message.service";
 import {ResponseError} from "../../../main/models/errors";
+import {ResponseService} from "../../../main/services/response.service";
+import {isUndefined} from "util";
 
 @Component({
     selector: 'profile-edit-form',
@@ -47,7 +49,7 @@ export class ProfileEditForm implements OnInit {
     }
 
     initUploader() {
-        let _this = this;
+        let __this = this;
         let uploader = new FileUploader({
             url: '/api/v1.0/uploads/profile-images',
             autoUpload: true,
@@ -56,12 +58,19 @@ export class ProfileEditForm implements OnInit {
 
         uploader.onCompleteItem = function (item: any, response: string, status: number) {
             let json = JSON.parse(response);
-            _this.imagePreview = json.link;
-            _this.form.patchValue({'image': json.id});
+            if (isUndefined(json.errors)) {
+                __this.imagePreview = json.link;
+                __this.form.patchValue({'image': json.id});
+            }
+            else {
+                json.errors
+                    .map((error: any) => ResponseError.newFromResponse(error))
+                    .forEach((error: ResponseError) => __this.msgSrv.error(error.detail))
+            }
         };
 
-        _this.uploader = uploader;
-        _this.imagePreview = _this.user.profile.imageLink;
+        __this.uploader = uploader;
+        __this.imagePreview = __this.user.profile.imageLink;
     }
 
     onSubmit() {

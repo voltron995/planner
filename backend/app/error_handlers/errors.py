@@ -48,12 +48,12 @@ class Error:
 
 class InvalidAttribute(Error):
     code = 422
-    detail = 'Invalid Attribute.'
+    title = 'Invalid Attribute.'
 
 
 class AccessDenied(Error):
     code = 403
-    detail = 'User is not permitted to perform the requested operation.'
+    title = 'User is not permitted to perform the requested operation.'
 
 
 class ElementNotFound(Error):

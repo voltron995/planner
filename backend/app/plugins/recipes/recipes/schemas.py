@@ -17,7 +17,7 @@ class RecipeSchema(ModelSchema):
     id = fields.Int()
     name = fields.String(required=True)
     description = fields.String()
-    img_path = fields.String()
+    image = fields.String()
     categories = fields.Nested(CategorySchema, many=True)
     ingredients = fields.Nested(
         IngredientListSchema,
@@ -34,8 +34,10 @@ class RecipeSchema(ModelSchema):
 
     # todo: do it better
     def _add_image_link(self, item):
-        if item['img_path']:
-            item['image_link'] = UploadsManager.get_link(item['img_path'], groups.RECIPE_IMAGES)
+        if item['image']:
+            item['image_link'] = UploadsManager.get_link(item['image'], groups.RECIPE_IMAGES)
         else:
             item['image_link'] = url_for('static', filename='assets/recipe-default.jpg')
         return item
+
+

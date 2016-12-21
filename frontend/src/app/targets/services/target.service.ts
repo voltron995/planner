@@ -39,7 +39,7 @@ export class TargetService {
 
         return new Promise((resolve, reject) => {
             this.requestSrv
-                .get(url, data)
+                .put(url, data)
                 .then(response => resolve(Target.newFromResponse(response)))
                 .catch(errors => reject(errors));
         });

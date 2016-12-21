@@ -3,6 +3,8 @@ import {ActivatedRoute} from "@angular/router";
 import {Target} from '../../models/targets'
 import {TargetService} from "../../services/target.service";
 import {Subscription} from "rxjs";
+import {ResponseError} from "../../../main/models/errors";
+import {MessageService} from "../../../main/services/message.service";
 
 
 @Component({
@@ -15,9 +17,12 @@ import {Subscription} from "rxjs";
 })
 
 export class TargetEditComponent implements OnInit, OnDestroy {
+    targets: Target[];
+
     constructor(
         private route: ActivatedRoute,
-        private targetSrv: TargetService
+        private targetSrv: TargetService,
+        private msgSrv: MessageService
     ) {}
 
     params: {
@@ -31,6 +36,7 @@ export class TargetEditComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.initParams();
         this.initTarget();
+        this.initTargets();
     }
 
     private initParams() {
@@ -46,6 +52,15 @@ export class TargetEditComponent implements OnInit, OnDestroy {
             .get(this.params.id)
             .then(target => {
                 this.target = target;
+            });
+    }
+
+    initTargets(): void {
+        this.targetSrv
+            .list()
+            .then(targets => this.targets = targets)
+            .catch((errors: ResponseError[]) => {
+                errors.forEach(error => this.msgSrv.error(error.detail))
             });
     }
 
