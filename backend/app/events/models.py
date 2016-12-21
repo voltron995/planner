@@ -13,7 +13,7 @@ class Event(BaseModel):
     user_id = db.Column(UUID, db.ForeignKey('users.id'), nullable=False)
     user = relationship('User', backref='events')
     target_id = db.Column(UUID, db.ForeignKey('targets.id'))
-    target = relationship('Target', backref='event')
+    target = relationship('Target', cascade='all, delete-orphan', backref='event')
     start_time = db.Column(db.DateTime(timezone=True), nullable=False)
     end_time = db.Column(db.DateTime(timezone=True), nullable=False)
     color_primary = db.Column(db.String(), default='#aaa')
