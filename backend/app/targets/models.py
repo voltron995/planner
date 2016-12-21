@@ -15,3 +15,5 @@ class Target(BaseModel):
     description = db.Column(db.String)
     user = relationship('User', backref='targets')
     target = relationship('Target', cascade='all, delete-orphan', post_update=True)
+    events = relationship("Event", back_populates='target',
+                    cascade="all, delete, delete-orphan")

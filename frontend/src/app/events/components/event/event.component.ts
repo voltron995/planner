@@ -79,7 +79,7 @@ export class EventComponent implements OnInit, OnDestroy {
 
     private initTarget() {
         this.targetSrv
-            .get(this.event.target_id)
+            .get(this.event.targetId)
             .then(target => this.target = target)
             .catch((errors: ResponseError[]) => {
                 errors.forEach(error => this.msgSrv.error(error.detail))

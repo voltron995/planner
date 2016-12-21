@@ -22,34 +22,12 @@ import {
 import {EventService} from "../../services/event.service";
 import {MessageService} from "../../../main/services/message.service";
 import {ResponseError} from "../../../main/models/errors"; // import should be from `angular-calendar` in your app
+import {Target} from '../../../targets/models/targets';
+import {TargetService} from '../../../targets/services/target.service';
+import {FormGroup, FormBuilder} from "@angular/forms";
+import {Event} from "../../models/event";
 
 
-const colors: any = {
-  red: {
-    primary: '#ad2121',
-    secondary: '#FAE3E3'
-  },
-  blue: {
-    primary: '#1e90ff',
-    secondary: '#D1E8FF'
-  },
-
-  yellow: {
-    primary: '#e3bc08',
-    secondary: '#FDF1BA'
-  },
-
-  green: {
-      primary: '#3d534b',
-      secondary: '#77986f'
-  },
-
-  gray: {
-    primary: '#bab2b7',
-    secondary: '#d9d6d8'
-  }
-
-};
 
 @Component({
     selector: 'calendar',
@@ -65,13 +43,34 @@ export class CalendarComponent {
   constructor(
       private router: Router,
       private eventSrv: EventService,
-      private msgSrv: MessageService
+      private msgSrv: MessageService,
+      private targetSrv: TargetService,
+      private fb: FormBuilder
   ) {}
 
   @Input()
   eventsList: any[];
 
+  targets: Target[];
+
+  initTargets(): void {
+      this.targetSrv
+          .list()
+          .then(targets => this.targets = targets)
+          .catch((errors: ResponseError[]) => {
+              errors.forEach(error => this.msgSrv.error(error.detail))
+          });
+  }
+    form: FormGroup;
+
+    initForm() {
+        this.form = this.fb.group({
+          target_id: ["All targets"]
+        });
+    };
+
   view: string = 'month';
+
 
   viewDate: Date = new Date();
 
@@ -100,9 +99,14 @@ export class CalendarComponent {
                         let index = this.events.indexOf(event);
                         if (index !== -1) {
                             this.events.splice(index, 1);
+                            console.log(event.cssClass);
+                            this.eventsList = this.eventsList.filter((eventTarget: Event) => {
+                                    return eventTarget.id != event.cssClass;
+                                }
+                            );
                             this.refresh.next();
                         }
-                        this.msgSrv.success(`Event ${event.title} successfully deleted.`);
+                        this.msgSrv.success('Event ${event.title} successfully deleted.');
                     })
                     .catch((errors: ResponseError[]) => {
                         errors.forEach(error => this.msgSrv.error(error.detail))
@@ -130,6 +134,61 @@ export class CalendarComponent {
     this.viewDate = addFn(this.viewDate, 1);
 
   }
+
+  filterEvents(targetId: any): void {
+      if (targetId != "") {
+         this.events = [];
+          for (var event of this.eventsList) {
+              if (event.targetId == targetId) {
+                  if (event.colorPrimary && event.colorSecondary) {
+                    var color_p: string = event.colorPrimary;
+                    var color_s: string = event.colorSecondary;
+                  } else {
+                    var color_p: string = "#bab2b7";
+                    var color_s: string = "#d9d6d8";
+                  }
+                  var eventObj = {
+                      start: new Date(event.startTime),
+                      end: new Date(event.endTime),
+                      title: event.name,
+                      color: {
+                            primary: color_p,
+                            secondary: color_s,
+                        },
+                      actions: this.actions,
+                      cssClass: event.id
+                  };
+                  this.events.push(eventObj);
+              }
+          }
+      }
+      else {
+          this.events = [];
+          for (var event of this.eventsList) {
+              if (event.colorPrimary && event.colorSecondary) {
+                var color_p: string = event.colorPrimary;
+                var color_s: string = event.colorSecondary;
+              } else {
+                var color_p: string = "#bab2b7";
+                var color_s: string = "#d9d6d8";
+              }
+              var eventObj = {
+                  start: new Date(event.startTime),
+                  end: new Date(event.endTime),
+                  title: event.name,
+                  color: {
+                        primary: color_p,
+                        secondary: color_s,
+                    },
+                  actions: this.actions,
+                  cssClass: event.id
+              };
+              this.events.push(eventObj);
+          }
+      }
+
+  };
+
 
   decrement(): void {
 
@@ -171,6 +230,8 @@ export class CalendarComponent {
   }
 
   ngAfterContentInit() {
+      this.initTargets();
+      this.initForm();
       for (var event of this.eventsList) {
           if (event.colorPrimary && event.colorSecondary) {
             var color_p: string = event.colorPrimary;
