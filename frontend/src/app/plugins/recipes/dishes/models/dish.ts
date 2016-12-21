@@ -25,7 +25,7 @@ export class Dish {
             name: data.name,
             description: data.description,
             price: data.price,
-            ingredients: data.ingredients.map((item: any) => Ingredient.newFromResponse(item)),
+            ingredients: data.ingredients,
             image: data.img_path,
             imageLink: data.image_link,
         });

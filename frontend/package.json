@@ -25,6 +25,7 @@
     "angular-calendar": "^0.4.3",
     "angular2-masonry": "^0.3.1",
     "angular2-modal": "~2.0.2",
+    "angular2-select": "^1.0.0-alpha.12",
     "core-js": "^2.4.1",
     "es6-promise": "^4.0.5",
     "isotope-layout": "^3.0.1",

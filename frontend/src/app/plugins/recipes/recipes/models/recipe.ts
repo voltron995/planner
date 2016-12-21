@@ -23,7 +23,7 @@ export class Recipe {
             name: data.name,
             description: data.description,
             price: data.price,
-            ingredients: data.ingredients.map((item: any) => Ingredient.newFromResponse(item)),
+            ingredients: data.ingredients,
             image: data.image_link
         });
     }

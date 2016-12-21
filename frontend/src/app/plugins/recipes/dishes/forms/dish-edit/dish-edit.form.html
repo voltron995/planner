@@ -37,6 +37,44 @@
             </textarea>
         </div>
 
+        <!-- Ingredients -->
+      <!-- <div class="form-group">
+           <div class="row">
+             <div class = "col-xs-12">
+               <div class="form-group-row"> -->
+
+            <label for="ingredients">Ingredients</label>
+            <ng-select [options]="myOptions"></ng-select>
+           <div class = "col-md-5">
+             <ul class="list-group" formArrayName = "ingredients">
+              <div class="row" *ngFor="let ingredient of form.controls.ingredients.controls; let i=index">
+                <div [formGroupName]="i">
+
+                  <div *ngFor = "let ingr of this.dish.ingredients">
+                    <div class = "col-sm-5">
+                  <label>Ingr Name</label>
+                  <input
+                    class="form-control"
+                    formControlName="name"
+                    value="{{ingr.ingredient.name}}"
+                    type="text"></div>
+                  <div class = "col-sm-5">
+
+                  <input
+                    class="form-control"
+                   formControlName="quantity"
+                   value="{{ingr.quantity}}"
+                   type="text"></div>
+                 </div>
+                 <div class = "col-sm-2">
+                   <button type="button" (click)="addIngredient()" class="btn btn-primary">+</button>
+                 </div>
+            </div>
+          </div>
+          </ul>
+          </div>
+
+
         <!-- Submit -->
         <button
                 class="btn btn-default"
