@@ -1,5 +1,6 @@
 import re
 
+from app import app
 from app.error_handlers.errors import ElementNotFound
 from app.error_handlers.exceptions import APINotFound
 from app.plugins.msclient import MSClient
@@ -48,6 +49,11 @@ class BasePlugin:
     actions = {}
 
     def __init__(self):
+        config = app.config['PLUGINS'].get(self.name)
+        if not config:
+            raise Exception("Plugin not found.")
+        self.port = config['port']
+        self.host = config['host']
         self._init_actions()
 
     def execute_action(self, action_name: str, view_args: dict = None, **data):

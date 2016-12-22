@@ -23,3 +23,11 @@ REDIS_CONFIG = {
     'host': '127.0.0.1',
     'port': 6379,
 }
+
+
+PLUGINS = {
+    "recipes": {
+        "host": "127.0.0.1",
+        "port": "6001"
+    }
+}

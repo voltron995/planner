@@ -16,4 +16,8 @@ server {
     location /dist {
         root /home/andy/Python/planner/frontend;
     }
+
+    location /uploads {
+       root /media/kate/D/SS/planner/planner;
+   }
 }
