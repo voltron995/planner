@@ -68,12 +68,6 @@ class ListCreateItemView(ListCreateView):
         if ms_response.ok:
             Item.create(plugin=self.plugin.name, plugin_item_id=ms_response.data.get('id'), event_id=json['event_id'])
             db.session.commit()
-
-            if 'image' in json:
-                image_uuid = json['image']
-                image = UploadsManager.get_tmp_file(image_uuid)
-                UploadsManager.move_file(image, self.upload_group)
-
             return response.success(data=ms_response.data, schema=self.schema)
         else:
             return response.error(ms_response.status_code, *ms_response.errors)
@@ -88,11 +82,6 @@ class ReadUpdateDeleteItemView(ReadUpdateDeleteView):
         ms_response = self.plugin.execute_action(self.actions['PUT'], view_args, **json)
 
         if ms_response.ok:
-            image_uuid = json.get('image')
-            if image_uuid and UploadsManager.is_tmp_file(image_uuid):
-                image = UploadsManager.get_tmp_file(image_uuid)
-                UploadsManager.move_file(image, self.upload_group)
-
             return response.success(data=ms_response.data, schema=self.schema)
         else:
             return response.error(ms_response.status_code, *ms_response.errors)
