@@ -12,7 +12,6 @@ export class Ingredient{
         this.description = attributes.description;
         this.img_path = attributes.img_path;
         this.dimension = attributes.dimension
-
     }
 
     public static newFromResponse(data: any) {

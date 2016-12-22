@@ -76,7 +76,7 @@ export class ItemsComponent implements OnInit {
     remove(item: PluginItem) {
         // First remove from server.
         this.itemSrv
-            .delete(item.appId)
+            .delete(item.pluginId, PluginsFactory.getPlugin(item.plugin))
             .then(() => {
                 // Then remove from local list.
                 let index = this.items.indexOf(item);

@@ -14,7 +14,7 @@ export class IngredientService {
     ) {}
 
     list(): Promise<Ingredient[]> {
-        const url = `${this.ingredientUrl}/`;
+        const url = `${this.ingredientUrl}`;
 
         return new Promise((resolve, reject) => {
             this.requestSrv

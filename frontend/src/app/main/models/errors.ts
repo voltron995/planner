@@ -14,7 +14,7 @@ export class ResponseError {
     public static newFromResponse(response: any): ResponseError {
         return new this({
             code: response.code,
-            detail: response.detail,
+            detail: response.detail || 'Oops! An error occurred.',
             source: response.source,
             title: response.title
         });

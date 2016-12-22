@@ -9,7 +9,7 @@
                 *ngFor="let recipe of recipes"
                 (click)="onSelect(recipe)"
                 class="recipe grid-item">
-            <img [src]="recipe.image" alt="Recipe Image" class="image">
+            <img [src]="recipe.imageLink" alt="Recipe Image" class="image">
             <div class="name">
                 {{ recipe.name }}
             </div>

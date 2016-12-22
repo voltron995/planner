@@ -32,8 +32,8 @@ export class ItemService {
         });
     }
 
-    delete(id: string) {
-        const url = `${this.itemsUrl}/items/${id}`;
+    delete(id: string, plugin: BasePlugin): any {
+        const url = `${this.itemsUrl}/plugins/${plugin.slug}/${plugin.itemUrl}/${id}`;
 
         return new Promise((resolve, reject) => {
             this.requestSrv
@@ -42,5 +42,4 @@ export class ItemService {
                 .catch(errors => reject(errors));
         });
     }
-
 }

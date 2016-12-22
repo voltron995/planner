@@ -7,6 +7,7 @@ export class Recipe {
     public description: string;
     public price: string;
     public image: string;
+    public imageLink: string;
     public ingredients: Ingredient[];
 
     constructor(id: string, attributes: any) {
@@ -15,7 +16,8 @@ export class Recipe {
         this.description = attributes.description;
         this.price = attributes.price;
         this.ingredients = attributes.ingredients;
-        this.image = attributes.image
+        this.image = attributes.image;
+        this.imageLink = attributes.imageLink;
     }
 
     public static newFromResponse(data: any) {
@@ -23,8 +25,9 @@ export class Recipe {
             name: data.name,
             description: data.description,
             price: data.price,
-            ingredients: data.ingredients.map((item: any) => Ingredient.newFromResponse(item)),
-            image: data.image_link
+            ingredients: data.ingredients,
+            image: data.image,
+            imageLink: data.image_link,
         });
     }
 
