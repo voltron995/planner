@@ -32,8 +32,15 @@ export class RecipeComponent {
         let data = {
             name: this.recipe.name,
             description: this.recipe.description,
-            image: this.recipe.image,
-            ingredients: this.recipe.ingredients,
+            image: this.recipe.image || '',
+            ingredients: this.recipe.ingredients.map((value: any) => {
+                return {
+                    'quantity': value.quantity,
+                    'ingredient': {
+                        id: value.id,
+                    }
+                }
+            }),
             event_id: this.eventId
         };
 
