@@ -30,7 +30,7 @@ class DishesList(ListCreateItemView):
             image_uuid = json.get('image')
             if image_uuid:
                 image = UploadsManager.get_file(image_uuid, groups.RECIPE_IMAGES)
-                UploadsManager.move_file(image, groups.DISH_IMAGES)
+                UploadsManager.copy_file(image, groups.DISH_IMAGES)
 
             return response.success(data=ms_response.data, schema=self.schema)
         else:
