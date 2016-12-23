@@ -1,5 +1,6 @@
 import os
 from datetime import datetime, timedelta
+from shutil import copyfile
 from uuid import uuid4
 
 from app import app
@@ -47,6 +48,14 @@ class UploadsManager:
         if not os.path.exists(folder):
             os.makedirs(folder)
         os.rename(file.path, cls.get_path(file.id, to_group))
+        return cls.get_file(uuid=file.id, group=to_group)
+
+    @classmethod
+    def copy_file(cls, file: UploadedFile, to_group: str) -> UploadedFile:
+        folder = cls.get_folder(to_group)
+        if not os.path.exists(folder):
+            os.makedirs(folder)
+        copyfile(file.path, cls.get_path(file.id, to_group))
         return cls.get_file(uuid=file.id, group=to_group)
 
     @classmethod
