@@ -37,7 +37,7 @@ export class RecipeComponent {
                 return {
                     'quantity': value.quantity,
                     'ingredient': {
-                        id: value.id,
+                        id: value.ingredient.id,
                     }
                 }
             }),
